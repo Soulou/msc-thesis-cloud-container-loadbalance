@@ -1,0 +1,3 @@
+all: Thesis.tex
+	pdflatex $^
+
