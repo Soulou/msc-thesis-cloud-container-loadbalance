@@ -4,25 +4,25 @@
 
 #### Live migration
  
-[1] C. Clark, K. Fraser, S. Hand, J. G. Hansen, E. Jul, C. Limpach, I. Pratt, and A. Warfield
-Live migration of virtual machines
-Proc. of the 2nd Symposium on Networked Systems Design and Implementation (NSDI’05), 2005.
+> [1] C. Clark, K. Fraser, S. Hand, J. G. Hansen, E. Jul, C. Limpach, I. Pratt, and A. Warfield
+> Live migration of virtual machines
+> Proc. of the 2nd Symposium on Networked Systems Design and Implementation (NSDI’05), 2005.
 
 #### Bin packing
 
-[2] G. Gambosi, A. Postiglione, and M. Talamo
-Algorithms for the relaxed online bin-packing model
-SIAM J. Comput. Issue 5, vol. 30, 2000.
+> [2] G. Gambosi, A. Postiglione, and M. Talamo
+> Algorithms for the relaxed online bin-packing model
+> SIAM J. Comput. Issue 5, vol. 30, 2000.
 
-### Problem
+### Motivation
 
 ### Algorithmic study - methods
 
 #### Bin packing
 
-Weijia Song, Zhen Xiao, Qi Chen, Haipeng Luo
-Adaptive Resource Provisioning for the Cloud Using Online Bin Packing
-2013 - IEEE Transactions on Computers
+> [3] Weijia Song, Zhen Xiao, Qi Chen, Haipeng Luo
+> Adaptive Resource Provisioning for the Cloud Using Online Bin Packing
+> 2013 - IEEE Transactions on Computers
 
 Introduce topic with Amazon EC2 80k launched VMs per day and half milion PM
 estimated and that one of main cost is electricity saving, so optimization is
@@ -46,7 +46,7 @@ that is why online bin packing is much more realistic. Strict online bin
 packing doesn't allow to move existing items, it's too restrictive. Relaxed bin
 packing only allow a constant number of items to be repack [2], so it doesn't
 fit either. Dynamic online bin packing [3] is considered, but discarded. So the
-designed solution is called _Variable Item Size Bin Packing_
+designed solution is called __Variable Item Size Bin Packing__
 
 VISBP:
 * Insert similar to relaxed online bin packing (no knowledge of future when
@@ -68,14 +68,14 @@ and de facto, the number of active PMs. The fewer, the less electricity is consu
 
 Experiments
 
-> Small scale experiment
+Small scale experiment:
 
 * 3 VMs on 1 PM. Show Xen schduler limiting at 80% the CPU load when the 3 VMs are doing
 high CPU usage
 * 3 PMs - 5 VMs. Unidimensional (CPU) VISBP
 * 2 PMs - 5 VMs. Multidimensional (CPU-NetworkIO) VISBP
 
-> Algorithms comparaison
+Algorithms comparaison:
 
 * 10PMs (10GB, 4CPUs -no hyperthreading), 80VMs (2GB, 1vCPU). 
 * Benchmarking with TCP-W
@@ -85,14 +85,13 @@ high CPU usage
 Results: Less active PMs with VISBP and more PMs over 25% of CPU usage after consolidation
 
 ### Experimental study
-#
-### Resource allocation
 
 - - -
 
-Mark, S., Frédéric, V., Henri, C.
-Virtual Machine Resource Allocation for Service Hosting on Heterogeneous Distributed Platforms
-2012 - Parallel & Distributed Processing Symposium
+__Tags__ : offline vector bin packing, heterogeneous environment
+> [4] Mark, S., Frédéric, V., Henri, C.
+> Virtual Machine Resource Allocation for Service Hosting on Heterogeneous Distributed Platforms
+> 2012 - Parallel & Distributed Processing Symposium
 
 In contrast with the previous publication, the paper deals with offline bin
 packing based allocation, But it adds another constraint: the heterogeneity of
@@ -129,9 +128,10 @@ zero-knowledge scheduling (from "Scheduling in the Dark")
 
 - - -
 
-Qi Zhang, Mohamed Faten Zhani, Raouf Boutaba, Joseph L. Hellerstein
-HARMONY: Dynamic Heterogeneity−Aware Resource Provisioning in the Cloud
-2013 - IEEE 33rd International Conference on Distributed Computing Systems
+__Tags__: heterogeneous environment, provisioning, google trace
+> [5] Qi Zhang, Mohamed Faten Zhani, Raouf Boutaba, Joseph L. Hellerstein
+> HARMONY: Dynamic Heterogeneity−Aware Resource Provisioning in the Cloud
+> 2013 - IEEE 33rd International Conference on Distributed Computing Systems
 
 HARMONY → Heterogeneity Aware Resource MONitoring and management sYstem
 Publication done by the University of Waterloo (CA) and Google. Based on real
@@ -147,32 +147,32 @@ As, at Google, the granularity of the task is too small, they are allocating
 containers which will handle tasks. Their problem of optimization is to avoid
 over-allocating and wasting resources.
 
-« Finally, traditional bin−packing heuristics (e.g., First−Fit) do not apply
+" Finally, traditional bin−packing heuristics (e.g., First−Fit) do not apply
 directly to CBS as they do not consider machine switching and container
-reassignment costs. » (CBS: Container Based Scheduler)
+reassignment costs. " (CBS: Container Based Scheduler)
 
 #### Network flow
 
-Kimish Patel, Murali Annavaram, Massoud Pedram
-NFRA: Generalized Network Flow Based Resource Allocation for Hosting Centers 
-2013 - Transactions on Computer
+> [6] Kimish Patel, Murali Annavaram, Massoud Pedram
+> NFRA: Generalized Network Flow Based Resource Allocation for Hosting Centers
+> 2013 - Transactions on Computer
 
 NFRA: Network Flow Resource Allocation
 
 
 - - -
 
-Fangzhe Chang, Jennifer Ren, Ramesh Viswanathan
-Optimal Resource Allocation in Clouds
-2010 - IEEE 3rd International Conference on Cloud Computing
+> [7] Fangzhe Chang, Jennifer Ren, Ramesh Viswanathan
+> Optimal Resource Allocation in Clouds
+> 2010 - IEEE 3rd International Conference on Cloud Computing
 
 TODO
 
 #### Unsorted
 
-Hien Nguyen Van, Frédéric Dang Tran, Jean-Marc Menaud
-SLA-aware Virtual Resource Management for Cloud Infrastructures
-2009 - IEEE Ninth International Conference on Computer and Information Technology
+> [8] Hien Nguyen Van, Frédéric Dang Tran, Jean-Marc Menaud
+> SLA-aware Virtual Resource Management for Cloud Infrastructures
+> 2009 - IEEE Ninth International Conference on Computer and Information Technology
 
 Work around the virtual machine allocation. They separe two components: first
 the Local Decision Module (LDM) and the Global Decision Module (GDM). A LDM is
@@ -191,11 +191,10 @@ The mathematical approach is done by solving an optimization problem. It defines
 two Constraint Satisfactions Problems. The first is for the VM allocation and the
 second for the VM packing, the consolidation.
 
-### Re-assignment specific publications
-
-Mauro, A., Sara, C., Michele, C., Michese, M.
-Dynamic load management of virtual machines in a cloud architecture
-2010 - Social-Informatics and Telecommunications Engineering
+__Tags__: reassignment, reactive, cpu-based
+> [9] Mauro, A., Sara, C., Michele, C., Michese, M.
+> Dynamic load management of virtual machines in a cloud architecture
+> 2010 - Social-Informatics and Telecommunications Engineering
 
 This publication defines a model to manage virtual machines migrations. 1.
 Select overloaded hosts (host monitoring), 2. Select guests to migrate (VM
@@ -208,9 +207,10 @@ bandwidth and I/O may influence these results.
 
 - - -
 
-Ramon, L., Vinicius W.C., M., Thiago, F., N., Vitor A.A., S.,
-Heuristics and matheuristics for a real-life machine reassignment problem
-2013 - International Transactions in Operational Research
+__Tags__: reassignment, 
+> [10] Ramon, L., Vinicius W.C., M., Thiago, F., N., Vitor A.A., S.,
+> Heuristics and matheuristics for a real-life machine reassignment problem
+> 2013 - International Transactions in Operational Research
 
 Formal answer to the problem proposed by Google during the ROADEF/EURO
 Challenge. The solution is based on a linear integer programming (IP)
@@ -221,9 +221,10 @@ conclusion)
 
 - - -
 
-Thomas, S., Alexander, S.
-Decision support for virtual machine reassignments in enterprise data centers
-2010 - Network Operations and Management Symposium
+__Tags__: reassignment necessity, live migration
+> [11] Thomas, S., Alexander, S.
+> Decision support for virtual machine reassignments in enterprise data centers
+> 2010 - Network Operations and Management Symposium
 
 Thomas S. starts from the statement that energy represents up to 50% of
 operating costs in infrastructure, that's why there is a need to optimize it.
@@ -232,10 +233,10 @@ consolidation in order to minimize the number of active (powered) physical
 hosts.
 
 Different numbers of way to execute the consolidation are listed, first using
-_first fit algorithm_ in a reactive way, when some metrics
+__first fit algorithm__ in a reactive way, when some metrics
 (CPU/memory/IO/bandwidth usage) are over a precise level over a certain period.
 But the result is suboptimized because only 1 parameter is taken into account.
-Then vector_ bin packing_ is introduced and the fact that it is NP-hard, so
+Then vector __bin packing__ is introduced and the fact that it is NP-hard, so
 difficult to apply on large set of instances without good heuristics.  Thus, an
 approached by defining a model of VM consumption by time range of 5 minutes for
 different resources and using the complementarity to optimize the consolidation
@@ -246,8 +247,8 @@ This is to introduce re-assignment based on virtual servers migrations
 considering the migration overhead which can be quite important (according to
 size of VM) and which may slow down other VMs on the host.
 
-Experiment: « From a professional data center we obtained data describing
-one-hour maxima for CPU demand of hundreds of VMs over four months.»
+Experiment: "From a professional data center we obtained data describing
+one-hour maxima for CPU demand of hundreds of VMs over four months."
 
 This paper is not focusing which VM has to be moved or on which host it should
 be done, but it shows the necessity of re-assignment by analyzing the CPU load
@@ -255,9 +256,10 @@ on a hourly basis.
 
 - - -
 
-Thomas, S., Andeas, W.
-Virtual Machine Re-Assignment Considering Migration Overhead
-2012 - Network Operations and Management Symposium
+__Tags__: reassignment, live migration, overhead
+> [12] Thomas, S., Andeas, W.
+> Virtual Machine Re-Assignment Considering Migration Overhead
+> 2012 - Network Operations and Management Symposium
 
 Short publication (may be taken as an extension of the previous publication)
 which stats at the observation that in publications relative to virtual machine
@@ -267,9 +269,10 @@ migrations.
 
 ### Surveys - Literature information
 
-Swapnil M Parikh
-A Survey on Cloud Computing Resource Allocation Techniques 
-2013 - Nirma University International Conference on Engineering
+__Tags__: survey, allocation
+> [13] Swapnil M Parikh
+> A Survey on Cloud Computing Resource Allocation Techniques
+> 2013 - Nirma University International Conference on Engineering
 
 This publication gathers recent papers on resource allocation in the scope of cloud computing.
 It introduces to some other approaches such as "game-theoretic method for fair
