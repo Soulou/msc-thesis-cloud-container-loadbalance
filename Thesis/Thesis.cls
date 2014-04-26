@@ -156,39 +156,28 @@
 \newcommand*{\subject}[1]{\def\subjectname{#1}}
 \newcommand*{\keywords}[1]{\def\keywordnames{#1}}
 
-\supervisor  {(Mark L. Stillwell)}
-
+\supervisor  {Mark L. Stillwell}
 \examiner    {}
-
-\degree      {(Master of Science)}
-
-\authors     {(L{e\'}o Unbekandt)}
-
+\degree      {Master of Science}
+\authors     {Léo Unbekandt}
 \university  {Cranfield University}
-
 \UNIVERSITY  {CRANFIELD UNIVERSITY}
-
 \department  {School of Engineering}
-
-\DEPARTMENT {School of Engineering}
-
-\group        {Applied Mathematics and Computing Group}
-
-\GROUP    {APPLIED MATHEMATICS AND COMPUTING GROUP}
-
-\course   {Computational and Software Techniques in Engineering}
-
-\COURSE    {COMPUTATIONAL AND SOFTWARE TECHNIQUES IN ENGINEERING}
-
-\award {(MSc)}
-
-\AWARD {(MSc)}
+\DEPARTMENT  {School of Engineering}
+\group       {Applied Mathematics and Computing Group}
+\GROUP       {APPLIED MATHEMATICS AND COMPUTING GROUP}
+\course      {Computational and Software Techniques in Engineering}
+\COURSE      {COMPUTATIONAL AND SOFTWARE TECHNIQUES IN ENGINEERING}
+\award       {MSc}
+\AWARD       {MSc}
 
 \academicyear {2013 - 2014}
+\addresses    {(leo@unbekandt.eu)}
+\subject      {}
+\keywords     {cloud-computing, virtualisation, virtual machine, resource allocation, vector bin packing}
+\title        {My Thesis}
+\date         {\today}
 
-\addresses   {(leo@unbekandt.eu)}
-\subject     {}
-\keywords    {cloud-computing, virtualisation, virtual machine, resource allocation, vector bin packing}
 \renewcommand\maketitle{
   \btypeout{Title Page}
   \hypersetup{pdftitle={\@title}}
@@ -260,6 +249,7 @@
       {\large Academic Year: \acadyear \par}
       \bigskip
       {\LARGE \authornames \par}
+      {\small \addressnames \par}
       \bigskip
       {\LARGE \bf \@title \par}
       \bigskip

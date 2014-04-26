@@ -5,4 +5,4 @@
 *.toc
 *.lof
 *.out
-*.swp
+.*.swp

@@ -1,0 +1,9 @@
+Resource Allocation Algorithms for Virtualized Service Hosting Platforms
+Mark Stillwell , David Schanzenbach , Frédéric Vivien , Henri Casanova
+
+Greedy algorithms : First Fit, Best Fit, Worst Fit, Next Fit, etc.
+
+We also assume a static workload, meaning that each service has constant resource needs ?!
+
+Rigid : Need all the requirements (cannot work without and cannot benefit from more)
+Fluid : Can use maximum resources 
