@@ -10,6 +10,12 @@ __[1] C. Clark, K. Fraser, S. Hand, J. G. Hansen, E. Jul, C. Limpach, I. Pratt, 
   Live migration of virtual machines<br>
   Proc. of the 2nd Symposium on Networked Systems Design and Implementation (NSDI’05), 2005.__
 
+The publications details the workflow for migrating a virtual machine from on host
+to another and look at the impact on working services as web server of video game server
+in order to measure the migration overhead. The process of copying memory pages then pausing
+the source server and enabling the destination server and redirecting the network traffic
+is explained.
+
 #### Bin packing
 
 > __Tags__: background, online bin packing
