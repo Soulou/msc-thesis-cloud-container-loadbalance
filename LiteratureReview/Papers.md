@@ -4,25 +4,29 @@
 
 #### Live migration
  
-> [1] C. Clark, K. Fraser, S. Hand, J. G. Hansen, E. Jul, C. Limpach, I. Pratt, and A. Warfield
-> Live migration of virtual machines
-> Proc. of the 2nd Symposium on Networked Systems Design and Implementation (NSDI’05), 2005.
+> __Tags__: background, live migration
+
+__[1] C. Clark, K. Fraser, S. Hand, J. G. Hansen, E. Jul, C. Limpach, I. Pratt, and A. Warfield<br>
+  Live migration of virtual machines<br>
+  Proc. of the 2nd Symposium on Networked Systems Design and Implementation (NSDI’05), 2005.__
 
 #### Bin packing
 
-> [2] G. Gambosi, A. Postiglione, and M. Talamo
-> Algorithms for the relaxed online bin-packing model
-> SIAM J. Comput. Issue 5, vol. 30, 2000.
+> __Tags__: background, online bin packing
+
+__[2] G. Gambosi, A. Postiglione, and M. Talamo<br>
+  Algorithms for the relaxed online bin-packing model<br>
+  SIAM J. Comput. Issue 5, vol. 30, 2000.__
 
 ### Motivation
 
 ### Algorithmic study - methods
 
-#### Bin packing
+> __Tags__: reassignment, online bin packing
 
-> [3] Weijia Song, Zhen Xiao, Qi Chen, Haipeng Luo
-> Adaptive Resource Provisioning for the Cloud Using Online Bin Packing
-> 2013 - IEEE Transactions on Computers
+__[3] Weijia Song, Zhen Xiao, Qi Chen, Haipeng Luo<br>
+  Adaptive Resource Provisioning for the Cloud Using Online Bin Packing<br>
+  2013 - IEEE Transactions on Computers__
 
 Introduce topic with Amazon EC2 80k launched VMs per day and half milion PM
 estimated and that one of main cost is electricity saving, so optimization is
@@ -88,10 +92,11 @@ Results: Less active PMs with VISBP and more PMs over 25% of CPU usage after con
 
 - - -
 
-__Tags__ : offline vector bin packing, heterogeneous environment
-> [4] Mark, S., Frédéric, V., Henri, C.
-> Virtual Machine Resource Allocation for Service Hosting on Heterogeneous Distributed Platforms
-> 2012 - Parallel & Distributed Processing Symposium
+> __Tags__ : offline vector bin packing, heterogeneous environment
+
+__[4] Mark, S., Frédéric, V., Henri, C. <br>
+   Virtual Machine Resource Allocation for Service Hosting on Heterogeneous Distributed Platforms<br>
+   2012 - Parallel & Distributed Processing Symposium__
 
 In contrast with the previous publication, the paper deals with offline bin
 packing based allocation, But it adds another constraint: the heterogeneity of
@@ -128,10 +133,11 @@ zero-knowledge scheduling (from "Scheduling in the Dark")
 
 - - -
 
-__Tags__: heterogeneous environment, provisioning, google trace
-> [5] Qi Zhang, Mohamed Faten Zhani, Raouf Boutaba, Joseph L. Hellerstein
-> HARMONY: Dynamic Heterogeneity−Aware Resource Provisioning in the Cloud
-> 2013 - IEEE 33rd International Conference on Distributed Computing Systems
+> __Tags__: heterogeneous environment, provisioning, google trace
+
+__[5] Qi Zhang, Mohamed Faten Zhani, Raouf Boutaba, Joseph L. Hellerstein
+  HARMONY: Dynamic Heterogeneity−Aware Resource Provisioning in the Cloud
+  2013 - IEEE 33rd International Conference on Distributed Computing Systems__
 
 HARMONY → Heterogeneity Aware Resource MONitoring and management sYstem
 Publication done by the University of Waterloo (CA) and Google. Based on real
@@ -151,16 +157,18 @@ over-allocating and wasting resources.
 directly to CBS as they do not consider machine switching and container
 reassignment costs. " (CBS: Container Based Scheduler)
 
-#### Network flow
+> __Tags__: network flow, theory, resource allocation
 
-> [6] Kimish Patel, Murali Annavaram, Massoud Pedram
-> NFRA: Generalized Network Flow Based Resource Allocation for Hosting Centers
-> 2013 - Transactions on Computer
+__[6] Kimish Patel, Murali Annavaram, Massoud Pedram
+  NFRA: Generalized Network Flow Based Resource Allocation for Hosting Centers
+  2013 - Transactions on Computer__
 
 NFRA: Network Flow Resource Allocation
 
 
 - - -
+
+> __Tags__: network flow, vm allocation
 
 > [7] Fangzhe Chang, Jennifer Ren, Ramesh Viswanathan
 > Optimal Resource Allocation in Clouds
@@ -168,11 +176,13 @@ NFRA: Network Flow Resource Allocation
 
 TODO
 
-#### Unsorted
+- - -
 
-> [8] Hien Nguyen Van, Frédéric Dang Tran, Jean-Marc Menaud
-> SLA-aware Virtual Resource Management for Cloud Infrastructures
-> 2009 - IEEE Ninth International Conference on Computer and Information Technology
+> __Tags__: reassignment, group of vms
+
+__[8] Hien Nguyen Van, Frédéric Dang Tran, Jean-Marc Menaud
+  SLA-aware Virtual Resource Management for Cloud Infrastructures
+  2009 - IEEE Ninth International Conference on Computer and Information Technology__
 
 Work around the virtual machine allocation. They separe two components: first
 the Local Decision Module (LDM) and the Global Decision Module (GDM). A LDM is
@@ -191,10 +201,11 @@ The mathematical approach is done by solving an optimization problem. It defines
 two Constraint Satisfactions Problems. The first is for the VM allocation and the
 second for the VM packing, the consolidation.
 
-__Tags__: reassignment, reactive, cpu-based
-> [9] Mauro, A., Sara, C., Michele, C., Michese, M.
-> Dynamic load management of virtual machines in a cloud architecture
-> 2010 - Social-Informatics and Telecommunications Engineering
+> __Tags__: reassignment, reactive, cpu-based
+
+__[9] Mauro, A., Sara, C., Michele, C., Michese, M.
+  Dynamic load management of virtual machines in a cloud architecture
+  2010 - Social-Informatics and Telecommunications Engineering__
 
 This publication defines a model to manage virtual machines migrations. 1.
 Select overloaded hosts (host monitoring), 2. Select guests to migrate (VM
@@ -207,10 +218,11 @@ bandwidth and I/O may influence these results.
 
 - - -
 
-__Tags__: reassignment, 
-> [10] Ramon, L., Vinicius W.C., M., Thiago, F., N., Vitor A.A., S.,
-> Heuristics and matheuristics for a real-life machine reassignment problem
-> 2013 - International Transactions in Operational Research
+> __Tags__: reassignment
+
+__[10] Ramon, L., Vinicius W.C., M., Thiago, F., N., Vitor A.A., S.,
+  Heuristics and matheuristics for a real-life machine reassignment problem
+  2013 - International Transactions in Operational Research__
 
 Formal answer to the problem proposed by Google during the ROADEF/EURO
 Challenge. The solution is based on a linear integer programming (IP)
@@ -221,10 +233,11 @@ conclusion)
 
 - - -
 
-__Tags__: reassignment necessity, live migration
-> [11] Thomas, S., Alexander, S.
-> Decision support for virtual machine reassignments in enterprise data centers
-> 2010 - Network Operations and Management Symposium
+> __Tags__: reassignment necessity, live migration
+
+__[11] Thomas, S., Alexander, S.
+  Decision support for virtual machine reassignments in enterprise data centers
+  2010 - Network Operations and Management Symposium__
 
 Thomas S. starts from the statement that energy represents up to 50% of
 operating costs in infrastructure, that's why there is a need to optimize it.
@@ -256,10 +269,11 @@ on a hourly basis.
 
 - - -
 
-__Tags__: reassignment, live migration, overhead
-> [12] Thomas, S., Andeas, W.
-> Virtual Machine Re-Assignment Considering Migration Overhead
-> 2012 - Network Operations and Management Symposium
+> __Tags__: reassignment, live migration, overhead
+
+__[12] Thomas, S., Andeas, W.
+  Virtual Machine Re-Assignment Considering Migration Overhead
+  2012 - Network Operations and Management Symposium__
 
 Short publication (may be taken as an extension of the previous publication)
 which stats at the observation that in publications relative to virtual machine
@@ -269,10 +283,11 @@ migrations.
 
 ### Surveys - Literature information
 
-__Tags__: survey, allocation
-> [13] Swapnil M Parikh
-> A Survey on Cloud Computing Resource Allocation Techniques
-> 2013 - Nirma University International Conference on Engineering
+> __Tags__: survey, resource allocation
+
+__[13] Swapnil M Parikh
+  A Survey on Cloud Computing Resource Allocation Techniques
+  2013 - Nirma University International Conference on Engineering__
 
 This publication gathers recent papers on resource allocation in the scope of cloud computing.
 It introduces to some other approaches such as "game-theoretic method for fair
