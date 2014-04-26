@@ -24,20 +24,85 @@ __[2] G. Gambosi, A. Postiglione, and M. Talamo<br>
   Algorithms for the relaxed online bin-packing model<br>
   SIAM J. Comput. Issue 5, vol. 30, 2000.__
 
-The relaxed online bin packing algorithm define a way to achieve online bin packing
-with extra move of items when packing a new item. The number of additional move is
-bounded to 3 for inserting a new element and 7 when an element has to move.
-Extrapolated to virtual machines migrations, it's interesting because it allows
-a limited amount of VM migration when adding a new VM, it is not strict as a simple
-online bin packing algorithm.
+The relaxed online bin packing algorithm define a way to achieve online bin
+packing with extra move of items when packing a new item. The number of
+additional move is bounded to 3 for inserting a new element and 7 when an
+element has to move.  Extrapolated to virtual machines migrations, it's
+interesting because it allows a limited amount of VM migration when adding a
+new VM, it is not strict as a simple online bin packing algorithm.
+
+> __Tags__: background, online bin packing
+
+__[3] Joseph Wun-Tat Chan Tak-Wah Lam Prudence W.H. Wong
+  Dynamic Bin Packing of Unit Fractions Items
+  Theoretical Computer Science issue 8, vol. 409, 2008__
+
+Dynamic online bin packing differenciate itself from standard bin packing by
+allowing items to be removed from bins. Static online bin packing doesn't allow
+these items changes, once an item has been placed it doesn't move anymore. The
+publication compares the dynamic bin packing to offline bin packing in order to
+calculate its 'N-competitive' value.
+
+Use of the publication: dynamic online bin packing is quoted by different other
+paper as an interesting algorithm, that is why it may be interesting to add in as
+a background paper.
 
 ### Motivation
+
+> __Tags__: virtualization, resiliency
+
+__[4] Salapura, V.
+  Cloud computing: Virtualization and resiliency for data center computing
+  Computer Design (ICCD), 2012 IEEE 30th International Conference__
+
+Small publication explaining the importance of virtualisation and why companies
+should virtualize their infrastructure in order to setup scalable, highly
+available services based on cloud infrastructure.  It also focuses on how
+disaster recovery scenarios are simplified and cheaper thanks to it. These reasons
+are basic arguments for using cloud infrastructure and virtual machines to run
+workloads.
+
+- - -
+
+> __Tags__: reassignment necessity, live migration, energy saving
+
+__[5] Thomas, S., Alexander, S.
+  Decision support for virtual machine reassignments in enterprise data centers
+  2010 - Network Operations and Management Symposium__
+
+Thomas S. starts from the statement that energy represents up to 50% of
+operating costs in infrastructure, that's why there is a need to optimize it.
+By using reassignment with live migration, they are looking at hosts
+consolidation in order to minimize the number of active (powered) physical
+hosts.
+
+Different numbers of way to execute the consolidation are listed, first using
+__first fit algorithm__ in a reactive way, when some metrics
+(CPU/memory/IO/bandwidth usage) are over a precise level over a certain period.
+But the result is suboptimized because only 1 parameter is taken into account.
+Then vector __bin packing__ is introduced and the fact that it is NP-hard, so
+difficult to apply on large set of instances without good heuristics.  Thus, an
+approached by defining a model of VM consumption by time range of 5 minutes for
+different resources and using the complementarity to optimize the consolidation
+is defined. For example high-CPU low-memory with low-cpu high-memory processes.
+(30-35% of PM may be saved using this complementarity)
+
+This is to introduce re-assignment based on virtual servers migrations
+considering the migration overhead which can be quite important (according to
+size of VM) and which may slow down other VMs on the host.
+
+Experiment: "From a professional data center we obtained data describing
+one-hour maxima for CPU demand of hundreds of VMs over four months."
+
+This paper is not focusing which VM has to be moved or on which host it should
+be done, but it shows the necessity of re-assignment by analyzing the CPU load
+on a hourly basis.
 
 ### Algorithmic study - methods
 
 > __Tags__: reassignment, online bin packing
 
-__[3] Weijia Song, Zhen Xiao, Qi Chen, Haipeng Luo<br>
+__[6] Weijia Song, Zhen Xiao, Qi Chen, Haipeng Luo<br>
   Adaptive Resource Provisioning for the Cloud Using Online Bin Packing<br>
   2013 - IEEE Transactions on Computers__
 
@@ -107,7 +172,7 @@ Results: Less active PMs with VISBP and more PMs over 25% of CPU usage after con
 
 > __Tags__ : offline vector bin packing, heterogeneous environment
 
-__[4] Mark, S., Frédéric, V., Henri, C. <br>
+__[7] Mark, S., Frédéric, V., Henri, C. <br>
    Virtual Machine Resource Allocation for Service Hosting on Heterogeneous Distributed Platforms<br>
    2012 - Parallel & Distributed Processing Symposium__
 
@@ -148,7 +213,7 @@ zero-knowledge scheduling (from "Scheduling in the Dark")
 
 > __Tags__: heterogeneous environment, provisioning, google trace
 
-__[5] Qi Zhang, Mohamed Faten Zhani, Raouf Boutaba, Joseph L. Hellerstein
+__[8] Qi Zhang, Mohamed Faten Zhani, Raouf Boutaba, Joseph L. Hellerstein
   HARMONY: Dynamic Heterogeneity−Aware Resource Provisioning in the Cloud
   2013 - IEEE 33rd International Conference on Distributed Computing Systems__
 
@@ -172,7 +237,7 @@ reassignment costs. " (CBS: Container Based Scheduler)
 
 > __Tags__: network flow, theory, resource allocation
 
-__[6] Kimish Patel, Murali Annavaram, Massoud Pedram
+__[9] Kimish Patel, Murali Annavaram, Massoud Pedram
   NFRA: Generalized Network Flow Based Resource Allocation for Hosting Centers
   2013 - Transactions on Computer__
 
@@ -183,9 +248,9 @@ NFRA: Network Flow Resource Allocation
 
 > __Tags__: network flow, vm allocation
 
-> [7] Fangzhe Chang, Jennifer Ren, Ramesh Viswanathan
-> Optimal Resource Allocation in Clouds
-> 2010 - IEEE 3rd International Conference on Cloud Computing
+__[10] Fangzhe Chang, Jennifer Ren, Ramesh Viswanathan
+  Optimal Resource Allocation in Clouds
+  2010 - IEEE 3rd International Conference on Cloud Computing__
 
 TODO
 
@@ -193,7 +258,7 @@ TODO
 
 > __Tags__: reassignment, group of vms
 
-__[8] Hien Nguyen Van, Frédéric Dang Tran, Jean-Marc Menaud
+__[11] Hien Nguyen Van, Frédéric Dang Tran, Jean-Marc Menaud
   SLA-aware Virtual Resource Management for Cloud Infrastructures
   2009 - IEEE Ninth International Conference on Computer and Information Technology__
 
@@ -216,7 +281,7 @@ second for the VM packing, the consolidation.
 
 > __Tags__: reassignment, reactive, cpu-based
 
-__[9] Mauro, A., Sara, C., Michele, C., Michese, M.
+__[12] Mauro, A., Sara, C., Michele, C., Michese, M.
   Dynamic load management of virtual machines in a cloud architecture
   2010 - Social-Informatics and Telecommunications Engineering__
 
@@ -233,7 +298,7 @@ bandwidth and I/O may influence these results.
 
 > __Tags__: reassignment
 
-__[10] Ramon, L., Vinicius W.C., M., Thiago, F., N., Vitor A.A., S.,
+__[13] Ramon, L., Vinicius W.C., M., Thiago, F., N., Vitor A.A., S.,
   Heuristics and matheuristics for a real-life machine reassignment problem
   2013 - International Transactions in Operational Research__
 
@@ -246,45 +311,9 @@ conclusion)
 
 - - -
 
-> __Tags__: reassignment necessity, live migration
-
-__[11] Thomas, S., Alexander, S.
-  Decision support for virtual machine reassignments in enterprise data centers
-  2010 - Network Operations and Management Symposium__
-
-Thomas S. starts from the statement that energy represents up to 50% of
-operating costs in infrastructure, that's why there is a need to optimize it.
-By using reassignment with live migration, they are looking at hosts
-consolidation in order to minimize the number of active (powered) physical
-hosts.
-
-Different numbers of way to execute the consolidation are listed, first using
-__first fit algorithm__ in a reactive way, when some metrics
-(CPU/memory/IO/bandwidth usage) are over a precise level over a certain period.
-But the result is suboptimized because only 1 parameter is taken into account.
-Then vector __bin packing__ is introduced and the fact that it is NP-hard, so
-difficult to apply on large set of instances without good heuristics.  Thus, an
-approached by defining a model of VM consumption by time range of 5 minutes for
-different resources and using the complementarity to optimize the consolidation
-is defined. For example high-CPU low-memory with low-cpu high-memory processes.
-(30-35% of PM may be saved using this complementarity)
-
-This is to introduce re-assignment based on virtual servers migrations
-considering the migration overhead which can be quite important (according to
-size of VM) and which may slow down other VMs on the host.
-
-Experiment: "From a professional data center we obtained data describing
-one-hour maxima for CPU demand of hundreds of VMs over four months."
-
-This paper is not focusing which VM has to be moved or on which host it should
-be done, but it shows the necessity of re-assignment by analyzing the CPU load
-on a hourly basis.
-
-- - -
-
 > __Tags__: reassignment, live migration, overhead
 
-__[12] Thomas, S., Andeas, W.
+__[14] Thomas, S., Andeas, W.
   Virtual Machine Re-Assignment Considering Migration Overhead
   2012 - Network Operations and Management Symposium__
 
@@ -298,7 +327,7 @@ migrations.
 
 > __Tags__: survey, resource allocation
 
-__[13] Swapnil M Parikh
+__[15] Swapnil M Parikh
   A Survey on Cloud Computing Resource Allocation Techniques
   2013 - Nirma University International Conference on Engineering__
 
