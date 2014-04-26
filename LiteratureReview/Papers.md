@@ -24,6 +24,13 @@ __[2] G. Gambosi, A. Postiglione, and M. Talamo<br>
   Algorithms for the relaxed online bin-packing model<br>
   SIAM J. Comput. Issue 5, vol. 30, 2000.__
 
+The relaxed online bin packing algorithm define a way to achieve online bin packing
+with extra move of items when packing a new item. The number of additional move is
+bounded to 3 for inserting a new element and 7 when an element has to move.
+Extrapolated to virtual machines migrations, it's interesting because it allows
+a limited amount of VM migration when adding a new VM, it is not strict as a simple
+online bin packing algorithm.
+
 ### Motivation
 
 ### Algorithmic study - methods
