@@ -2,11 +2,24 @@
 
 ### Background
 
+#### Virtualisation
+
+> __Tags__: background, operating system virtualisation
+
+__[1] Paul Barham, Boris D., Keir F., Steven H., Tim H., Alex H., Rolf N., Ian P., Andrew W.<br>
+  Xen and the Art of Virtualisation<br>
+  19th ACM Symposium on Operating Systems Principles - 2003__
+
+This paper details how operating system and hardware virtualisation is
+basically working in order to isolate process and slice of resources from each
+other.
+
+
 #### Live migration
  
 > __Tags__: background, live migration
 
-__[1] C. Clark, K. Fraser, S. Hand, J. G. Hansen, E. Jul, C. Limpach, I. Pratt, and A. Warfield<br>
+__[2] Christopher Clark, Keir F., Steven H., Jacob G. H., Eric J., Christian L., Ian P., Andrew W.<br>
   Live migration of virtual machines<br>
   Proc. of the 2nd Symposium on Networked Systems Design and Implementation (NSDI’05), 2005.__
 
@@ -20,7 +33,7 @@ is explained.
 
 > __Tags__: background, online bin packing
 
-__[2] G. Gambosi, A. Postiglione, and M. Talamo<br>
+__[3] G. Gambosi, A. Postiglione, and M. Talamo<br>
   Algorithms for the relaxed online bin-packing model<br>
   SIAM J. Comput. Issue 5, vol. 30, 2000.__
 
@@ -33,7 +46,7 @@ new VM, it is not strict as a simple online bin packing algorithm.
 
 > __Tags__: background, online bin packing
 
-__[3] Joseph Wun-Tat Chan Tak-Wah Lam Prudence W.H. Wong
+__[4] Joseph Wun-Tat Chan Tak-Wah Lam Prudence W.H. Wong
   Dynamic Bin Packing of Unit Fractions Items
   Theoretical Computer Science issue 8, vol. 409, 2008__
 
@@ -51,7 +64,7 @@ a background paper.
 
 > __Tags__: virtualization, resiliency
 
-__[4] Salapura, V.
+__[5] Salapura, V.
   Cloud computing: Virtualization and resiliency for data center computing
   Computer Design (ICCD), 2012 IEEE 30th International Conference__
 
@@ -66,7 +79,7 @@ workloads.
 
 > __Tags__: reassignment necessity, live migration, energy saving
 
-__[5] Thomas, S., Alexander, S.
+__[6] Thomas, S., Alexander, S.
   Decision support for virtual machine reassignments in enterprise data centers
   2010 - Network Operations and Management Symposium__
 
@@ -102,7 +115,7 @@ on a hourly basis.
 
 > __Tags__: reassignment, online bin packing
 
-__[6] Weijia Song, Zhen Xiao, Qi Chen, Haipeng Luo<br>
+__[7] Weijia Song, Zhen Xiao, Qi Chen, Haipeng Luo<br>
   Adaptive Resource Provisioning for the Cloud Using Online Bin Packing<br>
   2013 - IEEE Transactions on Computers__
 
@@ -116,7 +129,7 @@ not considering all the dimensions but only the most important in a vector.  To
 predict the load, they use a variant of the exponentially weighted moving
 average (EWMA) load predictor.
 
-In this case, they assume from [1], that migrating VMs doesn't create important
+In this case, they assume from [2], that migrating VMs doesn't create important
 overhead to affect the other VMs, so they don't consider it. They use a
 scheduler which is invoked periodically to predict the use of VMs according to
 former saved statistics (CPU/Memory/NetworkIO) and the output is a list of
@@ -126,13 +139,13 @@ Issue with offline bin packing: it can create a lot of change in the VMs layout
 when executing the algorithm because it does not consider the current layout,
 that is why online bin packing is much more realistic. Strict online bin
 packing doesn't allow to move existing items, it's too restrictive. Relaxed bin
-packing only allow a constant number of items to be repack [2], so it doesn't
-fit either. Dynamic online bin packing [3] is considered, but discarded. So the
+packing only allow a constant number of items to be repack [3], so it doesn't
+fit either. Dynamic online bin packing [4] is considered, but discarded. So the
 designed solution is called __Variable Item Size Bin Packing__
 
 VISBP:
 * Insert similar to relaxed online bin packing (no knowledge of future when
-  item is packed) [1]
+  item is packed) [2]
 * Insert and Change functions (no remove like dynamic bin packing have)
 * During an operation a small amount of additional moves is allowed
 
@@ -172,7 +185,7 @@ Results: Less active PMs with VISBP and more PMs over 25% of CPU usage after con
 
 > __Tags__ : offline vector bin packing, heterogeneous environment
 
-__[7] Mark, S., Frédéric, V., Henri, C. <br>
+__[8] Mark, S., Frédéric, V., Henri, C. <br>
    Virtual Machine Resource Allocation for Service Hosting on Heterogeneous Distributed Platforms<br>
    2012 - Parallel & Distributed Processing Symposium__
 
@@ -213,7 +226,7 @@ zero-knowledge scheduling (from "Scheduling in the Dark")
 
 > __Tags__: heterogeneous environment, provisioning, google trace
 
-__[8] Qi Zhang, Mohamed Faten Zhani, Raouf Boutaba, Joseph L. Hellerstein
+__[9] Qi Zhang, Mohamed Faten Zhani, Raouf Boutaba, Joseph L. Hellerstein
   HARMONY: Dynamic Heterogeneity−Aware Resource Provisioning in the Cloud
   2013 - IEEE 33rd International Conference on Distributed Computing Systems__
 
@@ -237,7 +250,7 @@ reassignment costs. " (CBS: Container Based Scheduler)
 
 > __Tags__: network flow, theory, resource allocation
 
-__[9] Kimish Patel, Murali Annavaram, Massoud Pedram
+__[10] Kimish Patel, Murali Annavaram, Massoud Pedram
   NFRA: Generalized Network Flow Based Resource Allocation for Hosting Centers
   2013 - Transactions on Computer__
 
@@ -248,7 +261,7 @@ NFRA: Network Flow Resource Allocation
 
 > __Tags__: network flow, vm allocation
 
-__[10] Fangzhe Chang, Jennifer Ren, Ramesh Viswanathan
+__[11] Fangzhe Chang, Jennifer Ren, Ramesh Viswanathan
   Optimal Resource Allocation in Clouds
   2010 - IEEE 3rd International Conference on Cloud Computing__
 
@@ -258,7 +271,7 @@ TODO
 
 > __Tags__: reassignment, group of vms
 
-__[11] Hien Nguyen Van, Frédéric Dang Tran, Jean-Marc Menaud
+__[12] Hien Nguyen Van, Frédéric Dang Tran, Jean-Marc Menaud
   SLA-aware Virtual Resource Management for Cloud Infrastructures
   2009 - IEEE Ninth International Conference on Computer and Information Technology__
 
@@ -281,7 +294,7 @@ second for the VM packing, the consolidation.
 
 > __Tags__: reassignment, reactive, cpu-based
 
-__[12] Mauro, A., Sara, C., Michele, C., Michese, M.
+__[13] Mauro, A., Sara, C., Michele, C., Michese, M.
   Dynamic load management of virtual machines in a cloud architecture
   2010 - Social-Informatics and Telecommunications Engineering__
 
@@ -298,7 +311,7 @@ bandwidth and I/O may influence these results.
 
 > __Tags__: reassignment
 
-__[13] Ramon, L., Vinicius W.C., M., Thiago, F., N., Vitor A.A., S.,
+__[14] Ramon, L., Vinicius W.C., M., Thiago, F., N., Vitor A.A., S.,
   Heuristics and matheuristics for a real-life machine reassignment problem
   2013 - International Transactions in Operational Research__
 
@@ -313,7 +326,7 @@ conclusion)
 
 > __Tags__: reassignment, live migration, overhead
 
-__[14] Thomas, S., Andeas, W.
+__[15] Thomas, S., Andeas, W.
   Virtual Machine Re-Assignment Considering Migration Overhead
   2012 - Network Operations and Management Symposium__
 
@@ -327,7 +340,7 @@ migrations.
 
 > __Tags__: survey, resource allocation
 
-__[15] Swapnil M Parikh
+__[16] Swapnil M Parikh
   A Survey on Cloud Computing Resource Allocation Techniques
   2013 - Nirma University International Conference on Engineering__
 
