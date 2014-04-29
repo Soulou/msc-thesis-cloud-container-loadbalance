@@ -4,5 +4,6 @@
 *.lot
 *.toc
 *.lof
+*.blg
 *.out
 .*.swp
