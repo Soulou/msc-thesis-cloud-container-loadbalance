@@ -64,7 +64,7 @@ a background paper.
 
 > __Tags__: virtualization, resiliency
 
-__[5] Salapura, V.
+__[5] Valentina Salapura
   Cloud computing: Virtualization and resiliency for data center computing
   Computer Design (ICCD), 2012 IEEE 30th International Conference__
 

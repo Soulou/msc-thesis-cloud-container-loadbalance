@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt]{report}
+\documentclass[a4paper,11pt]{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -12,7 +12,26 @@
 \usepackage{caption}
 \usepackage{multicol}
 
+\hypersetup{colorlinks=true,
+  linkcolor=brown,
+  urlcolor=blue,
+  citecolor=red,
+}
+
+\author{Leo Unbekandt \\
+ \texttt{leo@unbekandt.eu} \vspace{1em} \\
+ \textsc{Cranfield University} \\
+ School of engineering \\
+ Msc Computational and Software Techniques in Engineering
+}
+\title{Literature Review}
+\date{\today}
+
+
 \begin{document}
+
+\maketitle
+\tableofcontents
 
 \section*{Introduction}
 
@@ -24,28 +43,86 @@ launched Amazon Web Services (AWS) is born, popularising the concept of cloud
 computing. This platform allows developers and companies to allocate resources
 on demand, and these are provisionned instantly.
 
-The market of cloud computing has grown really quickly and forcasts predict that
-this expansion won't stop in the near future.\cite{website:cloudcomputingmarket}
-It is no coincidence if the industry and the academic environments are really
-interested by this domain. On the one hand, it is a field where money is present
-and on the second hand, we can consider that we are only at the beginning of an
-era: a lot of things have to be developed, to be optimized and to be found.
-
 \section{Background}
 
-The evolution of the paradigm of cloud computing has been made possible thanks
-to the virtualisation technology. As explained by Paul Barham et al.\cite{virtualisation},
-it allows servers to be splitted in different parts, isolated from each other,
-sharing the resources of the physical machine. Technologies have been developed to
-give people much more flexibility in the way to manage their virtual machines also called
-instances. Actually, the concept of live migration, which is detailled in the work
-of Christopher Clark et al.\cite{livemigration}, has been built to move instances
-from a physical host to another without interrupting the activity of what is running
-inside a virtual machine. Using this mean, 
+The market of cloud computing has grown really quickly and forcasts predict
+that this expansion won't stop in the near future. The following study gathers
+information from different suveys\cite{website:cloudcomputingmarket}.
+Currently, the public cloud providers represent a market of 47.4 billion of
+dollars and is expecting to grow up to 107.2 billion of dollars on only 4
+years.
 
+Beside public clouds, as is defined in the definition of cloud
+computing\cite{nistcloudcomputing} by the National Institute of Standards and
+Technology, private cloud or hybrid cloud mixing private and public cloud
+infrastructure are being developped more and more.  Thanks to open-source
+projects like Openstack\cite{website:openstack}, clouds environment can be
+installed on private infrastructures. This is necessary, for security,
+performance or data control purposes.
+
+It is no coincidence if the industry and the academic environments are really
+interested by this domain. On the one hand, it is a field where money is
+present and on the second hand, we can consider that we are only at the
+beginning of an era: a lot of things have to be developed, to be optimized and
+to be found.
+
+The evolution of the paradigm of cloud computing has been made possible thanks
+to different technologies. The virtualisation, as explained by Paul Barham et
+al.\cite{virtualisation} allows servers to be splitted in different
+sub-components, isolated from each other, sharing the resources of the physical
+machine. 
+
+Technologies have been developed to give people much more flexibility
+in the way to manage their virtual machines, also called instances. Actually,
+the concept of live migration, which is detailled in the work of Christopher
+Clark et al.\cite{livemigration}, has been built to move instances from one
+physical host to another without interrupting the activity of anything running
+in the virtual machine. The memory is kept intact of course, but also the
+running connections.  The instance may seem frozen for a few second when the
+migration is finalized, but nothing is disrupted.
 
 \section{Motivation}
-\section{Algorithmic studies}
+
+The legitimate question is ``Why do people migrate their infrastructure to a
+cloud infrastructure?''. The answers are multiple, Valentina Salapura explains
+how a virtualized environment improves the resiliency of an
+infrastructure \cite{virtresiliency}. More precisely, when a service requires
+to be scalable, highly available and fault taulerant, using cloud technologies
+is essential. In the case of disaster recovery scenarios, they are highly
+simplified and cheaper thanks to those environments.
+
+As a result the infrastructures are composed of a certain amount of physical
+machines (PMs) which could be dispatched among different data centers, and each
+of these PMs, containers a variable number of virtual machines (VMs). The
+problematic which is now interesting concerns the assignment of these VMs, what
+is the optimal distributions of the instances among the different servers? It
+depends of what caracteristic has to be optimized.
+
+Thomas Setzer and Alexander Stage base their study on the statement that energy
+represents up to 50\% of operating costs of an infrastructure. That's why there
+is a need to optimize it. Using the virtual machine reassignment through live
+migrations, they are looking at consolidating the VMs on the physical servers.
+Consolidating an infrastructure consists in reducing the number of PMs which
+are hosting instances without disturbing the performance of these.  After this
+operation, useless PMs can be suspended and electricity is saved, then when
+more computational power is required they are resumed dynamically.
+
+In the publication of Weihia Song et al.\cite{reassignment:binpacking1} also
+introduce their subject by explaining that it has been estimated that Amazon
+manages more than half a million of physical servers around the world and that
+it must be a priority for them to reduce their expensives by consolidating their
+infrastructure.
+
+\section{Algorithms}
+
+\subsection{Linear Programming}
+
+\subsection{Bin packing}
+
+\subsection{Network flows}
+
+\subsection{Others}
+
 \section{Real data analysis}
 
 \section*{Conclusion}
