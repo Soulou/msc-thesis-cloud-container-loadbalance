@@ -19,7 +19,7 @@ other.
  
 > __Tags__: background, live migration
 
-__[2] Christopher Clark, Keir F., Steven H., Jacob G. H., Eric J., Christian L., Ian P., Andrew W.<br>
+_[2] Christopher Clark, Keir F., Steven H., Jacob G. H., Eric J., Christian L., Ian P., Andrew W.<br>
   Live migration of virtual machines<br>
   Proc. of the 2nd Symposium on Networked Systems Design and Implementation (NSDI’05), 2005.__
 
@@ -46,8 +46,8 @@ new VM, it is not strict as a simple online bin packing algorithm.
 
 > __Tags__: background, online bin packing
 
-__[4] Joseph Wun-Tat Chan Tak-Wah Lam Prudence W.H. Wong
-  Dynamic Bin Packing of Unit Fractions Items
+__[4] Joseph Wun-Tat Chan Tak-Wah Lam Prudence W.H. Wong<br>
+  Dynamic Bin Packing of Unit Fractions Items<br>
   Theoretical Computer Science issue 8, vol. 409, 2008__
 
 Dynamic online bin packing differenciate itself from standard bin packing by
@@ -64,8 +64,8 @@ a background paper.
 
 > __Tags__: virtualization, resiliency
 
-__[5] Valentina Salapura
-  Cloud computing: Virtualization and resiliency for data center computing
+__[5] Valentina Salapura<br>
+  Cloud computing: Virtualization and resiliency for data center computing<br>
   Computer Design (ICCD), 2012 IEEE 30th International Conference__
 
 Small publication explaining the importance of virtualisation and why companies
