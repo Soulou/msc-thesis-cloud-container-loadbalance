@@ -102,7 +102,7 @@ migration is finalized, but nothing is disrupted.
 The legitimate question is “Why do people migrate their infrastructure to a
 cloud infrastructure?”. The answers are multiple, Valentina Salapura explains
 how a virtualized environment improves the resiliency of an
-infrastructure \cite{virtresiliency}. More precisely, when a service requires
+infrastructure~\cite{virtresiliency}. More precisely, when a service requires
 to be scalable, highly available and fault taulerant, using cloud technologies
 is essential. In the case of disaster recovery scenarios, they are highly
 simplified and cheaper thanks to those environments.
@@ -188,7 +188,7 @@ is considered unlimited so this constraint becomes void).
 
 The work of Mark Stillwell, Frédéric Vivien and Henri Casanova, which
 focuses virtual machine resources allocation in heterogeneous
-environment \cite{allocation:heterogeneous} also start by defining a formal
+environment~\cite{allocation:heterogeneous} also start by defining a formal
 model based on linear programming. However, as explained in this publication,
 resolving such a problem requires an exponential time, linked to the amount of
 allocations to achieve. As a result using directly this solution on an
@@ -256,7 +256,7 @@ Stiefler Johnson in 1967\cite{maths:bpheuristics}:
 \vspace{1em}
 
 Those different algorithms reduce the complexity of the packing operation to
-$O(n\log{n})$. But as \cite{maths:bpheuristics}'s title explains: they are
+$O(n\log{n})$. But as~\cite{maths:bpheuristics}'s title explains: they are
 “Near-Optimal”.  The issue is finally to find the best ratio optimality/complexity.
 
 On the other hand, the “online” algorithms, which, on the contrary, are packing
@@ -323,7 +323,7 @@ example an application having a high network bandwidth requirement, would also h
 high CPU consumption. Finally, they admit that this solution would work quite poorly
 in the case of instances with non-proportionnal requirements.
 
-In \cite{allocation:heterogeneous}, we have seen that the first approach of the author
+In~\cite{allocation:heterogeneous}, we have seen that the first approach of the author
 was around linear programming, but the main part of their work is defining a way
 to apply multidimensional vector bin packing to heterogeneous environments. On a first side,
 they deal with the muldimensional aspect of this problem. It is necessary to specify how to
@@ -344,19 +344,156 @@ the bins are sorted when executing any algorithm matters. All the previous way t
 sort the items can be applied to the set of bins.
 
 All these previous possibilities of ordering among the virtual machines and physical
-hosts are combined and result in a “meta” algorithm which takes the best result
+hosts are combined and result in a “meta” algorithm (METAHVP) which takes the best result
 out of the different combinations of one items ordering and one bins ordering. After
 individual analysis, some sort types are removed from the meta algorithm to improve
-its runtime.
+its runtime. (METAHVPLIGHT)
 
+The simulation achieved to test these heuristics are comparing the results to those
+which have been found using the linear programming method and those obtained using
+greedy algorithms (*-Fit). The conclusion is that METAHVP has the best results over
+all the other, and METAHVPLIGHT achieves this result in on tenth of METAHVP's runtime.
 
-\subsection{Network flows}
+Finally, according to what we want to study there are several possible solutions using
+bin packing. Semantically, it is really confortable to compare bins with physical servers
+and items with virtual machines, it allows a very natural vision of this problem.
 
 \subsection{Others}
 
+To deal with mathematical optimization and approximative solution of NP-complete problems,
+Ants colony algorithms, genetic algorithms and some other famous methods, based on statistical
+analysis.
+
+\subsubsection{Ant colony algorithms}
+
+In~\cite{algo:antcolony1},~\cite{algo:antcolony2} and~\cite{algo:antcolony3}, the ant colony
+algorithms are studied. As we can see in the following graph:
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=0.8\textwidth]{./images/antcolonyperf.png}
+	\caption{Comparaison between First Fit Decreased and Ant Colony algorithms in~\cite{algo:antcolony2}}
+\end{center}
+\end{figure}
+
+The simulation shows that the ant colony gets better performance than a simple greedy First
+Fit Decreasing, however this improvement is not free:
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=0.6\textwidth]{./images/antcolonyruntime.png}
+	\caption{Runtime of First Fit Decreased and Ant Colony algorithms in~\cite{algo:antcolony2}}
+\end{center}
+\end{figure}
+
+When the number of nodes becomes bigger, the time spent to find the optimal
+allocation grows hugely, it is thousands times longer than a simple First Fit
+Decreasing for 3 to 5 percents of improvement. For analysis purpose it is
+something interesting to get better results, but in a realistic point of view,
+this operation can not take several hours as it should be repeated often.
+
+\subsubsection{Genetic algorithms}
+
+Genetic algorithms (GA) are heuristics based on natural selection. Generations
+of solutions are mutating, inheriting with and from each other to result in
+close to optimal results.~\cite{algo:genetics1} and~\cite{algo:genetics2}
+focused on them to solve the virtual machines assignment problem. In the work
+of David Wilcox et al.\cite{algo:genetics1}, simulations are comparing GA with
+*-Fit algorithms.
+
+\begin{figure}[b!]
+\begin{center}
+	\includegraphics[width=0.65\textwidth]{./images/geneticperf1.png}
+	\caption{Results of simulations using a genetic algorithm\cite{algo:genetics1}}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=0.65\textwidth]{./images/geneticperf2.png}
+	\caption{Results of simulations using a genetic algorithm\cite{algo:genetics1}}
+\end{center}
+\end{figure}
+
+On the following graphs, ICDF stands for “inverse cumulative distribution
+function” also known as “quantile function”, the authors use it to represent
+the load: “Using the icdf, we can specify a percentile value and obtain a
+corresponding load which can be passed to the assignment algorithm”.
+
+The conclusion which is that GA tends to consume less physical hosts, at any
+load, the number of PMs is largely under the amount of servers used by the
+other bin packing algorithms. As a direct consequence, the PMs which are
+over-capacitated (where the amount of VMs exceed the resource capacity of the
+physical sever), is much more high. For this reason, this approach can hardly
+be used in environment where a SLA (Service Level Agreement) has to be
+respected, because if there are overloaded servers, some applications or tasks
+running of them will be slowed by this situation.
+
+\subsubsection{Network flows}
+
+Network flows are basically directed graphs where each edge has a capacity and a flow.
+The main property is that each node of this graph must have an equal sum of flows from
+the edges directed to it and leaving from it, except for two particular type of nodes:
+“the source node” and “the sink node”.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=0.8\textwidth]{./images/examplenetwork.png}
+	\caption{Example of network flow directed graph}
+\end{center}
+\end{figure}
+
+Some people have used this concept to build a model to solve the resource
+allocation problem, to fine a close to optimal solution. Kimish Patel, Murali
+Annavaram and Massoud Pedram worked on resource assignment in
+datacenter\cite{allocation:networkflow}, considering an heterogeneous
+environment as in~\cite{allocation:heterogeneous}. Each set of similar servers,
+considered as a pool of servers is represented by a node, with a capacity
+different from each other according to the differences between two pools of
+servers.
+
+Unfortunately, this technique does not seem to be used for virtual machines
+allocation, and the link between this method and the problem we are dealing
+with is not obvious at all.
+
 \section{Real data analysis}
 
-\section*{Conclusion}
+Most of the cited works in the literature review are basing their work on
+simulations.  In the experiments, simulation tools like
+SimGrid\cite{website:simgrid} or CloudSim\cite{website:cloudsim} are used to simulate
+the behavior of one or multiple cloud infrastructures.
+
+The data may be generated randomly or following some statistical rules, but
+often, worloads are based of extract of real workload. Typically, Google is
+releasing workloads of its own production infrastructure. 
+
+In 2012, Google sponsored the ROADEF contest (Operational research and decision
+support French society)\cite{website:roadef}. The contest was focusing the machine
+reassignment problem based on Google workload. Each attendee had to find the
+best solution find solution. Some of them resulted in an official publication
+like “Heuristics and matheuristics for a real-life machine reassignment
+problem” from Ramon Lopes, Vinicius W.C. Morais, Thiago F. Noronha and Vitor
+A.A. Souza\cite{roadef:ip}.  They based their work on linear programming.
+However in~\cite{roadef:bp1} and~\cite{roadef:bp2}, the authors have used
+around the bin packing algorithms. Unfortunately, the work of the winner has
+not been published so we are not able to see which algorithm has been used to
+achieve the best reassignment.
+
+\section*{Coonclusion}
+
+To conclude, it is obvious that a lot of different approaches to the resource
+allocation problem in a cloud computing environment have been studied. However,
+those may be really difficult to compare with each other, as various
+mathematical tools are used and because each algorithm focuses on something
+else. But overall we have seen that the two biggest approaches are using
+linear programming and bin packing. For each of these methods there are
+a lot of variants which are really different from each other.
+
+Another aspect is that most of the experiments are simulations. When they
+are not, the experiment on real cloud infrastructure are mostly done on a
+really limited numberof nodes. Building a model is interesting, but how close
+to the reality are them? How close would be the results from simulated
+experiences from real life experiences?
 
 \nocite{*}
 \bibliographystyle{unsrt}
