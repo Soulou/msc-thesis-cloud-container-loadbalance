@@ -46,11 +46,11 @@ As the demand is raising strongly, service providers have to be able to support
 an increasingly amount of customers on their infrastructure. In 2006, Amazon
 launched Amazon Web Services (AWS) is born, popularising the concept of cloud
 computing. This platform allows developers and companies to allocate resources
-on demand, and these are provisionned instantly.
+on demand, and these are provisioned instantly.
 
-The market of cloud computing has grown really quickly and forcasts predict
+The market of cloud computing has grown really quickly and forecasts predict
 that this expansion won't stop in the near future. The following study gathers
-information from different suveys\cite{website:cloudcomputingmarket}.
+information from different surveys\cite{website:cloudcomputingmarket}.
 Currently, the public cloud providers represent a market of 47.4 billion of
 dollars and is expecting to grow up to 107.2 billion of dollars on only 4
 years.
@@ -76,7 +76,7 @@ been written by the National Institute of Standards and Technology:
 
 Different kind of clouds are specified, if Amazon is a “public” cloud, this is
 not the only way to use a cloud infrastructure: private cloud or hybrid clouds
-mixing private and public cloud infrastructures are being developped more and
+mixing private and public cloud infrastructures are being developed more and
 more. Thanks to open-source projects like Openstack\cite{website:openstack},
 cloud environments can be installed on private infrastructures. This is
 sometimes necessary or requested for security, performance or data control
@@ -90,7 +90,7 @@ machine.
 
 Technologies have been developed to give people much more flexibility
 in the way to manage their virtual machines, also called instances. Actually,
-the concept of live migration, which is detailled in the work of Christopher
+the concept of live migration, which is detailed in the work of Christopher
 Clark et al.\cite{livemigration}, has been built to move instances from one
 physical host to another without interrupting the activity of anything running
 in the virtual machine. The memory is kept intact of course, but also the
@@ -103,7 +103,7 @@ The legitimate question is “Why do people migrate their infrastructure to a
 cloud infrastructure?”. The answers are multiple, Valentina Salapura explains
 how a virtualized environment improves the resiliency of an
 infrastructure~\cite{virtresiliency}. More precisely, when a service requires
-to be scalable, highly available and fault taulerant, using cloud technologies
+to be scalable, highly available and fault tolerant, using cloud technologies
 is essential. In the case of disaster recovery scenarios, they are highly
 simplified and cheaper thanks to those environments.
 
@@ -112,7 +112,7 @@ machines (PMs) which could be dispatched among different data centers, and each
 of these PMs, containers a variable number of virtual machines (VMs). The
 problematic which is now interesting concerns the assignment of these VMs, what
 is the optimal distributions of the instances among the different servers? It
-depends of what caracteristic has to be optimized.
+depends of what characteristic has to be optimized.
 
 Thomas Setzer and Alexander Stage base their study on the statement that energy
 represents up to 50\% of operating costs of an
@@ -128,16 +128,16 @@ In the publication \textit{An adaptive Resource Provisioning for the Cloud
 Using Online Bin Packing}\cite{reassignment:binpacking1}, the authors also
 introduce their subject by explaining that it has been estimated that Amazon
 manages more than half a million of physical servers around the world and that
-it must be a priority for them to reduce their expensives by consolidating
+it must be a priority for them to reduce their expenses by consolidating
 their infrastructure.
 
 \section{Algorithms}
 
-We have seend that cloud computing is a hot topic in the Internet industry
+We have seen that cloud computing is a hot topic in the Internet industry
 which results in a lot of new problematics in computer science. The resource
 allocation problem is one of them. All over the world, universities have
 started studying different approaches of allocation optimisation. The different
-algorhms listed in this document gather publications around the virtual machine
+algorithms listed in this document gather publications around the virtual machine
 assignment and reassignment on a set of physical machines.
 
 \subsection{Linear Programming}
@@ -164,8 +164,8 @@ are defined to setup the scope of the function to minimize.
 \end{figequation}
 
 \textit{Equation 1} is the problem they want to solve, in this case a cost
-minimization problem. How can we minize for each task $t$ of each application
-$k$ in each virtual machine $i$ of each cloud insfrastructure $j$ the price of
+minimization problem. How can we minimize for each task $t$ of each application
+$k$ in each virtual machine $i$ of each cloud infrastructure $j$ the price of
 the input and output bandwidth ($ni \cdot pi_j$ and $no_{kl} \cdot po_j$) and
 the price the requested virtual machines ($x_{klijs} \cdot p_{ij}$) at each
 unit of time ($S$)
@@ -178,9 +178,9 @@ unit of time ($S$)
 	\]
 \end{figequation}
 
-The \textit{Equation 2} defines a constraint from the linear proble, which
+The \textit{Equation 2} defines a constraint from the linear problem, which
 explains that in each cloud, at each unit of time, the sum of all the tasks run
-on all the virtual machines instanciated should be less than the number of CPUs
+on all the virtual machines instantiated should be less than the number of CPUs
 available.  (There is note that in the case of public clouds, the amount of CPU
 is considered unlimited so this constraint becomes void).
 
@@ -230,7 +230,7 @@ those bins.
 Two main types of bin packing algorithms exist. On the one hand, those
 considered as “offline”. They consider that we have access to all the items to
 find the optimal packing on the different bins. This problem is a NP-hard
-problem, there is no, to this day, a poliynomial way to solve this problem.
+problem, there is no, to this day, a polynomial way to solve this problem.
 That is why to answer this problem in a reasonable duration, different
 heuristics have to be defined. The most common have been studied by David
 Stiefler Johnson in 1967\cite{maths:bpheuristics}:
@@ -257,7 +257,7 @@ Stiefler Johnson in 1967\cite{maths:bpheuristics}:
 
 Those different algorithms reduce the complexity of the packing operation to
 $O(n\log{n})$. But as~\cite{maths:bpheuristics}'s title explains: they are
-“Near-Optimal”.  The issue is finally to find the best ratio optimality/complexity.
+“Near-Optimal”. The issue is finally to find the best ratio optimality/complexity.
 
 On the other hand, the “online” algorithms, which, on the contrary, are packing
 items at the time they are arriving. In this case bins are already partially
@@ -275,17 +275,17 @@ to be packed, it allows an additional limited number of moves among the
 currently packed items.
 
 Another interesting variant is the dynamic online bin packing defined by Joseph
-Wun-Tan.  It differenciates itself from standard online bin packing by allowing
-items to be removed from bins. Static online bin packing doesn't allow these
-items changes, once an item has been placed it doesn't move anymore.
+Wun-Tan.  It differentiates itself from standard online bin packing by allowing
+items to be removed from bins. Static online bin packing does not allow these
+items changes, once an item has been placed it does not move anymore.
 
 \subsubsection{Their application in resource allocation}
 
 In the scope of virtual machines assignment on physical hosts, the bins are the
 physical servers and the items are the virtual machines we want to assign,
-andconsequently, the services or tasks we want to host. Some additional aspects
+and consequently, the services or tasks we want to host. Some additional aspects
 have to be considered: virtual machines need different resources like memory,
-CPU, persistant storage (disk), network input/output. So often, the items we
+CPU, persistent storage (disk), network input/output. So often, the items we
 want to pack are multidimensional items, and we speak of multidimensional
 vector bin packing. Another interesting point is that moving a virtual machine
 from one host to another has a cost which may be important, and which prevent 
@@ -297,7 +297,7 @@ machine only has one dimension, its CPU consumption. From that point they study
 which algorithm may fit this particular problem. They reject “strict” online
 bin packing, because in realistic situations it is uncommon to know exactly
 the future consumption of a virtual machine, so it is necessary to move it
-afterwards, when we can measure it. Moreover, as VMs can be migrated easily,
+afterward, when we can measure it. Moreover, as VMs can be migrated easily,
 there is no reason not considering it if the resulting performance is better.
 “Relaxed online bin packing” allows movements when a new item is packed, but
 an item cannot be resized. “Dynamic online bin packing” is thought inadequate
@@ -305,7 +305,7 @@ in this context too, but often, when an virtual machine has to move the best
 solution is not always to remove it then repack it, but to move others instances
 which are easier to move.
 
-This is why in\cite{reassignment:visbp}, they decided de build an online bin
+This is why in\cite{reassignment:visbp}, they decided to build an online bin
 packing algorithm which suits the virtualisation environment: “Variable Item
 Size Bin Packing”, its characteristics are the following.
 
@@ -321,12 +321,12 @@ one-dimension. Using this way to simplify the problem is working in some cases.
 Commonly when a resource consumption increases the others are following. For
 example an application having a high network bandwidth requirement, would also have a
 high CPU consumption. Finally, they admit that this solution would work quite poorly
-in the case of instances with non-proportionnal requirements.
+in the case of instances with non-proportional requirements.
 
 In~\cite{allocation:heterogeneous}, we have seen that the first approach of the author
 was around linear programming, but the main part of their work is defining a way
 to apply multidimensional vector bin packing to heterogeneous environments. On a first side,
-they deal with the muldimensional aspect of this problem. It is necessary to specify how to
+they deal with the multidimensional aspect of this problem. It is necessary to specify how to
 sort the items because there is not natural way to sort these vector.
 
 \begin{itemize}
@@ -355,7 +355,7 @@ greedy algorithms (*-Fit). The conclusion is that METAHVP has the best results o
 all the other, and METAHVPLIGHT achieves this result in on tenth of METAHVP's runtime.
 
 Finally, according to what we want to study there are several possible solutions using
-bin packing. Semantically, it is really confortable to compare bins with physical servers
+bin packing. Semantically, it is really comfortable to compare bins with physical servers
 and items with virtual machines, it allows a very natural vision of this problem.
 
 \subsection{Others}
@@ -372,7 +372,7 @@ algorithms are studied. As we can see in the following graph:
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=0.8\textwidth]{./images/antcolonyperf.png}
-	\caption{Comparaison between First Fit Decreased and Ant Colony algorithms in~\cite{algo:antcolony2}}
+	\caption{Comparison between First Fit Decreased and Ant Colony algorithms in~\cite{algo:antcolony2}}
 \end{center}
 \end{figure}
 
@@ -464,7 +464,7 @@ SimGrid\cite{website:simgrid} or CloudSim\cite{website:cloudsim} are used to sim
 the behavior of one or multiple cloud infrastructures.
 
 The data may be generated randomly or following some statistical rules, but
-often, worloads are based of extract of real workload. Typically, Google is
+often, workloads are based of extract of real workload. Typically, Google is
 releasing workloads of its own production infrastructure. 
 
 In 2012, Google sponsored the ROADEF contest (Operational research and decision
@@ -491,7 +491,7 @@ a lot of variants which are really different from each other.
 
 Another aspect is that most of the experiments are simulations. When they
 are not, the experiment on real cloud infrastructure are mostly done on a
-really limited numberof nodes. Building a model is interesting, but how close
+really limited number of nodes. Building a model is interesting, but how close
 to the reality are them? How close would be the results from simulated
 experiences from real life experiences?
 
