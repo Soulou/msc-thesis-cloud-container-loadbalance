@@ -1,0 +1,113 @@
+\chapter{Container load balancing in cloud environment}
+\label{mainidea}
+\lhead{Chapter 2. \emph{Container load balancing in cloud environment}}
+
+\section{Containers - Operating System-level Virtualization}
+
+\subsection{Definition}
+
+The technology of the operating system-level virtualization is composed of
+different mecanisms to create isolated environments in the user-space.  Each of
+those environment can gather one or several running applications and has access
+to different resources. Those environment are commonly called containers from
+the tool which popularized them: LXC (LinuX Containers). This technology is 
+
+Operating system-level virtualization has been existing for a long time, it
+appeared first in the BSD kernel (1998), where the technology is called
+\textbf{Jails}.  Then, Sun developed Solaris (Sun UNIX operating system)
+\textbf{zones} in 2005, the same year as the \textbf{OpenVZ} implementation for
+the Linux kernel.
+
+Containers are running over the same operating system as the host system, they
+are sharing the same drivers, but all the processes contained in them are
+limited by this same operating system. The memory consumption, the CPU usage,
+the network and disk IO are monitored and managed by these container engines
+sending the corresponding instructions to their respective kernel. 
+
+This is a completely different approach to process isolation compare to
+classical virtual machines. Where hypervisors and VM have been following the
+paradigm where everything is virtualised, creating overhead and slower
+performance, then we look at optimising by accessing hardware in order to
+reduce binary translations and other slow operations. The main idea for
+containers is, based on the host operating system, only the required
+devices/features will be virtualised, and finally the level of performance is
+close to native efficiency.
+
+\begin{figure}
+	\includegraphics{./Images/containers_vs_vms.png}
+	\caption{Structural difference between containers and VMs}
+\end{figure}
+
+\subsecion{Advantages}
+
+Studying containers is not a random choice, they
+
+\subsecion{Limits}
+
+Containers are not able to live-migrate from one host to another with a
+standard linux kernel yet. This feature is possible with a OpenVZ patched
+kernel because thoses patches implement the checkpoint/restore operations for
+the containers, but for a vanilla Linux kernel, it does not exist yet. Some
+developers/hackers are trying to clean the code of OpenVZ and push the features
+to the mainstream kernel with the \cite{websiteCRIU} project, but so far the
+results are mostly drafty and unstable.
+
+This main limit results in the difficulty to host stateful applications like a
+database. It can be isolated in a container but we don't have the possibility
+to move it without any downtime, the container has to be stop first then
+restarted on another host. This is particularly blocking in the case of
+production environment where every downtime leads to money loses for instance.
+
+\section{Load balancing and scaling}
+
+As stateful applications can not be cleanly load balanced among a set of
+servers, the load balancing of stateless applications will be targeted. More
+precisely, web applications.
+
+\subsection{Web Application}
+
+A Web application is an applicative server which uses the web standards to
+communicate with clients. There are two main types of web services. The
+websites, which are rendering HTML/JS/CSS web pages to users, and web services
+defining an API and answering with standard data formats like XML or JSON. Both
+of them are using HTTP as transfer protocol.
+
+By the nature of HTTP, web applications are mostly stateless. Each resource
+request is done using a new connection (except the case of reusing opened
+connections). When a web application is stateful it is linked to the
+application itself which is linking information to a local session or
+connection.
+
+These last 5 years, more and more of the web services have been written based
+on some or all the principles of the REST method which declares as 'best
+practice' to create complete stateless applications. Additionaly, another
+manifesto, the \cite{website12Factors} has become another standard set of good
+practices for web development (website and web services)
+
+The main advantage of stateless services is that they are able to scale
+horizontaly easily: the first step is to spawn new instances of the service,
+and then modify the routing table of a frontal reverse-proxy. As a result the
+requests will be distributed among all the instances.
+
+\subsection{Job balancing on the infrastructure}
+
+When a web application has to be moved from one host to another, there should
+be no unavailable time and the current requests have to stopped gracefuly. To
+solve the first issue, the following walkthrough has to be followed:
+
+\begin{enumerate}
+	\item{Create a new instance of the application - Instanciate a new
+	container of a web application}
+	\item{Wait until the instance is available - TCP ping the application
+	until a connection is established}
+	\item{Change reverse proxy routing to route requests to the new
+	container and not the old one}
+	\item{Stop the old container to free its resources}
+\end{enumerate}
+
+To solve the second issue, it should be handle by the application itself. When
+the system is querying the old container to stop. It actually sends a signal to
+it.  In most systems (Systemd, Upstart at the system level, or Heroku and
+Dotcloud at the PaaS level), SIGTERM is sent, then the application has some
+time to shutdown. In the case where the application is still running a while
+after receiving the signal, SIGKILL is sent to get rid of the process.

@@ -1,0 +1,86 @@
+\chapter{The experiments}
+\label{experiments}
+\lhead{Chapter 3. \emph{Experiments}}
+
+\section{Study of the ability to isolate containers CPU usage using Linux control groups}
+\subsection{Goal of the experiment}
+
+Linux containers are sharing the same operating system, they are not fully
+isolated as we can see with complete virtual machines. To achieve this
+isolation, the control groups (cgruop) of the linux kernel are used to
+apply limits on the resource access right of each container.
+
+This experiment aims at studying how these cgroups are working and how
+do they actually share the CPU resources among the different containers.
+
+\subsection{Metrics}
+
+\subsubsection{Inputs}
+
+The number of CPUs that an application consumes has to be clearly defined. In
+each container, an application developped to consume a given number of CPU
+cores will be launched. The source code of the application can be found at
+\url{https://github.com/Soulou/msc-thesis-cpu-burn}.
+
+\vspace{1em}
+
+\lstset{language=bash}
+\begin{lstlisting}
+# Parameter n: Number of core to consume
+./msc-thesis-cpu-burn -nb-cpus=<n>
+\end{lstlisting}
+
+The second input corresponds to the number of shares a container can access
+on the CPUs of the running computer. This number is arbitrary as the shares
+are relative to each other. 
+
+\begin{quote}
+If a container does not have any cpu share number specified, the default value
+is: $1024$
+\end{quote}
+
+It is expected that if there are two containers, one with $1024$ cpu shares and
+the other with $2048$ CPU shares, the second container will have access to
+$2048/1024 = 200\%$ of the resources, for a single CPU: $33\%$ and $66\%$.
+
+\subsection{Setup}
+
+To test the capacity of the isolation by cpu shares, two different environments
+will be used. As the result are expected to be relative to the hardware their should
+not be any major differences between both, but as a sanity test, it is important
+execute it on two différents contexts
+
+The first one my personal laptop, here are its caracteristics:
+
+\begin{itemize}
+	\item{CPU: Intel\textregistered \hspace{1pt} Core\texttrademark
+	\hspace{1pt} i7-3537U CPU @ 2.00GHz (2 cores with hyperthreading)}
+	\item{Memory: 8 GB RAM DDR3}
+	\item{Disk: 256GB Solid State Drive}
+\end{itemize}
+
+Then we'll study the results of the same experiment on a 4 cores virtual machine
+based on an OpenStack cluster:
+
+\begin{itemize}
+	\item{CPU: 4 KVM vCPUs}
+	\item{Memory: 8 GB RAM}
+	\item{Disk: Virtual HDD 80GB}
+\end{itemize}
+
+
+
+
+\subsection{Results}
+
+\section{Load balancing of containers using different bin packing algorithms}
+\subsection{Goal of the experiment}
+
+\subsection{Source of the workloads}
+\subsubsection{Statistical distribution}
+\subsubsection{Sample from Google workload}
+\subsection{Metrics}
+\subsection{Setup}
+\subsection{Results}
+
+\subsection{}

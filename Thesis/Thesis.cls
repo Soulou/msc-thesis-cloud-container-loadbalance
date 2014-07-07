@@ -11,6 +11,12 @@
 \usepackage[french]{babel}
 \usepackage{lmodern}
 \usepackage{textcomp}
+\usepackage{float}
+
+% Define new type of figure for equations with separate references
+\floatstyle{ruled}
+\newfloat{figequation}{thp}{lop}
+\floatname{figequation}{Equation}
 
 \NeedsTeXFormat{LaTeX2e}[1996/12/01]
 \ProvidesClass{Thesis}
@@ -120,6 +126,8 @@
 \usepackage{booktabs}
 \usepackage{rotating}
 \usepackage{listings}
+\usepackage{natbib}
+
 \lstset{captionpos=b,
         frame=tb,
         basicstyle=\scriptsize\ttfamily,
@@ -175,7 +183,7 @@
 \addresses    {(leo@unbekandt.eu)}
 \subject      {}
 \keywords     {cloud-computing, virtualisation, virtual machine, resource allocation, vector bin packing}
-\title        {My Thesis}
+\title        {Allocation and migration of web-services isolated in Linux Containers}
 \date         {\today}
 
 \renewcommand\maketitle{
@@ -430,5 +438,6 @@
   \btypeout{\bibname}
   \@mainmatterfalse}
 \endinput
+
 %%
 %% End of file `Thesis.cls'.
