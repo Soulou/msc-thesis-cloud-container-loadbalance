@@ -183,7 +183,7 @@
 \addresses    {(leo@unbekandt.eu)}
 \subject      {}
 \keywords     {cloud-computing, virtualisation, virtual machine, resource allocation, vector bin packing}
-\title        {Allocation and migration of web-services isolated in Linux Containers}
+\title        {Investigation and implementation of resource allocation algorithms for containerized web applications in a cloud environment}
 \date         {\today}
 
 \renewcommand\maketitle{
