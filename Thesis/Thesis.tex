@@ -29,9 +29,7 @@
 
 %% ----------------------------------------------------------------
 % Declaration Page required for the Thesis, your institution may give you a different text to place here
-\Declaration{
-
-I, Léo Unbekandt, declare that this thesis titled, `Allocation and migration of web-services isolated in Linux Containers' and the work presented in it are my own. I confirm that:
+\Declaration{I, Léo Unbekandt, declare that this thesis titled, `Allocation and migration of web-services isolated in Linux Containers' and the work presented in it are my own. I confirm that:
 
 \begin{itemize} 
 \item[\tiny{$\blacksquare$}] This work was done wholly or mainly while in candidature for a research degree at this University.
@@ -145,9 +143,10 @@ THE SOFTWARE.
 \setstretch{1.5}  % Set the line spacing to 1.5, this makes the following tables easier to read
 \clearpage  % Start a new page
 \lhead{\emph{Abbreviations}}  % Set the left side page header to "Abbreviations"
-\listofsymbols{ll}  % Include a list of Abbreviations (a table of two columns)
-{
-	\textbf{VM} & \textbf{V}irtual \textbf{M}achine \\
+
+% Include a list of Abbreviations (a table of two columns)
+\listofsymbols{ll}{\textbf{VM} & \textbf{V}irtual \textbf{M}achine \\
+	\textbf{IaaS} & \textbf{I}nfrastructure \textbf{a}s \textbf{a} \textbf{S}ervice \\
 	\textbf{DBMS} & \textbf{D}ata\textbf{B}ase \textbf{M}anagement \textbf{S}ystem \\
 	\textbf{HTTP} & \textbf{H}yper\textbf{T}ext \textbf{T}ransfer \textbf{P}rotocol \\
 	\textbf{HTML} & \textbf{H}yper \textbf{T}ext \textbf{M}arkup \textbf{L}anguage \\
@@ -158,34 +157,19 @@ THE SOFTWARE.
 }
 
 %% ----------------------------------------------------------------
-\clearpage  %Start a new page
-\lhead{\emph{Symbols}}  % Set the left side page header to "Symbols"
-\listofnomenclature{lll}  % Include a list of Symbols (a three column table)
-{
-% symbol & name & unit \\
-$a$ & distance & m \\
-$P$ & power & W (Js$^{-1}$) \\
-& & \\ % Gap to separate the Roman symbols from the Greek
-$\omega$ & angular frequency & rads$^{-1}$ \\
-}
-%% ----------------------------------------------------------------
 \mainmatter	  % Begin normal, numeric (1,2,3...) page numbering
 \pagestyle{fancy}  % Return the page headers back to the "fancy" style
 
 % Include the chapters of the thesis, as separate files
 % Just uncomment the lines as you write the chapters
 
+\input{./Chapters/Introduction}
 \input{./Chapters/Chapter1} % Introduction
 \input{./Chapters/Chapter2} % Background Theory 
-\input{./Chapters/Chapter3} % Experimental Setup
-
-%\input{./Chapters/Chapter4} % Experiment 1
-
-%\input{./Chapters/Chapter5} % Experiment 2
-
-%\input{./Chapters/Chapter6} % Results and Discussion
-
-%\input{./Chapters/Chapter7} % Conclusion
+\input{./Chapters/Chapter3} % First experiment: CPU isolation
+\input{./Chapters/Chapter4} % Main experiments: algorithm testing
+\input{./Chapters/Chapter5} % Results and Discussion
+\input{./Chapters/Conclusion}
 
 %% ----------------------------------------------------------------
 % Now begin the Appendices, including them as separate files

@@ -2,46 +2,11 @@
 \label{litreview}
 \lhead{Chapter 1. \emph{Literature Review}}
 
-\section{Background}
-
-An interesting definition of the Cloud Computing has
-been written by the National Institute of Standards and Technology~\citep*{nistcloudcomputing}:
-
-\begin{quote}
-	“Cloud computing is a model for enabling ubiquitous, convenient, on-demand
-	network access to a shared pool of configurable computing resources (e.g.,
-	networks, servers, storage, applications, and services) that can be rapidly
-	provisioned and released with minimal management effort or service provider
-	interaction.”
-\end{quote}
-
-Different kind of clouds are specified, if Amazon is a “public” cloud, this is
-not the only way to use a cloud infrastructure: private cloud or hybrid clouds
-mixing private and public cloud infrastructures are being developed more and
-more. Thanks to open-source projects like~\cite{websiteOpenstack},
-cloud environments can be installed on private infrastructures. This is
-sometimes necessary or requested for security, performance or data control
-purposes.
-
-The evolution of the paradigm of cloud computing has been made possible thanks
-to different technologies. The virtualisation, as explained
-by~\cite*{virtualisation} allows servers to be splitted in different
-sub-components, isolated from each other, sharing the resources of the physical
-machine. 
-
-Technologies have been developed to give people much more flexibility in the
-way to manage their virtual machines, also called instances. Actually, the
-concept of live migration, which is detailed in the work
-of~\cite*{livemigration}, has been built to move instances from one physical
-host to another without interrupting the activity of anything running in the
-virtual machine. The memory is kept intact of course, but also the running
-connections.  The instance may seem frozen for a few second when the migration
-is finalized, but nothing is disrupted.
-
 \section{Motivation}
 
 The legitimate question is “Why do people migrate their infrastructure to a
-cloud infrastructure?”. The answers are multiple, Valentina Salapura explains
+cloud infrastructure?”. Whether it concers virtual machines, whether is is linked
+to containers, the answers are multiple, Valentina Salapura explains
 how a virtualized environment improves the resiliency of an
 infrastructure~\citep*{virtresiliency}. More precisely, when a service requires
 to be scalable, highly available and fault tolerant, using cloud technologies
@@ -50,20 +15,21 @@ simplified and cheaper thanks to those environments.
 
 As a result the infrastructures are composed of a certain amount of physical
 machines (PMs) which could be dispatched among different data centers, and each
-of these PMs, contains a variable number of virtual machines (VMs). The
-problematic which is now interesting concerns the assignment of these VMs, what
-is the optimal distributions of the instances among the different servers? It
-depends of what characteristic has to be optimized.
+of these PMs, contains a variable number of virtual machines (VMs), then each
+of them hosts a set of containerized applicatios. The problematic which is now
+interesting concerns the assignment of these applications, what is the optimal
+distributions of the containers among the different servers? It depends of what
+characteristic has to be optimized.
 
-Thomas Setzer and Alexander Stage base their study on the statement that energy
-represents up to 50\% of operating costs of an
-infrastructure~\citep*{reassignmentElectricitysaving}. That's why there is a need
-to optimize it. Using the virtual machine reassignment through live migrations,
-they are looking at consolidating the VMs on the physical servers.
-Consolidating an infrastructure consists in reducing the number of PMs which
-are hosting instances without disturbing the performance of these.  After this
-operation, useless PMs can be suspended and electricity is saved, then when
-more computational power is required they are resumed dynamically.
+At the scope of the physical server, Thomas Setzer and Alexander Stage base
+their study on the statement that energy represents up to 50\% of operating
+costs of an infrastructure~\citep*{reassignmentElectricitysaving}. That's why
+there is a need to optimize it. Using the virtual machine reassignment through
+live migrations, they are looking at consolidating the VMs on the physical
+servers.  Consolidating an infrastructure consists in reducing the number of
+PMs which are hosting instances without disturbing the performance of these.
+After this operation, useless PMs can be suspended and electricity is saved,
+then when more computational power is required they are resumed dynamically.
 
 In the publication \textit{An adaptive Resource Provisioning for the Cloud
 Using Online Bin Packing}~\citep*{reassignmentBinpacking1}, the authors also
@@ -71,6 +37,12 @@ introduce their subject by explaining that it has been estimated that Amazon
 manages more than half a million of physical servers around the world and that
 it must be a priority for them to reduce their expenses by consolidating
 their infrastructure.
+
+For consumers of commercial \textit{IaaS} offers, the main goal is to use the
+minimum number of virtual machines while having enough resources for all the
+applications running on their current infrastructure. They do not directly pay
+the electricity, it is included in the price paid to the provider, the focus is
+on the level of performance directly.
 
 \section{Algorithms}
 
@@ -221,15 +193,15 @@ items changes, once an item has been placed it does not move anymore.
 
 \subsubsection{Their application in resource allocation}
 
-In the scope of virtual machines assignment on physical hosts, the bins are the
-physical servers and the items are the virtual machines we want to assign,
-and consequently, the services or tasks we want to host. Some additional aspects
-have to be considered: virtual machines need different resources like memory,
-CPU, persistent storage (disk), network input/output. So often, the items we
-want to pack are multidimensional items, and we speak of multidimensional
-vector bin packing. Another interesting point is that moving a virtual machine
-from one host to another has a cost which may be important, and which prevent 
-doing numerous migrations in the meantime.
+In the scope of containers assignment on a set of hosts, the bins are the
+differents servers and the items are the services we want to host. Some
+additional aspects have to be considered: applications need different
+resources like memory, CPU, persistent storage (disk), network input/output. So
+often, the items we want to pack are multidimensional items, and we speak of
+multidimensional vector bin packing. Another interesting point is that moving a
+container from one host to another has a cost which may be important, even if it
+is cheaper than migrating a virtual machine. As a result we can not execute
+numerous container migrations simultaneously.
 
 In the work about online bin packing for virtual machines allocation
 of~\cite*{reassignmentVisbp}, the authors consider first, that a virtual

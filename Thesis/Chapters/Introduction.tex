@@ -1,0 +1,65 @@
+\section*{Introduction}
+
+An interesting definition of the Cloud Computing has
+been written by the National Institute of Standards and Technology~\citep*{nistcloudcomputing}:
+
+\begin{quote}
+	“Cloud computing is a model for enabling ubiquitous, convenient, on-demand
+	network access to a shared pool of configurable computing resources (e.g.,
+	networks, servers, storage, applications, and services) that can be rapidly
+	provisioned and released with minimal management effort or service provider
+	interaction.”
+\end{quote}
+
+Different kind of clouds are specified, if Amazon Web Services provides
+services which are part of a “public” cloud, this is not the only way to use a
+cloud infrastructure: private cloud or hybrid clouds mixing private and public
+cloud infrastructures are being developed more and more. Thanks to open-source
+projects like~\cite{websiteOpenstack}, cloud environments can be installed on
+private infrastructures. This is sometimes necessary or requested for security,
+performance or data control purposes.
+
+The evolution of the paradigm of cloud computing has been made possible thanks
+to different technologies. The virtualisation, as explained
+by~\cite*{virtualisation} allows servers to be splitted in different
+sub-components, isolated from each other, sharing the resources of the physical
+machine.
+
+Technologies have been developed to give people much more flexibility in the
+way to manage their applications, their products. Virtual machines got live
+migration, a process which is detailed in the work of~\cite*{livemigration}.
+The feature has been built to move instances from one physical host to another without
+interrupting the activity of anything running in the virtual machine. The
+memory is kept intact of course, but also the running connections. The instance
+may seem frozen for a few second when the migration is finalized, but nothing
+is disrupted.
+
+Virtual machines have been used and studied for a decade now, this work will focus
+on another way to isolate resources on a server: containers. In some way, those are
+lightweight virtual machines. However, instead of having a global focus (virtualisation
+of hardware + operating system), they focus at the application level. Containers
+are designed to isolate applications from each other on a similar host. This host
+can be a virtual machine or more directly a physical machine. Already in 2007,
+\cite{containersAsAlternative} have worked on the possibility to use container-based
+virtualization instead of hypervisors and virtual machines as a high-performance
+alternative.
+
+This technology has been more and more used in the industry these last 3-5
+years, more and more companies are adopting it. It may be to offer services for
+companies like OpenShift (Red Hat), Cloud Foundry, Heroku, MongoLab, etc. or to
+manage the hosting of their own projects: Google, Ebay, Spotify. What kind of
+applications are containerized? Any software is able to run in a container, the
+work done by~\cite{hpccontainers} shows in the field of HPC, containers are
+mature enough to replace virtual machines and get better performance. Recently,
+more and more companies are building their products using the micro services
+architecture~\cite*{microservices}. In this model, a set of loosely coupled
+softwares are communicating together using a communication protocol. The most
+often, the web (HTTP) is used, and those services are sending and receiving
+requests through REST API. One of the main advantages of those applications is
+that they are stateless, as a result, it is much more easy to migrate them.
+
+In this work, the focus will be on those web applications, isolated thanks to
+containers, hosted on virtual machines. How those services can be load balanced and
+how is it possible to keep the load balanced over a cluster a servers, with each
+of them running a different amount of containers. 
+ 
