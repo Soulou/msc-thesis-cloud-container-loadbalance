@@ -45,10 +45,12 @@ $2048/1024 = 200\%$ of the resources, for a single CPU: $33\%$ and $66\%$.
 
 \subsection{Setup}
 
+\subsubsection{Hosts}
+
 To test the capacity of the isolation by cpu shares, two different environments
-will be used. As the result are expected to be relative to the hardware their should
-not be any major differences between both, but as a sanity test, it is important
-execute it on two différents contexts
+will be used. As the result are expected to be relative to the hardware their
+should not be any major differences between both, but as a sanity test, it is
+important execute it on two différents contexts
 
 The first one my personal laptop, here are its caracteristics:
 
@@ -59,8 +61,8 @@ The first one my personal laptop, here are its caracteristics:
 	\item{Disk: 256GB Solid State Drive}
 \end{itemize}
 
-Then we'll study the results of the same experiment on a 4 cores virtual machine
-based on an OpenStack cluster:
+Then we'll study the results of the same experiment on a 4 cores virtual
+machine based on an OpenStack cluster:
 
 \begin{itemize}
 	\item{CPU: 4 KVM vCPUs}
@@ -68,16 +70,144 @@ based on an OpenStack cluster:
 	\item{Disk: Virtual HDD 80GB}
 \end{itemize}
 
+\subsubsection{Deployment}
+
+In order to simplify the reproduction of these experiments, the different
+applications have been packaged into container images. They can be found on the
+docker public repository:
+
+\begin{itemize}
+	\item{\texttt{soulou/msc-thesis-cpu-burn}}
+	\item{\texttt{soulou/msc-thesis-docker-cpu-monitor}}
+\end{itemize}
+
+In order to deploy them, simply install Docker on your host
+(\url{http://docs.docker.com/installation/}), then use the \texttt{docker pull}
+to get the container images locally.
+
+\vspace{1em}
+
+\begin{lstlisting}
+docker run -d soulou/msc-thesis-cpu-burn -nb-cpus=<n>
+...
+# Run more instances according to what your want to test
+...
+docker run -i -t \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /sys/fs/cgroup/cpuacct/docker:/cgroup \
+  soulou/msc-thesis-docker-cpu-monitor -cgroup-path=/cgroup
+\end{lstlisting}
+
+The cpu monitoring service will display in columns the cpu consumption
+of each container running on the host (including itself), the data are
+displayed to be quickly usable by a third-party data analysis tool like
+\textbf{R} or to draw graph with \textbf{Gnuplot}
+
+\subsection{Expected results}
+
+Four different experiments have been done:
+
+\begin{itemize}
+\item{4 Processes with equal CPU shares : \newline The tested hosts
+	have a total of 4 cores, normally 4 processes using 1 core each should
+	be able to share it equaly, and each of the process should be able to
+	get 100\%
+}
+\item{4 Processes with different CPU shares 128-256-512-1024 : \newline
+	For the same reason as the previous experiment, the
+	shares should not change the results. Even if some processes have less
+	priority over the CPU, as there is enough cores for all the processes,
+	they should all be able to run their process at its maximum potential.
+}
+\item{6 processes with equal CPU shares : \newline This case is
+	different, as there is a higher number of processes compared to the
+	amount of available computation units. With an equal amount of CPU
+	shares for each process, it is expected that each process will get 66\%
+	in average of CPU time.  The results can't be stable as the mount of
+	cores is not a divisor of the number of applications. In other words,
+	there is no way the operating system can allocate an equal share of
+	core per process, as the context of a process is linked to one core. An
+	application can't be 33\% on one core, and 33\% on the other one at the
+	same time.
+}
+\item{6 processes with different CPU shares 32-64-128-256-512-1024 : \newline
+	According to the rule defined previously, a process with 64 shares
+	should have twice more CPU time than a process with 32 shares but twice
+	less than a 128-shares process.
+}
+\end{itemize}
+
 \subsection{Results}
 
-\section{Load balancing of containers using different bin packing algorithms}
-\subsection{Goal of the experiment}
+All the following graphs represent the percentage of CPU time per process
+in function of the time in seconds.
 
-\subsection{Source of the workloads}
-\subsubsection{Statistical distribution}
-\subsubsection{Sample from Google workload}
-\subsection{Metrics}
-\subsection{Setup}
-\subsection{Results}
+\subsection{On the laptop}
 
-\subsection{}
+\begin{figure}[h!]
+\begin{center}
+	\includegraphics[width=0.45\textwidth]{./Images/CpuMonitor/laptop/4_equalshares.png}
+	\includegraphics[width=0.45\textwidth]{./Images/CpuMonitor/laptop/4_differentshares.png}
+	\caption{4 Processes with equal[1] and different[2] CPU shares}
+\end{center}
+\end{figure}
+
+Using 4 processes, the expectations are reached, even if there are some small
+differences between the excution with equal shares and the one without, it is
+clear that each service can use one complete core whatever are its CPU shares.
+
+\begin{figure}[h!]
+\begin{center}
+	\includegraphics[width=0.45\textwidth]{./Images/CpuMonitor/laptop/6_equalshares.png}
+	\includegraphics[width=0.45\textwidth]{./Images/CpuMonitor/laptop/6_differentshares.png}
+	\caption{6 Processes with equal[1] and different[2] CPU shares}
+\end{center}
+\end{figure}
+
+When 6 processes are executing on the host the observed behavior is different.
+When shares are equal, the cpu consumption of each process is completely
+unstable.  As explain in the expectation for this experiment, theoretically
+each process should have 66\%, but as it's not possible because a process is
+only attached to one core at a precise time, the operating system is moving the
+processes during all the calculations. This is why the curves are so changing.
+But overall, if we measure the average and median of the CPU consumption of
+each application, the result is 66\%, so the expectation is reached.
+
+In the case where 6 processes are running with different CPU shares, the
+results are linked to what has been planned, but not only. The process with the
+minimum amount of shares (32) is using $\approx15\%$ of CPU, then the one with
+64 shares has $\approx30\%$ of CPU consumption, and then, the third one has
+$\approx60\%$ of processor usage. These values are effectively each time twice
+higher as the previous one. However this rule is not respected afterwards. Three
+of the process are able to use one full core event if their shares are respectively
+really different (256, 512, 1024)
+
+\subsection{On the virtual machine}
+
+As previously said, the results of this experiment in another environment should
+not be fondamentally different. As the results are relative percentages, the
+same figures should be found.
+
+\begin{figure}[h!]
+\begin{center}
+	\includegraphics[width=0.45\textwidth]{./Images/CpuMonitor/vm/4_equalshares.png}
+	\includegraphics[width=0.45\textwidth]{./Images/CpuMonitor/vm/4_differentshares.png}
+	\caption{4 Processes with equal[1] and different[2] CPU shares}
+\end{center}
+\end{figure}
+
+For 
+
+\begin{figure}[h!]
+\begin{center}
+	\includegraphics[width=0.45\textwidth]{./Images/CpuMonitor/vm/6_equalshares.png}
+	\includegraphics[width=0.45\textwidth]{./Images/CpuMonitor/vm/6_differentshares.png}
+	\caption{6 Processes with equal[1] and different[2] CPU shares}
+\end{center}
+\end{figure}
+
+Ipsum lorem dolor sit amet
+
+\subsubsection{Comments on the results}
+
+\subsection{Conclusion on the experiment}
