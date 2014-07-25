@@ -196,7 +196,9 @@ same figures should be found.
 \end{center}
 \end{figure}
 
-For 
+When 4 processes are running, the results are not fondamentaly different with
+the privous ones. There are some instability which may be linked to the virtual
+machine environment, but concretely, each process got 100\% of a core.
 
 \begin{figure}[h!]
 \begin{center}
@@ -206,8 +208,29 @@ For
 \end{center}
 \end{figure}
 
-Ipsum lorem dolor sit amet
-
-\subsubsection{Comments on the results}
+Once more, the results are what we could expect. It is interesting that the
+consumption of 6 processes looks much more constant in this environment. It
+may be interesting to investigate that in order to know if it's because there
+are less applications running on the server than the laptop or if the vCPUs used
+by the virtual machine are rounding of the real CPU consumption on the physical
+host provided by the hypervisor. It doesn't change fundamentally the results,
+but there is a difference.
 
 \subsection{Conclusion on the experiment}
+
+The main goal of this experiment was to show that it is possible to give different
+priority levels to different applications running on a given host. This is something
+really important because in the scope of multiuser infrastructure, resources
+should be manageable. The \textbf{cgroups} already allow to set hard limit on memory
+consumption, but the CPU limits are different. The \textbf{cgroup} cpuset has not
+been mentionned in this experiment, it is another solution for CPU resource
+management but it is not integrated in \textbf{docker}. The \textbf{docker} developers
+are currently working on the addition of more resource control features but as the project
+is still quite recent, they are still not implemented.
+
+The obtained results are in line with the expectations, as long as there is less processes
+than cores, the shares have no effect, but when the relation changes and the number of
+processes is increasing, the shares can have an important impact on how an application
+will be able to use the available cores. From a Quality of Service perspective, it allows
+to regulate the processes on a server base, to decrease the "Bad neighbour" effect, when
+one or different processes are slowing down all the othere processes of a host.

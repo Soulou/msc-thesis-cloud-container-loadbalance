@@ -38,6 +38,50 @@ close to native efficiency.
 	\caption{Structural difference between containers and VMs}
 \end{figure}
 
+\subsection{Docker container engine}
+
+\subsubsection{A bit of history}
+
+\textbf{Docker} is a recent project. Introduced in May 2013 by the Platform as
+a Service provider \textbf{Dotcloud} with the ambition to create a standard way
+to manage multiplatform containers, \textbf{docker} has rapidely been promoted
+as a mainstream project supported by all the main tech companies.  Their
+catchword is "Build once, run everywhere", but this is only a half truth.
+
+The project has been created as a REST-ish API server, using LXC tools to
+manage the containers themselves, however LXC is, as its name shows (LinuX
+Container) specific to Linux-based operating system, at that time it was even
+more restrected, \textbf{docker} was only working on Ubuntu Linux amd64. This
+is why the "run anywhere" was a bit biased at that time. One year later, the
+project has abandonned LXC to create their own library named
+\textit{libcontainer}, which is able to run on mostly any Linux. In the future,
+the project leaders want docker to be able to run on any kind of
+containerization system : BSD Jails, Solaris Zones, and Linux Containers, to
+become the real interoperable standard for containerization.
+
+\subsubsection{Its contribution to operating system level virtualization}
+
+As stated previously, containers were existing for a long time before
+\textbf{docker}, but this project has succeeded to create a wave of motivation
+and keen interest around this technology. People were so enthusiastic that
+\textbf{Dotcloud} pivoted their activity, to focus on \textbf{docker} and
+changed its name to \textbf{Docker inc.}
+
+What has been brought by this container engine is a simple way to manage and
+deploy containers one a large amount of server through a simple API. This
+simplification took over the LXC tools which were known to be difficult to
+handle.
+
+\textbf{Docker} also use copy on write filesystems, it means that if different
+applications are using the same base files, they only need to be present once.
+The precise caracteristic let users create containers in milliseconds.
+
+Currently, thanks to \textbf{Docker inc.} containers are really fashinoable,
+every tech companies is looking at them and their evolution and more and more
+people try to get rid of heavy virtual machines, because even if containers do
+not have all the features of virtual machines, they are good enough in a lot of
+cases.
+
 \subsection{Advantages}
 
 Studying containers is not a random choice. They have been more and more
