@@ -1,0 +1,4 @@
+guard :shell do
+  watch(/Chapters\/.*\.tex/) { `pdflatex Thesis.tex` }
+  watch(/Thesis.tex/) { `pdflatex Thesis.tex` }
+end
