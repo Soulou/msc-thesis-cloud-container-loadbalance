@@ -1,0 +1,177 @@
+
+\chapter{HTTP API of the controller server}
+\lstset{language=Javascript, basicstyle=\footnotesize\ttfamily}
+\label{app:controller-api}
+
+\vspace{1em}
+\begin{lstlisting}
+
+/*
+ * Get the status of a given node, like the different resources consumption and total
+ */
+// GET /node/:host/status
+
+// Code 404 - Agent not found
+
+// Code 200 - OK
+// Content-Type: application/json
+{
+  "cpus": {
+    "cpu0": 44,
+    "cpu1": 22,
+  },
+  "free_memory": 12300000,
+  "memory": 27440000,
+  "network": {
+    "eth0": {
+      "tx": 98765,
+      "rx": 12345
+    }
+  }
+}
+
+/*
+ * Return a list of containers running on a given host
+ */
+// GET /node/:host/containers
+
+// Code 404 - Agent not found
+
+// Code 200 - OK
+// Content-Type: application/json
+[
+  {
+    "Id": "0123456789abcdef",
+    "Image": "soulou/msc-thesis-memory-http-service",
+    "Ports": [
+      {
+        "PublicPort": 49127,
+        "PrivatePort": 3000
+      }
+    ],
+    "Names": [ "service1-1-837" ],
+    "Created": 1723454345,
+    "Status": "Up"
+  },
+  {
+    ...
+  }
+]
+
+/*
+ * Return the status of all the nodes of the cluster.
+ */
+// GET /nodes/status
+
+// Code 200 - OK
+// Content-Type: application/json
+{
+  "192.169.0.1" : {
+    "cpus": {
+      "cpu0": 44,
+      "cpu1": 22,
+    },
+    "memory": 27440000,
+    "network": {
+      "eth0": {
+        "tx": 98765,
+        "rx": 12345
+      }
+    }
+  },
+  "192.168.0.2" : ...
+}
+
+/*
+ * This endpoint aims at executing an algorithm of load balancing.
+ * The name of the algorithm has to be given in the strategy parameter
+ * The containers and the agents nodes resource usage is gathered then normalized,
+ * then the algorithm is executed.
+ * As a result of the problem solving, a set of migration is applied to move
+ * the containers according to the algorithm solution.
+ */
+// POST /balance
+// Params:
+//   strategy: "stillwell_current"
+
+// Code 200 - OK
+{
+  "items": [[0.2, 0.3, 0], [...]],
+  "bins": [[1.0, 2.0, 1.0], [...]],
+  "problem": {
+    "algo": "stillwell_current",
+    "mapping": [0,0,0,1,2,3,4],
+  },
+  "migrations": [
+    {
+      "Service": "service-1",
+      "Started": {
+        "host": "182.168.0.2",
+        "id": "0123456789abcdef"
+      },
+      "Stopped": {
+        "host": "182.168.0.2",
+        "id": "0123456789abcdef"
+      }
+    },
+    {
+    ...
+    }
+  ]
+}
+
+// GET /containers
+
+// Code: 200 - OK
+// Content-Type: application/json
+[
+  {
+    "Host": "192.168.1.2",
+    "Id": "0123456789abcdef",
+    "Image": "soulou/msc-thesis-memory-http-service",
+    "Ports": [
+      {
+        "PublicPort": 49127,
+        "PrivatePort": 3000
+      }
+    ],
+    "Names": [ "service1-1-837" ],
+    "Created": 1723454345,
+    "Status": "Up"
+  },
+  {
+    ...
+  }
+]
+
+// POST /containers
+
+// Code: 201 - Container started
+
+// Docker JSON representation of a container:
+// With an additional field: "Host"
+// See: http://goo.gl/JrR6f6
+
+
+// DELETE /container/:host/:container_id
+
+// Code: 404 - Host or Container not found
+// Code: 204 - Container stopped
+
+
+// POST /container/:host/:container_id/migrate
+
+// Code 200 - Container migrated
+{
+  "Service": "service-1",
+  "Started": {
+    "host": "182.168.0.2",
+    "id": "0123456789abcdef"
+  },
+  "Stopped": {
+    "host": "182.168.0.2",
+    "id": "0123456789abcdef"
+  }
+},
+
+\end{lstlisting}

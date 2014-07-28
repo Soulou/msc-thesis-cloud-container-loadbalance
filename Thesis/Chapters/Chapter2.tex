@@ -2,9 +2,7 @@
 \label{mainidea}
 \lhead{Chapter 2. \emph{Container load balancing in cloud environment}}
 
-\section{Containers - Operating System-level Virtualization}
-
-\subsection{Definition}
+\section{Definition}
 
 The technology of the operating system-level virtualization is composed of
 different mecanisms to create isolated environments in the user-space.  Each of
@@ -38,9 +36,9 @@ close to native efficiency.
 	\caption{Structural difference between containers and VMs}
 \end{figure}
 
-\subsection{Docker container engine}
+\section{Docker container engine}
 
-\subsubsection{A bit of history}
+\subsection{A bit of history}
 
 \textbf{Docker} is a recent project. Introduced in May 2013 by the Platform as
 a Service provider \textbf{Dotcloud} with the ambition to create a standard way
@@ -59,7 +57,7 @@ the project leaders want docker to be able to run on any kind of
 containerization system : BSD Jails, Solaris Zones, and Linux Containers, to
 become the real interoperable standard for containerization.
 
-\subsubsection{Its contribution to operating system level virtualization}
+\subsection{Its contribution to operating system level virtualization}
 
 As stated previously, containers were existing for a long time before
 \textbf{docker}, but this project has succeeded to create a wave of motivation
@@ -82,7 +80,7 @@ people try to get rid of heavy virtual machines, because even if containers do
 not have all the features of virtual machines, they are good enough in a lot of
 cases.
 
-\subsection{Advantages}
+\section{Advantages}
 
 Studying containers is not a random choice. They have been more and more
 present in the industry these last years. Companies keep externalizing their
@@ -112,7 +110,7 @@ This company is using containers because, it allows them to isolate the database
 to provision them instantly, and the files required to run MongoDB are
 only present once on their servers. (physical or virtual).
 
-\subsection{Limits}
+\section{Limits}
 
 Containers are not able to live-migrate from one host to another with a
 standard linux kernel yet. This feature is possible with a OpenVZ patched
@@ -128,7 +126,7 @@ to move it without any downtime, the container has to be stop first then
 restarted on another host. This is particularly blocking in the case of
 production environment where every downtime leads to money loses for instance.
 
-\subsection{Web Application}
+\section{Web Application}
 
 As containerized stateful applications can not be cleanly load balanced among a
 set of servers (a downtime is required), stateless web applications will be
@@ -157,7 +155,7 @@ horizontaly easily: the first step is to spawn new instances of the service,
 and then modify the routing table of a frontal reverse-proxy. As a result the
 requests will be distributed among all the instances.
 
-\subsection{Application balancing on the infrastructure}
+\section{Application balancing on the infrastructure}
 
 When a web application has to be moved from one host to another, there should
 be no unavailable time and the current requests have to stopped gracefuly. To
@@ -180,9 +178,9 @@ Dotcloud at the PaaS level), SIGTERM is sent, then the application has some
 time to shutdown. In the case where the application is still running a while
 after receiving the signal, SIGKILL is sent to get rid of the process.
 
-\subsection{Operation on containers}
+\section{Operation on containers}
 
-\subsubsection{Load balancing}
+\subsection{Load balancing}
 
 The load balancing process consists in moving applications in order avoid having
 over-loaded and under-loaded hosts.
@@ -208,7 +206,7 @@ servers, they could be suspended (If a mecanism like WakeOnLan is enabled to
 wake them when they are required again) for example, these operationnal pieces
 information are not in our scope.
 
-\subsubsection{Resource Allocation}
+\subsection{Resource Allocation}
 
 Whan a new application has to start on the cluster, a container has to be
 created.  At that step, it is required to find the best server to host this

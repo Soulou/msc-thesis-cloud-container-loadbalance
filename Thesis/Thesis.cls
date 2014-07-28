@@ -127,10 +127,31 @@
 \usepackage{rotating}
 \usepackage{listings}
 \usepackage{natbib}
+\usepackage{color}
+
+\definecolor{lightgray}{rgb}{.9,.9,.9}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
 
 \lstset{captionpos=b,
         frame=tb,
-        basicstyle=\scriptsize\ttfamily,
+        basicstyle=\ttfamily\footnotesize,
         showstringspaces=false,
         keepspaces=true}
 \lstdefinestyle{matlab} {

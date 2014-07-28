@@ -1,21 +1,21 @@
-\chapter{The experiments}
-\label{experiments}
-\lhead{Chapter 3. \emph{Experiments}}
+\chapter{CPU allocation and scheduling for containerized processes}
+\label{cpuallocation}
 
-\section{Study of the ability to isolate containers CPU usage using Linux control groups}
-\subsection{Goal of the experiment}
+\section{Goal of the experiment}
 
-Linux containers are sharing the same operating system, they are not fully
-isolated as we can see with complete virtual machines. To achieve this
-isolation, the control groups (cgroup) of the linux kernel are used to
-apply limits on the resource access right of each container.
+This experiment has been defined to study of the ability to isolate containers
+CPU usage using Linux control groups Linux containers are sharing the same
+operating system, they are not fully isolated as we can see with complete
+virtual machines. To achieve this isolation, the control groups (cgroup) of the
+linux kernel are used to apply limits on the resource access right of each
+container.
 
-This experiment aims at studying how these cgroups are working and how
-do they actually share the CPU resources among the different containers.
+This experiment aims at studying how these cgroups are working and how do they
+actually share and isolate the CPU resources among the different containers.
 
-\subsection{Metrics}
+\section{Metrics}
 
-\subsubsection{Inputs}
+\subsection{Inputs}
 
 The number of CPUs that an application consumes has to be clearly defined. In
 each container, an application developped to consume a given number of CPU
@@ -43,9 +43,9 @@ It is expected that if there are two containers, one with $1024$ cpu shares and
 the other with $2048$ CPU shares, the second container will have access to
 $2048/1024 = 200\%$ of the resources, for a single CPU: $33\%$ and $66\%$.
 
-\subsection{Setup}
+\section{Setup}
 
-\subsubsection{Hosts}
+\subsection{Hosts}
 
 To test the capacity of the isolation by cpu shares, two different environments
 will be used. As the result are expected to be relative to the hardware their
@@ -70,7 +70,7 @@ machine based on an OpenStack cluster:
 	\item{Disk: Virtual HDD 80GB}
 \end{itemize}
 
-\subsubsection{Deployment}
+\subsection{Deployment}
 
 In order to simplify the reproduction of these experiments, the different
 applications have been packaged into container images. They can be found on the
@@ -103,7 +103,7 @@ of each container running on the host (including itself), the data are
 displayed to be quickly usable by a third-party data analysis tool like
 \textbf{R} or to draw graph with \textbf{Gnuplot}
 
-\subsection{Expected results}
+\section{Expected results}
 
 Four different experiments have been done:
 
@@ -137,12 +137,12 @@ Four different experiments have been done:
 }
 \end{itemize}
 
-\subsection{Results}
+\section{Results}
 
 All the following graphs represent the percentage of CPU time per process
 in function of the time in seconds.
 
-\subsection{On the laptop}
+\section{On the laptop}
 
 \begin{figure}[h!]
 \begin{center}
@@ -182,7 +182,7 @@ higher as the previous one. However this rule is not respected afterwards. Three
 of the process are able to use one full core event if their shares are respectively
 really different (256, 512, 1024)
 
-\subsection{On the virtual machine}
+\section{On the virtual machine}
 
 As previously said, the results of this experiment in another environment should
 not be fondamentally different. As the results are relative percentages, the
@@ -216,7 +216,44 @@ by the virtual machine are rounding of the real CPU consumption on the physical
 host provided by the hypervisor. It doesn't change fundamentally the results,
 but there is a difference.
 
-\subsection{Conclusion on the experiment}
+\section{Additional analysis}
+
+We have seen that with 6 processes on 4 cores, 3 of them are able to get a full
+CPU, in this case the processes are limiting the experiment. That is why, the 
+operation has been repeated with the following parameters.
+
+\begin{lstlisting}
+docker run -d -c <shares> soulou/msc-thesis-cpu-burn -nb-cpus 2
+\end{lstlisting}
+
+In this case, each container will try to get 2 cores, so 200\% of CPU.
+
+\begin{figure}[h1]
+\begin{center}
+	\includegraphics[width=0.6\textwidth]{./Images/CpuMonitor/vm/6_differentshares_2cores.png}
+	\caption{6 Processes using 2 cores with different CPU shares}
+\end{center}
+\end{figure}
+
+\vspace{2em}
+
+\begin{center}
+\begin{tabular}{l | c | c | c | c | c | c}
+		& App6 & App5 & App4 & App3 & App2 & App1 \\
+	Median  & 144.0 & 90.11 & 63.29 & 38.58 & 23.59 & 16.04 \\
+	Mean    & 145.6 & 90.22 & 64.48 & 40.20 & 25.07 & 17.52
+\end{tabular}
+\captionof{table}{Median and mean of the different application CPU usage in \%}
+\end{center}
+
+Compared to the previous experiment, we can first observe that the limit is not
+the process anymore, none of the applications have reached their maximal
+potential 200\%. However, the observed relation between two tasks has been
+lost. The more shares it owns, the more CPU usage a process has, accordingly to
+the shares. The operating system is respecting the shares, in a best effort.
+The priority of one process over another can not be precisely defined.
+
+\section{Conclusion on the experiment}
 
 The main goal of this experiment was to show that it is possible to give different
 priority levels to different applications running on a given host. This is something
