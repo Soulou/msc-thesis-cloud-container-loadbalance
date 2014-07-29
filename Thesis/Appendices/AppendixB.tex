@@ -30,6 +30,8 @@
   }
 }
 
+==================================================
+
 /*
  * Return a list of containers running on a given host
  */
@@ -58,6 +60,8 @@
   }
 ]
 
+==================================================
+
 /*
  * Return the status of all the nodes of the cluster.
  */
@@ -81,6 +85,8 @@
   },
   "192.168.0.2" : ...
 }
+
+==================================================
 
 /*
  * This endpoint aims at executing an algorithm of load balancing.
@@ -120,6 +126,12 @@
   ]
 }
 
+==================================================
+
+/*
+ * Return a list of all the containers running on the cluster
+ * hosted by each alive node.
+ */
 // GET /containers
 
 // Code: 200 - OK
@@ -144,6 +156,12 @@
   }
 ]
 
+==================================================
+
+/*
+ * Create a new container
+ */
+
 // POST /containers
 
 // Code: 201 - Container started
@@ -152,12 +170,22 @@
 // With an additional field: "Host"
 // See: http://goo.gl/JrR6f6
 
+==================================================
+
+/*
+ * Stop and delete a container on a given host
+ */
 
 // DELETE /container/:host/:container_id
 
 // Code: 404 - Host or Container not found
 // Code: 204 - Container stopped
 
+==================================================
+
+/*
+ * Migrate a container, to the most available node
+ */
 
 // POST /container/:host/:container_id/migrate
 
@@ -172,6 +200,6 @@
     "host": "182.168.0.2",
     "id": "0123456789abcdef"
   }
-},
+}
 
 \end{lstlisting}
