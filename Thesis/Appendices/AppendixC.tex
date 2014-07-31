@@ -1,0 +1,127 @@
+
+\chapter{Client command line tool documentation}
+\lstset{language=Bash, basicstyle=\footnotesize\ttfamily}
+\label{app:client-doc}
+
+\vspace{1em}
+
+\begin{itemize}
+\item{Start a container
+\begin{lstlisting}
+./client.py start [--image <image name>] <service name>
+
+##
+# The Image parameter correspond to the docker image which should be
+# run on the agent, as at that time, the identify of this agent is not
+# known, take care that all the agents have the requested docker image.
+# By default a fibonacci web service is executed.
+#
+# The service name is the name of the group of containers that the
+# newly created process will be appended, if the group doesn't exist,
+# it is created.
+#
+# Example
+#
+
+./client.py start --image soulou/memory-http-service service1
+
+-> Host: 192.168.114.13
+-> ID: e6bbb8853678b67882ea6919c559d80a20
+-> Service: service1
+-> Image: soulou/msc-thesis-memory-http-service
+-> Port: 49342
+\end{lstlisting}}
+\item{Stop a container
+\begin{lstlisting}
+./client.py stop --service <service_name> | --all <host> | <host> <ID>
+
+##
+# Three different options are available to stop a container.
+# * All the container of a service ban be stopped
+# * All the container of a precise server may be stopped
+# * A precise container can be shutdown by giving its host and its ID
+#
+# Example
+#
+
+./client.py stop --service <service_name>
+
+Container f6fe748fbf from 192.168.114.14 has been stopped
+Container e7dc0f68f3 from 192.168.114.17 has been stopped
+Container 6a28e4b2ab from 192.168.114.15 has been stopped
+\end{lstlisting}}
+\item{Get status of the infrastructure
+\begin{lstlisting}
+./client.py status
+
+##
+# Give the information about all the running containers
+#
+# Output example
+#
+
++----------------+-------+-----------+
+| Node           |  Port |  Service  |
++----------------+-------+-----------+
+| 192.168.114.14 | 49196 |  service3 |
+| 192.168.114.14 | 49195 |  service3 |
+| 192.168.114.13 | 49342 |  service1 |
++----------------+-------+-----------+
+
++---------------------------------------+
+|                 Image                 |
++---------------------------------------+
+| soulou/msc-thesis-memory-http-service |
+| soulou/msc-thesis-memory-http-service |
+| soulou/msc-thesis-memory-http-service |
++---------------------------------------+
+
++-----------------+---------------------+
+|        ID       |      Created At     |
++-----------------+---------------------+
+| 3c9345c19e00d21 | 2014-07-28 10:51:34 |
+| 9a2e2b22448f766 | 2014-07-28 10:51:33 |
+| e6bbb8853678b67 | 2014-07-29 15:52:15 |
++-----------------+---------------------+
+\end{lstlisting}}
+\item{Migrate an application to another node
+\begin{lstlisting}
+./client.py migrate <host> <id>
+
+##
+# This operation asks the controller to migrate a container
+# to another node
+#
+# Example
+#
+
+./client.py migrate 192.168.1.3
+
+Container 192.168.1.3 - 9a2e2b2244 -> 192.168.1.18 - 406d5ce46d
+\end{lstlisting}}
+\item{Get node or nodes status
+\begin{lstlisting}
+./client.py node_status <host>
+./client.py nodes_status
+
+##
+# Get the system metrics for on particular node or all the nodes
+#
+
+./client.py nodes_status
+[ '192.168.114.19': {'cpus': {'cpu0': 0, 'cpu1': 0},
+                    'free_memory': 3736440,
+                    'memory': 4048292,
+                    'nb_containers': 0,
+                    'net': {'docker0': {'rx': 0, 'tx': 0},
+                            'eth0': {'rx': 3728, 'tx': 1858},
+                            'eth1': {'rx': 0, 'tx': 0},
+                            'lo': {'rx': 0, 'tx': 0},
+                            'veth2074': {'rx': 0, 'tx': 0},
+                            'vetha4f2': {'rx': 913, 'tx': 1796},
+                            'vethc390': {'rx': 0, 'tx': 0},
+                            'vethd466': {'rx': 633, 'tx': 964},
+                            'vethec34': {'rx': 0, 'tx': 0}}}}
+]
+\end{lstlisting}}
+\end{itemize}

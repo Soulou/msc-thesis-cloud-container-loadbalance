@@ -1,15 +1,13 @@
-\chapter{Study of algorithms for Containers allocation and load balancing}
-\label{containerloadbalance}
+\chapter{Definition of the experimental setup}
+\label{chap:expsetup}
 
-\section{Experimental Setup}
-
-This part will be devoted to the study of the containerized web application
+This chapter will be devoted to the study of the containerized web application
 allocation and load balancing in a cloud environment. Before speaking of the
 experiments themselves, it is important to define how those experiments have
 been setup. The target is the ability to test algorithms using a realistic
 infrastructure and not to create a simulation of it.
 
-\subsection{Hardware Infrastructure}
+\section{Hardware Infrastructure}
 
 The experiments have been done on a private cloud infrastructure, powered by
 Openstack (version: Grizzly). The amount and the capacities of the virtual
@@ -23,8 +21,8 @@ going to use two distincts kind of nodes. The agents execute the
 different web applications, and the controller which is the interface to
 control the complete infrastructure.
 
-\subsection{Software Infrastructure}
-\subsubsection{Operating System}
+\section{Software Infrastructure}
+\subsection{Operating System}
 
 All the virtual machines are running \textbf{Ubuntu Server 14.04 LTS}, this choice
 has been lead by the fact that this Linux distribution is probably the most standard
@@ -47,7 +45,7 @@ used. More precisely its REST API. Actually all the requests to Docker are done
 through HTTP requests on a unix socket. (\textbf{Docker} is using a unix socket
 owned by root for security reasons, to avoid remote access to the host)
 
-\subsubsection{Service discovery}
+\subsection{Service discovery}
 
 One of the common difficulties in cloud infrastrucure gathering numerous
 virtual machines is the service discovery. It is possible of course to use a
@@ -79,7 +77,7 @@ operating system, downloading the binary from the website
 configuration of each node service is done through a set of JSON files which
 have to be defined in \textbf{Consul} configuration directory.
 
-\subsubsection{Balancer agent}
+\subsection{Balancer agent}
 
 On each server which has to exectute the web applications, the installation
 of the balancer agent is required. It is a HTTP server written using python3.
@@ -163,16 +161,21 @@ steps are required.
 \end{enumerate}}
 \end{itemize}
 
-To sum up, three distinct threads are running in the Balancer agent, the HTTP server,
-the host system monitoring, and the containers monitoring. Those threads are used to
-be able to get accurate data instantly, otherwise 1 second should be waited to get
-interesting data.
+To sum up, three distinct threads are running in the Balancer agent, the HTTP
+server, the host system monitoring, and the containers monitoring. Those
+threads are used to be able to get accurate data instantly, otherwise 1 second
+should be waited to get interesting data.
 
-\subsubsection{Balancer controller}
+\footnote{\url{https://github.com/Soulou/msc-thesis-container-balancer-agent}}
 
-The second main brick of this infrastructure is the controller. The role of this software
-is to control all the different agents, to give them the instructions about which container
-to start and which container to stop.
+\subsection{Balancer controller}
+
+The second main brick of this infrastructure is the controller. The role of
+this software is to control all the different agents, to give them the
+instructions about which container to start and which container to stop. There
+is no need to configure this service particularly, the knowledge about the
+composition of the infrastructure is acquired through requests to the local
+\textbf{Consul} agent.
 
 The running applications on the cluster are gathered by \textit{service}. Each
 of them can contain a variable amount of containers hosted on the different agent.
@@ -183,31 +186,76 @@ the incoming requests will be routed to both of thoses containers by following a
 round-robin algorithm. (C1 - C2 - C1 - C2 - ...).
 
 \textbf{Hipache}\footnote{\url{https://github.com/dotcloud/hipache}} is used as
-a front HTTP working as reverse proxy, it is in charge of routing incoming requests
-to the different containers.
-Why \textbf{Hipache} has been used instead of a more classical server like
-\textbf{Apache}. The main reason is that \textbf{Hipache} is dynamically
-configurable thanks to different backends. The most common is the
-\textbf{redis} backend. \textbf{Redis} is a key-value store with really high
-performance as all the dataset stay in memory, and is asynchronously written to
-the disk. So when the controller sends request to start or stop a container, it
-also connects to a \textbf{redis} instance to update hipache configuration.
+a front HTTP working as reverse proxy, it is in charge of routing incoming
+requests to the different containers.  Why \textbf{Hipache} has been used
+instead of a more classical server like \textbf{Apache}. The main reason is
+that \textbf{Hipache} is dynamically configurable thanks to different backends.
+The most common is the \textbf{redis} backend. \textbf{Redis} is a key-value
+store with really high performance as all the dataset stay in memory, and is
+asynchronously written to the disk. So when the controller sends request to
+start or stop a container, it also connects to a \textbf{redis} instance to
+update hipache configuration.
 
-The controller also exposes a HTTP API
+The controller also exposes a HTTP API which is described in the Annexe
+B~\nameref{app:controller-api} Part of this API is only a proxy to the agents
+endpoint, in order to gather all the data to only one location, and  on the
+other side, there are the active actions, linked to container scheduling on the
+infrastructure.
 
 This component of the infrastructure is critical for the experiment detailed
-later in this work.
+later in this work. The controller is charged to choose the nodes where the
+containers have to start. To select a strategy which will be used when a new
+controller has to start, it has to be specified as options:
 
-\subsubsection{Balancer client}
-\subsubsection{Deployment}
+\begin{lstlisting}
+python3 controller.py --strategy random
+\end{lstlisting}
 
-\section{Deployed applications}
+In the previous example, the new containers will be placed randomly on the different
+vailable nodes. Others strategy are available:
 
-\section{User load simulation}
+\begin{itemize}
+\item{random: Choose randomly a node}
+\item{round-robin: Choose one node after the other, following a loop:
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{./Images/round-robin.png}
+\caption{Scheme of a round-robin scheduling}
+\end{center}
+\end{figure}}
+\end{itemize}
+ 
+\footnote{\url{https://github.com/Soulou/msc-thesis-container-balancer-controller}}
 
-\section{Offline bin packing algorithms}
+\subsection{Balancer client}
 
+The balancer client, is a command line tool to command the controller, it
+shows in a human-understandable way, the JSON results the controller and allows
+a user to execute requests easily. Its documentation can be found in the
+Annexe C: "~\nameref{app:client-doc}".
 
-\section{Online bin packing algorithms}
+\footnote{\url{https://github.com/Soulou/msc-thesis-container-balancer-client}}
 
-\section{Results}
+\subsection{Deployment}
+
+All those services and tools have to be deployed on the instances of the
+infrastructure.  More and more configuration managers (CM) are released those days to
+answer the increasing needs to deploy applications in volatiles infrastructure,
+composed of temporary virtual machines. To setup all the different pieces of
+this infrastructure, \textbf{Ansible} has been used. There are two main models
+of CMs, thos centralized around a server, like \textbf{Chef Server} or \textbf{Puppet},
+where the nodes synchronize themselves with this server. The devops do not connect
+directly to the nodes but give instructions to the central server. The second
+category are those who are run from a devops workstation, like \textbf{Chef Solo},
+\textbf{Ansible}, \textbf{SaltStack}. The choice of \textbf{Ansible} has been done
+for it's ability to deploy nodes in parallel and by it's easiness of prototyping,
+its syntax is pretty simple.
+
+All the mecanisms of deployment can be found on following \textit{GitHub} page:
+\url{https://github.com/Soulou/msc-thesis-cloud-builder}. The script requires
+that \textbf{Openstack} credentials are stored in environment variables. (
+\texttt{OS\_USERNAME, OS\_TENANT\_NAME, OS\_PASSWORD, OS\_AUTH\_URL,
+OS\_REGION\_NAME}). Then it uses the API to instanciates VMs, and then deploy
+all the services on them using ansible \footnote{Ansible configuration:
+\url{https://github.com/Soulou/msc-thesis-cloud-builder/tree/master/ansible}}.
+

@@ -1,0 +1,67 @@
+\chapter{Study of algorithms for Containers allocation and load balancing}
+\label{chapt:containerloadbalance}
+
+\section{Experimental applications}
+
+To achieve experiments, applications have to be deployed. Those applications
+have to behave as standard web services. Whatever is the language or the
+framework used (except PHP), all the dependencies of the applications are
+loaded on application startup, so afterwards, there is no more file to read
+from the disk.  As a result the disk input/output are really low for most of
+the applications.
+
+Two main applications will be used during the experiment, an application which
+is calculating $N$ elements of the Fibonacci suite\footnote{\textbf{Docker}
+image: \texttt{soulou/msc-thesis-fibo-http-service}}. This weh application has
+only one endpoint: \texttt{GET /:n}, which returns the $N^{th}$ items, of the
+Fibonacci sequence. This application only consumes CPU, the memory print is
+really small.
+
+The second application which is used, has been designed to consume a precise
+amount of resource during a specified duration\footnote{\textbf{Docker} image:
+\texttt{soulou/msc-thesis/memory-http-service}}. Its endpoint is \texttt{GET
+/:memory/:time} with the memory in megabytes and the time in milliseconds. For
+instance, \texttt{GET /10/100} will consume precisely 10MB for a duration of
+0.1s. Thanks to this application, we can measure precisely how much should
+consume the application with a load of $N$ requests per second of a certain
+amount of memory during a precise timelapse.
+
+\section{Load generation}
+
+To generate load against web applications, web requests generators are
+required.  Historically, the most used tool is part of the \textbf{Apache} web
+server tools, and is called Apache Benchmark \textit{Command line name: ab}. In
+the following experiment, another utility is going to be used:
+\textbf{wrk}\footnote{\url{https://github.com/wg/wrk}}. This is a benchmark
+tool able to send requests using a given number of connections, used in different
+parallel threads.
+
+
+
+\section{Online bin packing algorithms}
+
+\begin{itemize}
+\item{Service1: }
+\end{itemize}
+
+\begin{verbatim}
+
+Round-Robin
+
+Service1 Requests/sec:     16.71 16.69 16.91 16.74 16.67 16.48
+Service2 Requests/sec:     22.92 23.76 23.16 23.87 23.31 23.20
+Service3 Requests/sec:     27.68 28.30 28.13 28.69 27.18 28.83
+
+Random
+
+Service1 Requests/sec:     15.21 13.17 17.05 15.05 15.33
+Service2 Requests/sec:     21.78 12.83 23.14 19.73 19.85
+Service3 Requests/sec:     30.33 19.79 28.68 28.72 24.85
+
+\end{verbatim}
+
+
+\section{Offline bin packing algorithms}
+\section{Results}
+
+
