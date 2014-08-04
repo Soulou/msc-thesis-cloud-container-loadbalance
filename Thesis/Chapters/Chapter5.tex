@@ -3,19 +3,22 @@
 
 \section{Experimental applications}
 
-To achieve experiments, applications have to be deployed. Those applications
-have to behave as standard web services. Whatever is the language or the
-framework used (except PHP), all the dependencies of the applications are
-loaded on application startup, so afterwards, there is no more file to read
-from the disk.  As a result the disk input/output are really low for most of
-the applications.
+The experimental process has to measure the performance of a set of containers
+before and/or after using any resource allocation algorithm. First, we have to
+define which applications will be containerized for those operations. Those
+applications have to be deployed on all the agent servers and have to behave as
+standard web services. Whatever is the language or the framework used (except
+PHP), all the dependencies of the applications are loaded on application
+startup, so afterwards, there is no more file to read from the disk.  As a
+result the disk input/output are really low for most of the applications and it
+this metric will not be measured in the following experiments.
 
-Two main applications will be used during the experiment, an application which
+The first service which has been used during the experiments is an application which
 is calculating $N$ elements of the Fibonacci suite\footnote{\textbf{Docker}
 image: \texttt{soulou/msc-thesis-fibo-http-service}}. This weh application has
 only one endpoint: \texttt{GET /:n}, which returns the $N^{th}$ items, of the
-Fibonacci sequence. This application only consumes CPU, the memory print is
-really small.
+Fibonacci sequence. This application only consumes CPU, the memory footprint is
+really negligible.
 
 The second application which is used, has been designed to consume a precise
 amount of resource during a specified duration\footnote{\textbf{Docker} image:
@@ -25,24 +28,84 @@ instance, \texttt{GET /10/100} will consume precisely 10MB for a duration of
 0.1s. Thanks to this application, we can measure precisely how much should
 consume the application with a load of $N$ requests per second of a certain
 amount of memory during a precise timelapse.
+The memory is allocated and initilized. As a ressult, even if we are requesting
+amount of memory, it also generates an important CPU load in the loops for memory
+application.
+
+The source code of bother services can be found on GitHub:
+\begin{itemize}
+\item{\url{https://github.com/Soulou/msc-thesis-fibo-http-service}}
+\item{\url{https://github.com/Soulou/msc-thesis-memory-http-service}}
+\end{itemize}
 
 \section{Load generation}
 
-To generate load against web applications, web requests generators are
-required.  Historically, the most used tool is part of the \textbf{Apache} web
-server tools, and is called Apache Benchmark \textit{Command line name: ab}. In
-the following experiment, another utility is going to be used:
+An important question when measuring the performance against an infrastructure,
+in this case: web services, is the way to generation the requests. Do they
+have to reflect a realistic user load, is it possible to do it, is it pertinent?
+In this case, we are going to measure raw performance over the cluster, to gather
+data about the efficiency of a specific algorithm. When user load simulation algorithm
+is used, the benchmark is irregular, and finally getting information about
+the real impact of a given algorithm may be more difficult to do.
+
+\subsection{Tools}
+
+To generate web trafic, HTTP requests generators are required. Historically,
+the most used tool is part of the \textbf{Apache} web server tools, and is
+called Apache Bench \textit{Command line name: ab}, released under the open-source
+\textit{Apache Licence}. This utils is not really
+used anymore because it is single-threaded which is a very limitating parameter.
+Only one CPU core is used, it may not be enough to saturate a target and get a
+correct measure of the performance, if the measuring tool is limitating.
+
+The tool which has been mostly used in the scope of this work is named
 \textbf{wrk}\footnote{\url{https://github.com/wg/wrk}}. This is a benchmark
-tool able to send requests using a given number of connections, used in different
-parallel threads.
+tool able to send requests using a given number of connections, used in
+different parallel threads. (The opposite of \texttt{ab}, which sends all
+the request concurrently using one thread)
 
+Usage example:
 
+\vspace{1em}
+\begin{lstlisting}
+wrk -c 10 -t 2 -d 1m http://service1.thesis.dev
+\end{lstlisting}
+
+This example will send 10 requests concurrently during 1 minute using two threads.
+So we are sure that the targeted URL will receive a maximum of 10 request at a
+given time.
+
+\subsection{Different kinds of load}
+
+Combining \textbf{wrk} and the memory allocation HTTP service, we can simulate
+different kinds of load and different kinds of application. 
+
+In some cases, web applications are micro-services and their job is to do a small
+particular task. Commonly, requests are really quick and the treatment of each of
+them has a low memory footprint. However as those HTTP requests may be numerous,
+the overall processor and memory usage can be important.
+
+ 
 
 \section{Online bin packing algorithms}
 
+An online bin packing algorithm as defined in the first chapter of this
+work:~\nameref{litreview}, is an algorithm which has to pack new items into
+bins without having the knowledge of what is already present in the bins. So
+bins have a remaining capacity, and each new items is known or partially known.
+In some cases, the new items are completely unknown.
+
+In this infrastructure there are two different cases which can be distinguished:
+
 \begin{itemize}
-\item{Service1: }
+\item{The new container is part of a new service: there is no information about
+the number of incoming requests, and what is the memory footprint of the new process}
+\item{The new container is from an existing service: in this case, the CPU consumption
+and memory usage can be estimated by looking the other containers of a similar service.
+For insntace, if two containers of \texttt{service1} are running using both 20\% of CPU,
+it is probably true that the consumption of the new container will be capped at 20\%}
 \end{itemize}
+
 
 \begin{verbatim}
 
