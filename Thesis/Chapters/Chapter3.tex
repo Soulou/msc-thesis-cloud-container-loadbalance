@@ -18,7 +18,7 @@ actually share and isolate the CPU resources among the different containers.
 \subsection{Inputs}
 
 The number of CPUs that an application consumes has to be clearly defined. In
-each container, an application developped to consume a given number of CPU
+each container, an application developed to consume a given number of CPU
 cores will be launched. The source code of the application can be found at
 \url{https://github.com/Soulou/msc-thesis-cpu-burn}.
 
@@ -52,7 +52,7 @@ will be used. As the result are expected to be relative to the hardware their
 should not be any major differences between both, but as a sanity test, it is
 important execute it on two différents contexts
 
-The first one my personal laptop, here are its caracteristics:
+The first one my personal laptop, here are its characteristics:
 
 \begin{itemize}
 	\item{CPU: Intel\textregistered \hspace{1pt} Core\texttrademark
@@ -110,7 +110,7 @@ Four different experiments have been done:
 \begin{itemize}
 \item{4 Processes with equal CPU shares : \newline The tested hosts
 	have a total of 4 cores, normally 4 processes using 1 core each should
-	be able to share it equaly, and each of the process should be able to
+	be able to share it equally, and each of the process should be able to
 	get 100\%
 }
 \item{4 Processes with different CPU shares 128-256-512-1024 : \newline
@@ -153,7 +153,7 @@ in function of the time in seconds.
 \end{figure}
 
 Using 4 processes, the expectations are reached, even if there are some small
-differences between the excution with equal shares and the one without, it is
+differences between the execution with equal shares and the one without, it is
 clear that each service can use one complete core whatever are its CPU shares.
 
 \begin{figure}[h!]
@@ -185,7 +185,7 @@ really different (256, 512, 1024)
 \section{On the virtual machine}
 
 As previously said, the results of this experiment in another environment should
-not be fondamentally different. As the results are relative percentages, the
+not be fundamentally different. As the results are relative percentages, the
 same figures should be found.
 
 \begin{figure}[h!]
@@ -196,8 +196,8 @@ same figures should be found.
 \end{center}
 \end{figure}
 
-When 4 processes are running, the results are not fondamentaly different with
-the privous ones. There are some instability which may be linked to the virtual
+When 4 processes are running, the results are not fundamentally different with
+the previous ones. There are some instability which may be linked to the virtual
 machine environment, but concretely, each process got 100\% of a core.
 
 \begin{figure}[h!]
@@ -260,7 +260,7 @@ priority levels to different applications running on a given host. This is somet
 really important because in the scope of multiuser infrastructure, resources
 should be manageable. The \textbf{cgroups} already allow to set hard limit on memory
 consumption, but the CPU limits are different. The \textbf{cgroup} cpuset has not
-been mentionned in this experiment, it is another solution for CPU resource
+been mentioned in this experiment, it is another solution for CPU resource
 management but it is not integrated in \textbf{docker}. The \textbf{docker} developers
 are currently working on the addition of more resource control features but as the project
 is still quite recent, they are still not implemented.
@@ -270,4 +270,4 @@ than cores, the shares have no effect, but when the relation changes and the num
 processes is increasing, the shares can have an important impact on how an application
 will be able to use the available cores. From a Quality of Service perspective, it allows
 to regulate the processes on a server base, to decrease the "Bad neighbour" effect, when
-one or different processes are slowing down all the othere processes of a host.
+one or different processes are slowing down all the other processes of a host.

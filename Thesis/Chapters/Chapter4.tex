@@ -17,7 +17,7 @@ are always in the same private network.
 This document won't cover how to install Openstack but there are plenty of
 tutorials on the web. Moreover this setup can be done in a public cloud
 infrastructure like Amazon Web Services EC2, there is no difference. We are
-going to use two distincts kind of nodes. The agents execute the
+going to use two distinct kinds of node. The agents execute the
 different web applications, and the controller which is the interface to
 control the complete infrastructure.
 
@@ -47,11 +47,11 @@ owned by root for security reasons, to avoid remote access to the host)
 
 \subsection{Service discovery}
 
-One of the common difficulties in cloud infrastrucure gathering numerous
+One of the common difficulties in cloud infrastructure gathering numerous
 virtual machines is the service discovery. It is possible of course to use a
 configuration manager to generate static configuration on each node which will
 be used by the different services. However this system is static, doesn't scale
-well and is not fault resiliant. That is what it is a bad idea to write
+well and is not fault resilient. That is what it is a bad idea to write
 anything statically when deploying such infrastructure.
 
 The project \textbf{Consul} has been used to achieve the feature. Consul is
@@ -61,16 +61,16 @@ This feature let \textbf{Consul} creates a decentralized cluster of servers.
 When a new node is available, it just needs to communicate with one node,
 whichever it is, to join the complete cluster and get access to the shared
 resources. On the second hand, the process is using a consensus algorithm to
-elect a leader node on the cluster, which has the responsability to keep the
+elect a leader node on the cluster, which has the responsibility to keep the
 data consistent. Write operations have to be validated by the leader node, then
 spread to the rest of the servers. If the leader node crashes, another node is
 automatically elected by the others nodes.
 
-\textbf{Consul} main usage is service discovery, so each node is regitering its
+\textbf{Consul} main usage is service discovery, so each node is registering its
 running services to consul which will spread the information among the whole
 cluster. That is how services get to know each other.
 
-The application is developped using the \textbf{Go} programming language, so
+The application is developed using the \textbf{Go} programming language, so
 the installation is trivial. To achieve the installation, whatever is the
 operating system, downloading the binary from the website
 \url{http://www.consul.io/downloads.html} and executing it enough.  The
@@ -79,7 +79,7 @@ have to be defined in \textbf{Consul} configuration directory.
 
 \subsection{Balancer agent}
 
-On each server which has to exectute the web applications, the installation
+On each server which has to execute the web applications, the installation
 of the balancer agent is required. It is a HTTP server written using python3.
 The source code can be found on GitHub
 \footnote{\url{https://github.com/Soulou/msc-thesis-container-balancer-agent}}. The
@@ -105,7 +105,7 @@ sudo -E python agent.py
 
 The server has two distinct roles. The first one is to execute instructions
 coming from a controller, the interface is an HTTP API. You can find its
-documentation in the Annexe A: ~\nameref{app:agent-api}
+documentation in the Appendix A: ~\nameref{app:agent-api}
 
 The other role of the agent is to achieve real time monitoring of the
 server itself and of each container running on it. Different threads
@@ -123,7 +123,7 @@ the current information about the CPU usage, the interruptions and the
 processes. However those data are cumulative. So each second the data are
 fetched, and compared to the CPU usage of the previous second. The data are un
 \textit{User Hz}, this unit represent a tick in the user space, 100 of them are
-generated per second, so the value shown in this file are close to hundreths of
+generated per second, so the value shown in this file are close to hundredths of
 second.} \item{Memory: This value is easier to access, the kernel provides
 \texttt{/proc/meminfo} which contains the real time data usage. There is no
 extra work to do in order to the clean pieces of information.} \item{Network
@@ -150,14 +150,14 @@ container, it is enough to read
 \textit{/sys/fs/cgroup/memory/docker/:container\_id/memory.usage\_in\_bytes} to get
 the interesting piece of information.}}
 \item{Network I/O: It is a bit more difficult to monitor the network usage of a container,
-as the resource management mecanisms is not part of the cgroup, it is another feature
+as the resource management mechanisms is not part of the cgroup, it is another feature
 of the Linux Kernel called "network namespace". In order to get access to it, different
 steps are required.
 \begin{enumerate}
 \item{Find the PID of a process in the monitored container by looking in \texttt{/sys/fs/cgroup/:cgroup/docker/:container\_id/tasks}}
 \item{Access the network namespace file located in \texttt{/proc/:pid/net/ns}}
 \item{Create a link of this namespace to \texttt{/var/run/netns/:container\_id}}
-\item{Use IP command to get stats fron the desired namespace \texttt{ip netns exec :container\_id netstat -i}}
+\item{Use IP command to get stats from the desired namespace \texttt{ip netns exec :container\_id netstat -i}}
 \end{enumerate}}
 \end{itemize}
 
@@ -182,7 +182,7 @@ of them can contain a variable amount of containers hosted on the different agen
 
 Moreover, it updates dynamically the routing tables of the different services
 running on the infrastructure. If a service called "service-test" owns two containers,
-the incoming requests will be routed to both of thoses containers by following a
+the incoming requests will be routed to both of those containers by following a
 round-robin algorithm. (C1 - C2 - C1 - C2 - ...).
 
 \textbf{Hipache}\footnote{\url{https://github.com/dotcloud/hipache}} is used as
@@ -196,7 +196,7 @@ asynchronously written to the disk. So when the controller sends request to
 start or stop a container, it also connects to a \textbf{redis} instance to
 update hipache configuration.
 
-The controller also exposes a HTTP API which is described in the Annexe
+The controller also exposes a HTTP API which is described in the Appendix
 B~\nameref{app:controller-api} Part of this API is only a proxy to the agents
 endpoint, in order to gather all the data to only one location, and  on the
 other side, there are the active actions, linked to container scheduling on the
@@ -212,7 +212,7 @@ python3 controller.py --strategy random
 \end{lstlisting}
 
 In the previous example, the new containers will be placed randomly on the different
-vailable nodes. Others strategy are available:
+available nodes. Others strategy are available:
 
 \begin{itemize}
 \item{random: Choose randomly a node}
@@ -232,7 +232,7 @@ vailable nodes. Others strategy are available:
 The balancer client, is a command line tool to command the controller, it
 shows in a human-understandable way, the JSON results the controller and allows
 a user to execute requests easily. Its documentation can be found in the
-Annexe C: "~\nameref{app:client-doc}".
+Appendix C: "~\nameref{app:client-doc}".
 
 \footnote{\url{https://github.com/Soulou/msc-thesis-container-balancer-client}}
 
@@ -243,7 +243,7 @@ infrastructure.  More and more configuration managers (CM) are released those da
 answer the increasing needs to deploy applications in volatiles infrastructure,
 composed of temporary virtual machines. To setup all the different pieces of
 this infrastructure, \textbf{Ansible} has been used. There are two main models
-of CMs, thos centralized around a server, like \textbf{Chef Server} or \textbf{Puppet},
+of CMs, those centralized around a server, like \textbf{Chef Server} or \textbf{Puppet},
 where the nodes synchronize themselves with this server. The devops do not connect
 directly to the nodes but give instructions to the central server. The second
 category are those who are run from a devops workstation, like \textbf{Chef Solo},
@@ -255,7 +255,7 @@ All the mecanisms of deployment can be found on following \textit{GitHub} page:
 \url{https://github.com/Soulou/msc-thesis-cloud-builder}. The script requires
 that \textbf{Openstack} credentials are stored in environment variables. (
 \texttt{OS\_USERNAME, OS\_TENANT\_NAME, OS\_PASSWORD, OS\_AUTH\_URL,
-OS\_REGION\_NAME}). Then it uses the API to instanciates VMs, and then deploy
+OS\_REGION\_NAME}). Then it uses the API to instantiates VMs, and then deploy
 all the services on them using ansible \footnote{Ansible configuration:
 \url{https://github.com/Soulou/msc-thesis-cloud-builder/tree/master/ansible}}.
 

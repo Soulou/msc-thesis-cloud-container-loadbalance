@@ -24,11 +24,11 @@ sending the corresponding instructions to their respective kernel.
 
 This is a completely different approach to process isolation compare to
 classical virtual machines. Where hypervisors and VM have been following the
-paradigm where everything is virtualised, creating overhead and slower
+paradigm where everything is virtualized, creating overhead and slower
 performance, then we look at optimising by accessing hardware in order to
 reduce binary translations and other slow operations. The main idea for
 containers is, based on the host operating system, only the required
-devices/features will be virtualised, and finally the level of performance is
+devices/features will be virtualized, and finally the level of performance is
 close to native efficiency.
 
 \begin{figure}
@@ -49,9 +49,9 @@ catchword is "Build once, run everywhere", but this is only a half truth.
 The project has been created as a REST-ish API server, using LXC tools to
 manage the containers themselves, however LXC is, as its name shows (LinuX
 Container) specific to Linux-based operating system, at that time it was even
-more restrected, \textbf{docker} was only working on Ubuntu Linux amd64. This
+more restricted, \textbf{docker} was only working on Ubuntu Linux amd64. This
 is why the "run anywhere" was a bit biased at that time. One year later, the
-project has abandonned LXC to create their own library named
+project has abandoned LXC to create their own library named
 \textit{libcontainer}, which is able to run on mostly any Linux. In the future,
 the project leaders want docker to be able to run on any kind of
 containerization system : BSD Jails, Solaris Zones, and Linux Containers, to
@@ -72,9 +72,9 @@ handle.
 
 \textbf{Docker} also use copy on write filesystems, it means that if different
 applications are using the same base files, they only need to be present once.
-The precise caracteristic let users create containers in milliseconds.
+The precise characteristic let users create containers in milliseconds.
 
-Currently, thanks to \textbf{Docker inc.} containers are really fashinoable,
+Currently, thanks to \textbf{Docker inc.} containers are really fashionable,
 every tech companies is looking at them and their evolution and more and more
 people try to get rid of heavy virtual machines, because even if containers do
 not have all the features of virtual machines, they are good enough in a lot of
@@ -88,14 +88,14 @@ infrastructure, and the hosting of their services. The phenomena happens for
 various reasons. A company infrastructure has to be robust, and available most
 of the time. Nowadays, unavailability means important losses of money. As
 hosting is a craft by itself, most of the companies do not have enough fund to
-invest in a dedicated IT department, so they have to externalize thoses
+invest in a dedicated IT department, so they have to externalize these
 processes.
 
 The amount of resource providers, whether it is an application (Software as a
 Service - SaaS), a platform (Platform as a Service - PaaS), or an
 infrastructure (Infrastructure as a Service - IaaS), is increasing heavily,
 because for the final users, it is cheaper than doing it themselves, and it is
-easy to use, the internal mecanisms are abstracted.
+easy to use, the internal mechanisms are abstracted.
 
 Those providers have all the same problems: what is the best way to setup a
 multi-tenant architecture which is secure enough and fast enough. "Containers"
@@ -104,7 +104,7 @@ thousands of MongoDB databases. Data is something critical for any company, so
 \textbf{MongoLab} needs tot isolate each instance of MongoDB from each other.
 We can assume that most of the databases they are hosting don't have a really high
 traffic. Having a virtual machine for each of those instances is clearly something
-oversized and would result on high provisionning overhead (duration of virtual
+oversized and would result on high provisioning overhead (duration of virtual
 machine boot), storage overhead (1 full operating system per instance), etc.
 This company is using containers because, it allows them to isolate the databases,
 to provision them instantly, and the files required to run MongoDB are
@@ -146,23 +146,23 @@ connection.
 
 These last 5 years, more and more of the web services have been written based
 on some or all the principles of the REST method which declares as "best
-practice" to create complete stateless applications. Additionaly, another
+practice" to create complete stateless applications. Additionally, another
 manifesto, the \cite{website12Factors} has become a standard set of good
 practices for web development (website and web services)
 
 The main advantage of stateless services is that they are able to scale
-horizontaly easily: the first step is to spawn new instances of the service,
+horizontally easily: the first step is to spawn new instances of the service,
 and then modify the routing table of a frontal reverse-proxy. As a result the
 requests will be distributed among all the instances.
 
 \section{Application balancing on the infrastructure}
 
 When a web application has to be moved from one host to another, there should
-be no unavailable time and the current requests have to stopped gracefuly. To
+be no unavailable time and the current requests have to stopped gracefully. To
 solve the first issue, the following walkthrough has to be followed:
 
 \begin{enumerate}
-	\item{Create a new instance of the application - Instanciate a new
+	\item{Create a new instance of the application - Instantiate a new
 	container of a web application}
 	\item{Wait until the instance is available - TCP ping the application
 	until a connection is established}
@@ -196,19 +196,19 @@ infrastructure.  There are three potential outcome from this operation. The
 first is, that the current number of hosts is sufficient, so the containers are
 dispatched on them to get a balance of resource consumption. The second
 possibility is that all the hosts are completely busy. In this case some new
-servers should be provisionned. (Through a IaaS API, or more simply by sending
+servers should be provisioned. (Through a IaaS API, or more simply by sending
 an email to the infrastructure manager who will have to deal with the
 situation) The last case is when the hosts are not required anymore because
 there the applications can be packed on less nodes that before. There are
 different behavior which are possible in order to spare electricity and/or
 money. If the hosts are VMs, they can be shutdown, if they are physical
-servers, they could be suspended (If a mecanism like WakeOnLan is enabled to
-wake them when they are required again) for example, these operationnal pieces
+servers, they could be suspended (If a mechanism like WakeOnLan is enabled to
+wake them when they are required again) for example, these operational pieces
 information are not in our scope.
 
 \subsection{Resource Allocation}
 
-Whan a new application has to start on the cluster, a container has to be
+When a new application has to start on the cluster, a container has to be
 created.  At that step, it is required to find the best server to host this
 newly spawned application
 

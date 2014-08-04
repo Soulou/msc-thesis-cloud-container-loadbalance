@@ -15,7 +15,7 @@ this metric will not be measured in the following experiments.
 
 The first service which has been used during the experiments is an application which
 is calculating $N$ elements of the Fibonacci suite\footnote{\textbf{Docker}
-image: \texttt{soulou/msc-thesis-fibo-http-service}}. This weh application has
+image: \texttt{soulou/msc-thesis-fibo-http-service}}. This web application has
 only one endpoint: \texttt{GET /:n}, which returns the $N^{th}$ items, of the
 Fibonacci sequence. This application only consumes CPU, the memory footprint is
 really negligible.
@@ -28,7 +28,7 @@ instance, \texttt{GET /10/100} will consume precisely 10MB for a duration of
 0.1s. Thanks to this application, we can measure precisely how much should
 consume the application with a load of $N$ requests per second of a certain
 amount of memory during a precise timelapse.
-The memory is allocated and initilized. As a ressult, even if we are requesting
+The memory is allocated and initialized. As a result, even if we are requesting
 amount of memory, it also generates an important CPU load in the loops for memory
 application.
 
@@ -50,13 +50,13 @@ the real impact of a given algorithm may be more difficult to do.
 
 \subsection{Tools}
 
-To generate web trafic, HTTP requests generators are required. Historically,
+To generate web traffic, HTTP requests generators are required. Historically,
 the most used tool is part of the \textbf{Apache} web server tools, and is
 called Apache Bench \textit{Command line name: ab}, released under the open-source
-\textit{Apache Licence}. This utils is not really
-used anymore because it is single-threaded which is a very limitating parameter.
+\textit{Apache Licence}. This utility is not really
+used anymore because it is single-threaded which is a very limiting parameter.
 Only one CPU core is used, it may not be enough to saturate a target and get a
-correct measure of the performance, if the measuring tool is limitating.
+correct measure of the performance, if the measuring tool is limiting.
 
 The tool which has been mostly used in the scope of this work is named
 \textbf{wrk}\footnote{\url{https://github.com/wg/wrk}}. This is a benchmark
@@ -102,7 +102,7 @@ In this infrastructure there are two different cases which can be distinguished:
 the number of incoming requests, and what is the memory footprint of the new process}
 \item{The new container is from an existing service: in this case, the CPU consumption
 and memory usage can be estimated by looking the other containers of a similar service.
-For insntace, if two containers of \texttt{service1} are running using both 20\% of CPU,
+For instance, if two containers of \texttt{service1} are running using both 20\% of CPU,
 it is probably true that the consumption of the new container will be capped at 20\%}
 \end{itemize}
 
