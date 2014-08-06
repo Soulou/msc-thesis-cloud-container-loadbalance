@@ -3,5 +3,5 @@ all: Thesis.tex
 	pdflatex $^
 
 clean:
-	rm *.log *.aux *.blg *.lof *.lot *.toc *.out
+	rm *.log *.aux *.blg *.lof *.lot *.toc *.out *.bbl
 

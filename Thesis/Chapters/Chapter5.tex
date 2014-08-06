@@ -75,17 +75,59 @@ This example will send 10 requests concurrently during 1 minute using two thread
 So we are sure that the targeted URL will receive a maximum of 10 request at a
 given time.
 
+One reproach which can be made to this tool is that it doesn't adjust the
+number of threads automatically. By default, two threads are used, but if we
+need more parallel connections, the user has to define it by hand. But is most
+of the case, giving a thread per core on the underlying computer is the
+best practice.
+
 \subsection{Different kinds of load}
 
-Combining \textbf{wrk} and the memory allocation HTTP service, we can simulate
-different kinds of load and different kinds of application. 
+Combining \textbf{wrk} and the two previously defined web application, different
+kinds of load can be generated. Thanks to the "memory" HTTP service, it is even
+possible to emulate different kinds of application.
 
 In some cases, web applications are micro-services and their job is to do a small
 particular task. Commonly, requests are really quick and the treatment of each of
 them has a low memory footprint. However as those HTTP requests may be numerous,
 the overall processor and memory usage can be important.
 
- 
+In out infrastructure, one container of such a service may be represented by instances
+of the memory services with requests using a few megabytes of memory, are done
+really quickly: \texttt{http://micro-service.thesis.dev/5/100}. All the requests to this
+endpoint are compliant with the previous constraints. The following data show how 
+such application behave in an environment where they don't have to share resources\footnote{All the measure
+have been done 5 times, and the given result is  the average}:
+
+\begin{itemize}
+	\item{One instance: \newline
+	\texttt{wrk -c 20 'http://memory-service.thesis.dev/5/100'} - 82.05req/s - CPU 106\%, 24MB \newline
+	\texttt{wrk -c 40 'http://memory-service.thesis.dev/5/100'} - 93.74req/s - CPU 112\%, 22MB \newline
+	There is no big difference when running 20 or 40 connections in parallel, so we can assume that we have
+	reached the maximum capacity of the instance. As announced previously, the memory usage is really low, but
+	the application is using one complete core.\vspace{1em}}
+	\item{Two instances on two different hosts: \newline
+	\texttt{wrk -c 20 'http://memory-service.thesis.dev/5/100'} - 123.23req/s - CPU 109\% | 80\%, 15MB | 14MB \newline
+	\texttt{wrk -c 40 'http://memory-service.thesis.dev/5/100'} - 165.77req/s - CPU 117\% | 97\%, 17MB | 31MB \newline
+	The exepectations were that two instances would be able to execute twice the number of requests compared to
+	the previous case. With 20 connections, it is not the case, but with 40, the service has been able to execute
+	165 requests per second, which is more or less the double as previously. 20 connections was not enough. This
+	lack can be seen by the fact that the CPU usage of one of the instances is not one complete core but 80\%.}
+	\item{Two instances on the same host: \newline
+	\texttt{wrk -c 20 'http://memory-service.thesis.dev/5/100'} - 101.11req/s - CPU 97\% | 98\%, 17MB | 18MB \newline
+	\texttt{wrk -c 40 'http://memory-service.thesis.dev/5/100'} - 127.77req/s - CPU 115\% | 117\%, 18MB | 17MB \newline
+	The instances have 2 vCPUs, so theoretically two instances of a same service on one node should be able to run
+	at maximumal performance, but in practice, the results are not as good, a ratio of 1.5 has been reached using
+	40 parallel connections. This is a perfect illustration of a "bad neighbour" situation, the performance of
+	each container is jeopardized by the other instance. That is something which can be (at least partially) solved
+	with scheduling algorithms, to avoid as much as possible this case.}
+\end{itemize}
+
+Note: The values of CPU usage are often above 100\% when an application is
+using on core.  The amount of \textit{User HZ} is read every second, so it may
+be an inacurracy of this timer, or it may be that the time used by the kernel
+to schedule processes is taken into account. As a result, the process uses
+100\% and the kernel uses some CPU time on another core.
 
 \section{Online bin packing algorithms}
 
@@ -106,6 +148,7 @@ For instance, if two containers of \texttt{service1} are running using both 20\%
 it is probably true that the consumption of the new container will be capped at 20\%}
 \end{itemize}
 
+In the first case, it
 
 \begin{verbatim}
 

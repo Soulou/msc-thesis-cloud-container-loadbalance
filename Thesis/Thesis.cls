@@ -125,7 +125,7 @@
 \usepackage{booktabs}
 \usepackage{rotating}
 \usepackage{listings}
-\usepackage{natbib}
+\usepackage[sort, numbers]{natbib}
 \usepackage{color}
 
 \definecolor{lightgray}{rgb}{.9,.9,.9}
@@ -313,31 +313,6 @@
   \cleardoublepage
 }
 
-\newenvironment{abstract}
-{
-  \btypeout{Abstract Page}
-  \thispagestyle{empty}
-  \null\vfil
-  \begin{center}
-    \setlength{\parskip}{0pt}
-    {\normalsize \UNIVNAME \par}
-    \bigskip
-    {\huge{\textit{Abstract}} \par}
-    \bigskip
-    {\normalsize \deptname \par}
-    \bigskip
-    {\normalsize Doctor of Philosophy\par}
-    \bigskip
-    {\normalsize\bf \@title \par}
-    \medskip
-    {\normalsize by \authornames \par}
-    \bigskip
-  \end{center}
-}
-{
-  \vfil\vfil\vfil\null
-  \cleardoublepage
-}
 \addtocounter{secnumdepth}{1}
 \setcounter{tocdepth}{6}
 \newcounter{dummy}

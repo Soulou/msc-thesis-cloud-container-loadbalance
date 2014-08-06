@@ -1,7 +1,37 @@
 \section*{Introduction}
 
-An interesting definition of the Cloud Computing has
-been written by the National Institute of Standards and Technology~\citep*{nistcloudcomputing}:
+The focus of this thesis concerns resource allocation. The optimization of the
+tasks distribution is a common problem to every person who has to scale
+softwares in a distributed setting such as a cloud environment. What is the
+best distribution for the set of applications we need to deploy. People are
+looking for the best ratio performance over cost. In this work, we are going to
+design a experimental infrastructure which can be considered as an
+``enterprise'' infrastructure.
+
+Then, in a second step, we are going to perform experiments over this
+infrastructure to evaluate the efficiency of resource allocations algorithms
+and different heuristics. Finally, the aim of this work is to be able to an
+overview of what is possible and to give some recommendations concerning good
+practices and interesting algorithms to use in a real world situation.
+
+This ten last years, the hardware of servers has been keeping improving year
+after year, especially processors, which have been improved at doing operations
+simultaneously. Infrastructure owners had to create ways to split those
+resources securely, in order to be used by several isolated people.  From this
+need, the concept of virtualization~\cite{virtualisation}
+allows to split servers into isolated sub-servers, sharing the resource of a
+common physical machine.
+
+\textbf{Amazon Web Service} has started to commercialize their service of
+on-demand virtual servers name \textbf{Elastic Compute Cloud} in 2006. It
+has been the first actor of a large market which has been built since. Based on
+the concept of ``pay as you go'', their customers have been able to adapt in real time
+their infrastructure consumption, so directly the money they are spending.
+
+Companies have been more and more attracted by those \textit{clouds} to move
+their applications and their data, and reduce their operating costs. An
+interesting definition of the Cloud Computing has been written by the National
+Institute of Standards and Technology~\citep*{nistcloudcomputing}:
 
 \begin{quote}
 	“Cloud computing is a model for enabling ubiquitous, convenient, on-demand
@@ -11,55 +41,50 @@ been written by the National Institute of Standards and Technology~\citep*{nistc
 	interaction.”
 \end{quote}
 
-Different kind of clouds are specified, if Amazon Web Services provides
-services which are part of a “public” cloud, this is not the only way to use a
-cloud infrastructure: private cloud or hybrid clouds mixing private and public
-cloud infrastructures are being developed more and more. Thanks to open-source
-projects like~\cite{websiteOpenstack}, cloud environments can be installed on
-private infrastructures. This is sometimes necessary or requested for security,
-performance or data control purposes.
-
-The evolution of the paradigm of cloud computing has been made possible thanks
-to different technologies. The virtualisation, as explained
-by~\cite*{virtualisation} allows servers to be splitted in different
-sub-components, isolated from each other, sharing the resources of the physical
-machine.
-
 Technologies have been developed to give people much more flexibility in the
 way to manage their applications, their products. Virtual machines got live
-migration, a process which is detailed in the work of~\cite*{livemigration}.
-The feature has been built to move instances from one physical host to another without
-interrupting the activity of anything running in the virtual machine. The
-memory is kept intact of course, but also the running connections. The instance
-may seem frozen for a few second when the migration is finalized, but nothing
-is disrupted.
+migration, a process which is detailed in the work of~\citet*{livemigration}.
+The feature has been built to move instances from one physical host to another
+without interrupting the activity of anything running in the virtual machine.
 
-Virtual machines have been used and studied for a decade now, this work will focus
-on another way to isolate resources on a server: containers. In some way, those are
-lightweight virtual machines. However, instead of having a global focus (virtualization
-of hardware + operating system), they focus at the application level. Containers
-are designed to isolate applications from each other on a similar host. This host
-can be a virtual machine or more directly a physical machine. Already in 2007,
-\cite{containersAsAlternative} have worked on the possibility to use container-based
-virtualization instead of hypervisors and virtual machines as a high-performance
-alternative.
+This thesis doesn't focus on the allocation of virtual machines in a set of
+physical server, but at a higher level, the allocation of application
+containers. Actually, VMs have been used extensively and studied for more than
+a decade now, but this is not the only way to achieve virtualization.
+Containers are considered as lightweight virtual machines. Instead of
+being global (virtualization of hardware and operating system), they
+focus the isolation at the application level.
 
-This technology has been more and more used in the industry these last 3-5
-years, more and more companies are adopting it. It may be to offer services for
-companies like OpenShift (Red Hat), Cloud Foundry, Heroku, MongoLab, etc. or to
-manage the hosting of their own projects: Google, Ebay, Spotify. What kind of
-applications are containerized? Any software is able to run in a container, the
-work done by~\cite{hpccontainers} shows in the field of HPC, containers are
-mature enough to replace virtual machines and get better performance. Recently,
-more and more companies are building their products using the micro services
-architecture~\cite*{microservices}. In this model, a set of loosely coupled
-softwares are communicating together using a communication protocol. The most
-often, the web (HTTP) is used, and those services are sending and receiving
-requests through REST API. One of the main advantages of those applications is
-that they are stateless, as a result, it is much more easy to migrate them.
+Recently, more and more companies are building their products using the. In
+this model, a set of loosely coupled softwares are communicating together using
+a communication protocol. The most often, the web (HTTP) is used, and those
+services are sending and receiving requests through REST API\@. One of the main
+advantages of those applications is that they are stateless, as a result, it is
+much more easy to migrate them.
 
-In this work, the focus will be on those web applications, isolated thanks to
-containers, hosted on virtual machines. How those services can be load balanced and
-how is it possible to keep the load balanced over a cluster a servers, with each
-of them running a different amount of containers. 
+In this work, the focus will be on web applications, isolated thanks to
+containers, hosted on virtual machines. Web applications are the main type of
+server applications, companies are building more and more microservices
+architecture~\cite{microservices} which are commonly build over HTTP\@. How those
+services can be load balanced and how is it possible to keep the resources
+balanced in a cluster, with each server running a different amount of
+containers?
+
+$\Rightarrow$ In the first chapter, a literature review provides a large
+background concerning the motivation behind resource allocation and load
+balancing, showing that a lot of different perspectives have been used by
+researchers these last years. A particular focus is given to bin packing
+algorithms which will be used later in this work. \vspace{5pt} \newline
+$\Rightarrow$ Then the second part provides numerous details about the scope of
+the thesis.  Containerized web applications features and limits are specified.
+\vspace{5pt} \newline $\Rightarrow$ The third part is a preliminary experiment
+to measure the ability to share the CPU cores of a server between containers.
+\vspace{5pt} \newline $\Rightarrow$ The design of the experimental platform in
+a cloud environment is defined in the chapter 4 The different roles of the
+servers are explained, as well as the deployment of the complete software suite
+in another infrastructure.\vspace{5pt} \newline $\Rightarrow$ Finally, the
+last chapter shows different experiments done in the previously identified
+infrastructure and some discussions concerning the use of bin packing
+algorithms.
+
  

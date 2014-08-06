@@ -5,22 +5,37 @@
 \section{Definition}
 
 The technology of the operating system-level virtualization is composed of
-different mecanisms to create isolated environments in the user-space.  Each of
+different mecanisms to create isolated environments in the user-space. Each of
 those environment can gather one or several running applications and has access
 to different resources. Those environment are commonly called containers from
-the tool which popularized them: LXC (LinuX Containers). This technology is 
+the tool which popularized them: LXC (LinuX Containers).
 
-Operating system-level virtualization has been existing for a long time, it
-appeared first in the BSD kernel (1998), where the technology is called
-\textbf{Jails}.  Then, Sun developed Solaris (Sun UNIX operating system)
-\textbf{zones} in 2005, the same year as the \textbf{OpenVZ} implementation for
-the Linux kernel.
+Operating system-level virtualization has been existing for a long time, the
+premises of this technology can be found at the early times of computing in the
+1960s. It wasn't named the same way, but companies like \textbf{IBM} had to
+allow users to split the computing time of a mainframe for example. Different
+operating system weren't started, but processes were strongly isolated inside
+one unique OS.
+
+Operating system-level virtualisation was not common in most infrastructures
+until the nineties where common open-source kernels started to implement
+features related to it. \textbf{Jails} appeared first in the BSD kernel (1998).
+Then, Sun developed Solaris (Sun UNIX operating system) \textbf{zones} in 2005,
+the same year as the \textbf{OpenVZ} implementation for the Linux kernel.
 
 Containers are running over the same operating system as the host system, they
 are sharing the same drivers, but all the processes contained in them are
 limited by this same operating system. The memory consumption, the CPU usage,
 the network and disk IO are monitored and managed by these container engines
 sending the corresponding instructions to their respective kernel. 
+
+This technology has been more and more used in the industry these last 3-5
+years, more and more companies are adopting it. It may be to offer services for
+companies like OpenShift (Red Hat), Cloud Foundry, Heroku, MongoLab, etc. or to
+manage the hosting of their own projects: Google, Ebay, Spotify. What kind of
+applications are containerized? Any software is able to run in a container, the
+work done by~\citet*{hpccontainers} shows in the field of HPC, containers are
+mature enough to replace virtual machines and get better performance.
 
 This is a completely different approach to process isolation compare to
 classical virtual machines. Where hypervisors and VM have been following the
@@ -29,7 +44,9 @@ performance, then we look at optimising by accessing hardware in order to
 reduce binary translations and other slow operations. The main idea for
 containers is, based on the host operating system, only the required
 devices/features will be virtualized, and finally the level of performance is
-close to native efficiency.
+close to native efficiency. Already in 2007, \cite{containersAsAlternative}
+have worked on the possibility to use container-based virtualization instead of
+hypervisors and virtual machines as a high-performance alternative.
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{./Images/containers_vs_vms.png}
@@ -42,7 +59,7 @@ close to native efficiency.
 
 \textbf{Docker} is a recent project. Introduced in May 2013 by the Platform as
 a Service provider \textbf{Dotcloud} with the ambition to create a standard way
-to manage multiplatform containers, \textbf{docker} has rapidely been promoted
+to manage multiplatform containers, \textbf{docker} has rapidly been promoted
 as a mainstream project supported by all the main tech companies.  Their
 catchword is "Build once, run everywhere", but this is only a half truth.
 
@@ -101,7 +118,7 @@ Those providers have all the same problems: what is the best way to setup a
 multi-tenant architecture which is secure enough and fast enough. "Containers"
 is an answer to this issue. For example, the company \textbf{MongoLab} is hosting
 thousands of MongoDB databases. Data is something critical for any company, so
-\textbf{MongoLab} needs tot isolate each instance of MongoDB from each other.
+\textbf{MongoLab} needs to isolate each instance of MongoDB from each other.
 We can assume that most of the databases they are hosting don't have a really high
 traffic. Having a virtual machine for each of those instances is clearly something
 oversized and would result on high provisioning overhead (duration of virtual

@@ -1,5 +1,6 @@
 guard :shell do
   watch(/Appendices\/.*\.tex/) { `pdflatex Thesis.tex </dev/null`}
+  watch(/Others\/.*\.tex/) { `pdflatex Thesis.tex </dev/null`}
   watch(/Chapters\/.*\.tex/) { `pdflatex Thesis.tex </dev/null` }
   watch(/Thesis\.tex/) { `pdflatex Thesis.tex </dev/null` }
   watch(/Thesis\.cls/) { `pdflatex Thesis.tex </dev/null` }

@@ -43,6 +43,11 @@ It is expected that if there are two containers, one with $1024$ cpu shares and
 the other with $2048$ CPU shares, the second container will have access to
 $2048/1024 = 200\%$ of the resources, for a single CPU: $33\%$ and $66\%$.
 
+\subsubsection{Output}
+
+As the input concerns the maximal CPU usage, the output the experiment is going
+to get, each second, the actual consumption of each running container.
+
 \section{Setup}
 
 \subsection{Hosts}

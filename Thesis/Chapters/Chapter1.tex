@@ -21,9 +21,9 @@ interesting concerns the assignment of these applications, what is the optimal
 distributions of the containers among the different servers? It depends of what
 characteristic has to be optimized.
 
-At the scope of the physical server, Thomas Setzer and Alexander Stage base
+At the scope of the physical server, Thomas Setzer and Alexander Stage based
 their study on the statement that energy represents up to 50\% of operating
-costs of an infrastructure~\citep*{reassignmentElectricitysaving}. That's why
+costs of an infrastructure~\cite{reassignmentElectricitysaving}. That's why
 there is a need to optimize it. Using the virtual machine reassignment through
 live migrations, they are looking at consolidating the VMs on the physical
 servers.  Consolidating an infrastructure consists in reducing the number of
@@ -32,7 +32,7 @@ After this operation, useless PMs can be suspended and electricity is saved,
 then when more computational power is required they are resumed dynamically.
 
 In the publication \textit{An adaptive Resource Provisioning for the Cloud
-Using Online Bin Packing}~\citep*{reassignmentBinpacking1}, the authors also
+Using Online Bin Packing}~\cite{reassignmentBinpacking1}, the authors also
 introduce their subject by explaining that it has been estimated that Amazon
 manages more than half a million of physical servers around the world and that
 it must be a priority for them to reduce their expenses by consolidating
@@ -62,7 +62,7 @@ of constraints, in other words: maximizing profits while minimizing costs. In
 scope of resource allocation, it is required to define the different variables,
 the function we want to optimize and the constraints linked to the variables.
 
-In their work,~\cite*{allocationHybrid} are working with linear programming. The aim
+In their work,~\citet*{allocationHybrid} are working with linear programming. The aim
 of their study is to define a way to optimize the number of allocated virtual
 machines splitted in different cloud infrastructures.  Different constraints
 are defined to setup the scope of the function to minimize.
@@ -98,7 +98,7 @@ is considered unlimited so this constraint becomes void).
 
 \vspace{1em}
 
-The work of~\cite*{allocationHeterogeneous}, which
+The work of~\citet{allocationHeterogeneous}, which
 focuses virtual machine resources allocation in heterogeneous
 environment also start by defining a formal
 model based on linear programming. However, as explained in this publication,
@@ -108,11 +108,10 @@ important workload is not feasible.
 
 \vspace{1em}
 
-The work of~\cite*{mathsRrndlp} about linear optimization
-relaxation has been used to simplify the original problem
-and transform it from an exponential complexity to a polynomial complexity. The
-“random rounding” is a probabilistic approach which modifies some of the
-constraints by a weaker one.
+\citet*{mathsRrndlp} have studied the linear optimization relaxation has been
+used to simplify the original problem and transform it from an exponential
+complexity to a polynomial complexity. The “random rounding” is a probabilistic
+approach which modifies some of the constraints by a weaker one.
 
 \begin{figequation}
 	\caption{Application of random rounding}
@@ -144,8 +143,7 @@ considered as “offline”. They consider that we have access to all the items 
 find the optimal packing on the different bins. This problem is a NP-hard
 problem, there is no, to this day, a polynomial way to solve this problem.
 That is why to answer this problem in a reasonable duration, different
-heuristics have to be defined. The most common have been studied
-by~\cite*{mathsBpheuristics}:
+heuristics have to be defined in~\cite*{mathsBpheuristics}:
 
 \vspace{1em}
 \begin{center}
@@ -181,7 +179,7 @@ a set of bin, this is why different algorithms have been developed
 To answer more precisely to the cloud resource allocation problem, some people
 have defined some variants of those two main categories of bin packing
 algorithms. G. Gambosi and A. Postiglione and M. Talamo have developed a
-“relaxed online bin packing” algorithm~\cite*{mathsRelaxedonlinebp}. It may be
+“relaxed online bin packing” algorithm~\cite{mathsRelaxedonlinebp}. It may be
 represent as a mix between online and offline bin packing. When a new item has
 to be packed, it allows an additional limited number of moves among the
 currently packed items.
@@ -217,7 +215,7 @@ in this context too, but often, when an virtual machine has to move the best
 solution is not always to remove it then repack it, but to move others instances
 which are easier to move.
 
-This is why in the publication of~\cite*{reassignmentVisbp}, they decided to
+This is why in the publication of~\citet*{reassignmentVisbp}, they decided to
 build an online bin packing algorithm which suits the virtualisation
 environment: “Variable Item Size Bin Packing”, its characteristics are the
 following.
@@ -279,7 +277,7 @@ analysis.
 
 \subsubsection{Ant colony algorithms}
 
-In~\cite{algoAntcolony1},~\cite{algoAntcolony2} and~\cite{algoAntcolony3}, the ant colony
+In~\cite{algoAntcolony1, algoAntcolony2, algoAntcolony3}, the ant colony
 algorithms are studied. As we can see in the following graph:
 
 \begin{figure}[H]
@@ -385,9 +383,8 @@ support French society)\cite{websiteRoadef}. The contest was focusing the machin
 reassignment problem based on Google workload. Each attendee had to find the
 best solution find solution. Some of them resulted in an official publication
 like “Heuristics and matheuristics for a real-life machine reassignment
-problem” from Ramon Lopes, Vinicius W.C. Morais, Thiago F. Noronha and Vitor
-A.A. Souza\cite{roadefIp}.  They based their work on linear programming.
-However in~\cite{roadefBp1} and~\cite{roadefBp2}, the authors have used
+problem” from \citet*{roadefIp}.  They based their work on linear programming.
+However in~\cite{roadefBp1, roadefBp2}, the authors have used
 around the bin packing algorithms. Unfortunately, the work of the winner has
 not been published so we are not able to see which algorithm has been used to
 achieve the best reassignment.
