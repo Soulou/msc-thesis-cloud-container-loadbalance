@@ -4,19 +4,28 @@
 
 \section{Motivation}
 
-The legitimate question is “Why do people migrate their infrastructure to a
-cloud infrastructure?”. Whether it concerns virtual machines, whether it is linked
-to containers, the answers are multiple, Valentina Salapura explains
-how a virtualized environment improves the resiliency of an
-infrastructure~\citep*{virtresiliency}. More precisely, when a service requires
-to be scalable, highly available and fault tolerant, using cloud technologies
-is essential. In the case of disaster recovery scenarios, they are highly
-simplified and cheaper thanks to those environments.
+Cloud computing is currently a major thread trend in the IT culture, companies
+are more and more using cloud infrastructure, even if their reasons are still
+blurred and have been strongly altered by a skilled salesperson. However, behind
+this marketing layer there are some concrete technological evolutions and
+advantages.
 
-As a result the infrastructures are composed of a certain amount of physical
-machines (PMs) which could be dispatched among different data centers, and each
-of these PMs, contains a variable number of virtual machines (VMs), then each
-of them hosts a set of containerized applications. The problematic which is now
+The legitimate question is “Why should people use cloud services? ”. Whether
+it concerns virtual machines, whether it is linked to containers, the answers
+are multiple. Valentina Salapura explains how a virtualized environment
+improves the resiliency of an infrastructure~\cite{virtresiliency}.
+As cloud infrastructure should be highly available and fault tolerant, in order
+to provide a high-quality SLA (Service Level Agreement) and attract customers,
+the overall quality of the hosting is in most of the case better that what can
+ben done by the customers directly. It is not their job, they don't have as
+much knowleldge as the provider which is specialized in this field.
+
+Behind the user perspective, from the provider point of view, they own the
+infrastructure and have to allocate resources from it for their customers.  It
+is composed of a certain amount of physical machines (PMs) which could be
+dispatched among different data centers, and each of these PMs, contains a
+variable number of virtual machines (VMs), then is the \textbf{PaaS}, each of
+them are running a set containerized applications. The problematic which is now
 interesting concerns the assignment of these applications, what is the optimal
 distributions of the containers among the different servers? It depends of what
 characteristic has to be optimized.
@@ -32,7 +41,7 @@ After this operation, useless PMs can be suspended and electricity is saved,
 then when more computational power is required they are resumed dynamically.
 
 In the publication \textit{An adaptive Resource Provisioning for the Cloud
-Using Online Bin Packing}~\cite{reassignmentBinpacking1}, the authors also
+Using Online Bin Packing}~\cite{reassignmentVisbp}, the authors also
 introduce their subject by explaining that it has been estimated that Amazon
 manages more than half a million of physical servers around the world and that
 it must be a priority for them to reduce their expenses by consolidating
@@ -46,12 +55,28 @@ on the level of performance directly.
 
 \section{Algorithms}
 
-We have seen that cloud computing is a hot topic in the Internet industry
-which results in a lot of new problematics in computer science. The resource
+We have seen that cloud computing is a hot topic in the Internet industry which
+results in a lot of new problematics in computer science. The resource
 allocation problem is one of them. All over the world, universities have
 started studying different approaches of allocation optimisation. The different
-algorithms listed in this document gather publications around the virtual machine
-assignment and reassignment on a set of physical machines.
+algorithms listed in this document gather publications around the virtual
+machine assignment and reassignment on a set of physical machines.
+
+Whatever is the kind of process used to solve this problem, the goal is always
+the identical. Given a set of resources with a given capacity, how to choose
+the best position for a task which has to consume those resources.
+
+In the first part, a general solution method is studied. Using Linear
+Programming, we are able to get the optimized result. However as this problem
+is NP-hard, it is not possible to use Linear Programming anymore when the
+amount of objects or the number of resources are getting big. This is why we
+have to use heuristics.  Heuristics decrease the quality of the results, but
+allow the computation to be executed much more fastly.
+
+Among those heuristic algorithms, we are going to have a special focus on the
+bin packing heuristics which are the methods used later in this thesis.  An
+overview of other methods like the Ant Colony heuristics, or network flows
+based algorithms will be proposed.
 
 \subsection{Linear Programming}
 
