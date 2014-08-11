@@ -131,7 +131,7 @@ only present once on their servers. (physical or virtual).
 
 Containers are not able to live-migrate from one host to another with a
 standard linux kernel yet. This feature is possible with a OpenVZ patched
-kernel because thoses patches implement the checkpoint/restore operations for
+kernel because those patches implement the checkpoint/restore operations for
 the containers, but for a vanilla Linux kernel, it does not exist yet. Some
 developers/hackers are trying to clean the code of OpenVZ and push the features
 to the mainstream kernel with the \cite{websiteCRIU} project, but so far the
@@ -172,7 +172,7 @@ horizontally easily: the first step is to spawn new instances of the service,
 and then modify the routing table of a frontal reverse-proxy. As a result the
 requests will be distributed among all the instances.
 
-\section{Application balancing on the infrastructure}
+\section{Application balancing in the infrastructure}
 
 When a web application has to be moved from one host to another, there should
 be no unavailable time and the current requests have to stopped gracefully. To
@@ -195,7 +195,7 @@ Dotcloud at the PaaS level), SIGTERM is sent, then the application has some
 time to shutdown. In the case where the application is still running a while
 after receiving the signal, SIGKILL is sent to get rid of the process.
 
-\section{Operation on containers}
+\section{Operations on containers}
 
 \subsection{Load balancing}
 

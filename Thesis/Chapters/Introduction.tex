@@ -1,4 +1,5 @@
-\section*{Introduction}
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
 \lhead{\emph{Introduction}}
 
 The focus of this thesis concerns resource allocation. The optimization of the
@@ -6,34 +7,33 @@ tasks distribution is a common problem to every person who has to scale
 softwares in a distributed setting such as a cloud environment. What is the
 best distribution for the set of applications we need to deploy. People are
 looking for the best ratio performance over cost. In this work, we are going to
-design a experimental infrastructure which can be considered as an
+design an experimental infrastructure which can be considered as an
 ``enterprise'' infrastructure.
 
-Then, in a second step, we are going to perform experiments over this
-infrastructure to evaluate the efficiency of resource allocations algorithms
-and different heuristics. Finally, the aim of this work is to be able to an
-overview of what is possible and to give some recommendations concerning good
-practices and interesting algorithms to use in a real world situation.
+The final goal is to have a convenient platform to perform experiments in order
+to evaluate the efficiency of resource allocations algorithms using different
+heuristics. The aim of this work is to be able to have an overview of what is
+possible and to give some recommendations concerning good practices and
+interesting algorithms to use in a real world situation.
 
 This ten last years, the hardware of servers has been keeping improving year
-after year, especially processors, which have been improved at doing operations
-simultaneously. Infrastructure owners had to create ways to split those
-resources securely, in order to be used by several isolated people.  From this
-need, the concept of virtualization~\cite{virtualisation}
-allows to split servers into isolated sub-servers, sharing the resource of a
-common physical machine.
+after year, especially processors. They have been improved at doing operations
+simultaneously. Infrastructure owners have been struggling to create ways to
+split those resources securely and efficiently, in order to be used by several
+isolated customers. To answer this need, technologies related to the concept of
+virtualization~\cite{virtualisation} have been created, to allow to split
+servers into isolated sub-servers, sharing resources from a common host.
 
 \textbf{Amazon Web Service} has started to commercialize their service of
-on-demand virtual servers name \textbf{Elastic Compute Cloud} in 2006. It
-has been the first actor of a large market which has been built since. Based on
-the concept of ``pay as you go'', their customers have been able to adapt in real time
-their infrastructure consumption, so directly the money they are spending.
+on-demand virtual servers named \textbf{Elastic Compute Cloud} in 2006. It was
+the first actor of a large market, which has grown hugely since. Based on the
+concept of ``pay as you go'', their customers have been able to adapt, in real
+time, their infrastructure consumption, impacting directly the money they are
+spending. This attraction gave birth to the first clouds service like
+\textbf{Dropbox} which was first based on Amazon infrastructure.
 
-Companies have been more and more attracted by those \textit{clouds} to move
-their applications and their data, and reduce their operating costs. An
-interesting definition of the Cloud Computing has been written by the National
-Institute of Standards and Technology~\citep*{nistcloudcomputing}:
-
+An interesting definition of the Cloud Computing has been written by the
+National Institute of Standards and Technology~\citep*{nistcloudcomputing}:
 \begin{quote}
 	“Cloud computing is a model for enabling ubiquitous, convenient, on-demand
 	network access to a shared pool of configurable computing resources (e.g.,
@@ -42,49 +42,43 @@ Institute of Standards and Technology~\citep*{nistcloudcomputing}:
 	interaction.”
 \end{quote}
 
-Technologies have been developed to give people much more flexibility in the
-way to manage their applications, their products. Virtual machines got live
-migration, a process which is detailed in the work of~\citet*{livemigration}.
-The feature has been built to move instances from one physical host to another
-without interrupting the activity of anything running in the virtual machine.
-
 This thesis doesn't focus on the allocation of virtual machines in a set of
 physical server, but at a higher level, the allocation of application
 containers. Actually, VMs have been used extensively and studied for more than
 a decade now, but this is not the only way to achieve virtualization.
-Containers are considered as lightweight virtual machines. Instead of
-being global (virtualization of hardware and operating system), they
-focus the isolation at the application level.
+Containers are considered as lightweight virtual machines. Instead of being
+global (virtualization of hardware and operating system), they focus on the
+isolation at the application level. This method is getting more and more
+attraction: companies have started requesting infrastructure based on
+it~\cite{dockerOverVMWare}.
 
-Recently, more and more companies are building their products using the. In
-this model, a set of loosely coupled softwares are communicating together using
-a communication protocol. The most often, the web (HTTP) is used, and those
-services are sending and receiving requests through REST API\@. One of the main
-advantages of those applications is that they are stateless, as a result, it is
-much more easy to migrate them.
+When using containers, it is a common practice to split its product into
+a set of loosely coupled softwares, which are communicating together using
+a common communication protocol. The most often, the web (HTTP) is used, and those
+services are sending and receiving requests through HTTP APIs\@. One of the main
+advantages of those applications is that they are stateless. As a result, it is
+much more easy to move them from one server to another, this is why this thesis
+will focus on these particular softwares.
 
-In this work, the focus will be on web applications, isolated thanks to
-containers, hosted on virtual machines. Web applications are the main type of
-server applications, companies are building more and more microservices
-architecture~\cite{microservices} which are commonly build over HTTP\@. How those
-services can be load balanced and how is it possible to keep the resources
-balanced in a cluster, with each server running a different amount of
-containers?
+The main question which will be answered is: how those services can be managed
+when they are containerized and how is it possible to apply resource allocation
+methods in a concrete infrastructure to manage all the containers and their
+resource consumption?
 
 $\Rightarrow$ In the first chapter, a literature review provides a large
 background concerning the motivation behind resource allocation and load
 balancing, showing that a lot of different perspectives have been used by
 researchers these last years. A particular focus is given to bin packing
 algorithms which will be used later in this work. \vspace{5pt} \newline
-$\Rightarrow$ Then the second part provides numerous details about the scope of
-the thesis.  Containerized web applications features and limits are specified.
+$\Rightarrow$ Then, the second part provides numerous details about the scope of
+the thesis. Containerized web applications features and limits are covered.
 \vspace{5pt} \newline $\Rightarrow$ The third part is a preliminary experiment
 to measure the ability to share the CPU cores of a server between containers.
 \vspace{5pt} \newline $\Rightarrow$ The design of the experimental platform in
-a cloud environment is defined in the chapter 4 The different roles of the
+a cloud environment is defined in the chapter 4. The different roles of the
 servers are explained, as well as the deployment of the complete software suite
 in another infrastructure.\vspace{5pt} \newline $\Rightarrow$ Finally, the
-last chapter shows different experiments done in the previously identified
+last chapter shows different experiments done in the previously created
 infrastructure and some discussions concerning the use of bin packing
 algorithms.
 
