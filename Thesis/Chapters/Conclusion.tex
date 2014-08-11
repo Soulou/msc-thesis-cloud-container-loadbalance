@@ -1,11 +1,53 @@
+\clearpage
 \section*{Conclusion}
+\lhead{\emph{Conclusion}}
 
-An particular effort has been made to make this work reproducible.
-All the tools are open-source softwares and protocols standard.
-Thanks to \textbf{Ansible} the environment should be easy
-to deploy on any infrastructure, physical, virtual or hybrid. 
-Even if the obtained results in another deployment of the platform
-would be slightly different, it should follow the same trends as
-those obtained in this thesis.
+The purpose of this work has been to show how containers are a new efficient
+way to isolate and deploy web applications. Then, we have seen that is it
+possible apply limitation and quotas to limit how a container behaves. The next
+step has been to design a software platform, aiming at deploying containers
+easily into a cloud environment, but also to be able to move them between all
+the available nodes. Furthermore this set of server appplications are gathering
+real time metrics about the running containers and servers. With these data,
+bin packing algorithms have been made possible and the last chapter of this
+thesis has shown different experiments concerning the different way to use them
+to allocate resource, consolidate the infrastructure or balance the load of the
+servers.
+\vspace{1em}
 
+The developed platform has shown that it is able to manage efficiently
+containerized web applications. This feature has lead to interesting results
+concerning resource allocation. When a new container has to be run, we have
+seen that a mix of simple bin packing heuristics is giving some really
+interesting results. Combined together best fit and worst got the best ratio
+``number of used nodes by number of answered requests per second''
+\vspace{1em}
 
+The field of resource allocation is getting more and more important now,
+because infrastructure are getting more and more heavily distributed and I
+have the feeling I have only scratched the surface of what can be done.
+However, I think the developed platform is good enough and could extend
+in order to be used for further experiments.
+\vspace{1em}
+
+This writing has principaly focused the obtained performance for containers
+which were able to run without any limit. This is something which is really
+common. A lot of service providers are based on a ``fair use'' policy. In this
+case they do their best to run everything, but they can warn or give explicit
+quota to user abusing this statement. If we get outside this scope, other
+experiment should be done to get new results.
+\vspace{1em}
+
+Working in a real environment instead of a simulation changes a lot of settings,
+I think that with the developed tools, a lot more testing and experiment
+could be done, especially concerning load balancing. Another possible extension
+could be some statistical prediction about the future consumption of a service,
+based on statistical and probabilistical models. 
+\vspace{1em}
+
+A particular effort has been made to make this work reproducible. All the
+tools are open-source softwares and protocols standard.  Thanks to
+\textbf{Ansible} the environment should be easy to deploy on any
+infrastructure, physical, virtual or hybrid.  Even if the obtained results in
+another deployment of the platform would be slightly different, it should
+follow the same trends as those obtained in this thesis.

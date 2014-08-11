@@ -1,4 +1,5 @@
 \chapter{Study of algorithms for Containers allocation and load balancing}
+\lhead{Chapter 5. \emph{Study of algorithms for Containers allocation and load balancing}}
 \label{chapt:containerloadbalance}
 
 \section{Experimental applications}
@@ -270,6 +271,7 @@ splitted into 3 services of various sizes:
 	Service 2 & 4 & 25MB & 200ms & 20 \\
 	Service 3 & 2 & 50MB & 300ms & 10 \\
 \end{tabular}
+\label{tab:exp2-services}
 \captionof{table}{Description of the experimental HTTP services}
 \vspace{1em}
 
@@ -397,6 +399,124 @@ and Worst-fit has definitely got the most interessant results.
 
 \subsection{Offline bin packing algorithms}
 
-\subsubsection{Comparaison with online bin packing on the infrastructure}
+\subsubsection{Impact on the infrastructure}
 
+When an offline bin packing algorithm is applied on computing infrastructure,
+to apply the new configuration, it results in a lot of migrations. When we are
+dealing with full virtual machines, a migration has a cost and it is difficult
+to imagine migrating several instances from one same host in parallel. With
+containers, this issue doesn't exist and even less with stateless application
 
+When a container has to be migrated, a new one is being started on the
+destination server, then the routing table to the service is updated and
+finally the source container is stopped. This operation can be done in less
+than a second. Compared to VM migration which can last minutes and use a lot of
+disk, network and CPU resources, the process which is used here costs almost
+nothing.
+
+If migrations were costly, caution should be taken when choosing the algorithm,
+to avoid to do too many of them.
+
+\subsubsection{Algorithms}
+
+In this case, testing simple algorithms like round-robin or random would not be
+interesting. They would result in the same data as what we have seen in the part
+about online bin packing.
+
+Offline bin packing algorithms are close to the online bin packing algorithm,
+the differences are that we have all the pieces of information about the
+running containers so there is no need to estimate any value. Then, there is
+not only one item to pack anymore, but a list of items. An additional question
+is in which order do the items have to be considered by the algorithms.
+In~\cite{reassignmentElectricitysaving},~\cite{statisticalAssignment}
+and~\cite{variableSizeBinPacking} they all refer to first-fit decreasing or
+best-fit decreasing as reference algorithms. It means that the data are used
+from the biggest to the smallest.
+
+As a result 4 algorithms will be tested: Best-Fit Decreasing (BFD), First-Fit
+Decreasing (FFD), the algorithm proposed by Michaël Gabay
+in~\cite{variableSizeBinPacking} and the variant detailed
+in~\cite{allocationHeterogeneous} where items are sorted decreasingly.
+
+The used parameters are the following:
+
+\begin{verbatim}
+Gabay: heuristic=bin_balancing
+Gabay: heuristic=bfd_item_centric
+Gabay: heuristic=bfd_bin_centric
+Stillwell: item_sort=d:maximal, pack=pack_by_items
+\end{verbatim}
+
+\subsubsection{Experiment}
+
+The following experiment is based on the same services as the previous
+experiment. This choice has been made because they have already been
+benchmarked, and their range of performance is already known.  Refer to
+the~\tref{tab:exp2-services}.
+
+To obtain the data of the following graph, the underneath experiment has been done 5
+times for each algorithm:
+
+\begin{enumerate}
+	\item{Start the load generation against the three services}
+	\item{Deploy containers using a resource allocation algorithm which is not
+	optimal. Best-fit has ben chosen because of the low result it has given in
+	the previous experiment. This situation leads to overloaded nodes}
+	\item{Run a first benchmark to get the performance before the offline bin
+	packing algorithm execution}
+	\item{Balance the infrastructure with the chosen algorithm}
+	\item{Run a second benchmark to get the performance after the operation}
+	\item{Calculate the average of the performance variation for the three services}
+\end{enumerate}
+
+Then once the previous protocol has been done 5 times, the average of the
+result is the value displayed on the plot.\footnote{The detailed results for
+the experiment can be found here:
+\url{https://github.com/Soulou/msc-thesis-container-balancer-client/tree/master/experiment4}}
+
+\begin{figure}[h!]
+	\includegraphics[width=\textwidth]{./Images/BinPacking/exp4_improvement.png}
+	\caption{Performance improvement in function of the algorithm}
+\end{figure}
+
+\subsubsection{Results and Discussions}
+
+The results are quite surprising. If \textit{Gabay balance} is shelved, the
+different results are using the same amount of nodes, but their result are
+unexpected.~\cite{allocationHeterogeneous} and~\cite{variableSizeBinPacking}
+based their work on BFD and FFD, and build variations of them to fit specific
+need, which is to work in an heterogeneous environment. Obviously it was not
+the case here, but we could expect that those algorithms would have done at
+least as good as BFD or FFD\@.
+
+It is also possible that this error is due to a bad integration of the
+algorithm in the container platform. Extensive testing would be required to
+find if the behavior is buggy. It may be linked to how the data are normalized.
+Everything is based on the bins. The server which as the highest capacity
+results in the unit bin, with $1$ as capacity for each of his metrics, then all
+the containers consumptions (items) and other bins are normalized using this
+reference.  After this step, a reserve is subtracted from the capacity, to
+avoid the algorithms to pack servers up to 100\% again. By default this reserve
+is 20\%, and it seemd it suits well the implementations of BFD and FFD\@. But
+Gabay's and Stillwell's algorithm are not working as they should. According to
+their estimation in their work, they should both be more performant than BFD
+and FFD\@.
+
+The heuristic \textit{Gabay Balance} got great results which are really closed
+to a simple worst fit allocation, all the nodes have been used and no effort
+has been done to limit that. But, as a results, great performance is present.
+If the goal of the operation is to balanced the load of the server, this approach
+is probably the most efficient.
+
+Comparing the two basics algorithms, FFD got slightly better results than BFD,
+the difference is higher than the difference of those algorithms for online bin
+packing, but the trend is similar. 
+
+\vspace{1em}
+
+Finally, the platform has proven that it is possible to get interesting metric
+from it. In the previous experiments, containers have been deployed and
+migrated with success resulting in performance variations. The three main
+operation linked to resource allocation/re-assignment can be tested using this
+infrastructure. If the online bin packing results are interesting, the data
+collected for offline be packing are not resulting to a spcific recommandation.

@@ -99,14 +99,15 @@
  */
 // POST /balance
 // Params:
-//   strategy: "stillwell_current"
+//   strategy: "first-fit-decreasing"
+//   opts: "heuristic=xxx;item_sort=xxx"
 
 // Code 200 - OK
 {
   "items": [[0.2, 0.3, 0], [...]],
   "bins": [[1.0, 2.0, 1.0], [...]],
   "problem": {
-    "algo": "stillwell_current",
+    "algorithm": "first-fit-decreasing",
     "mapping": [0,0,0,1,2,3,4],
   },
   "migrations": [
