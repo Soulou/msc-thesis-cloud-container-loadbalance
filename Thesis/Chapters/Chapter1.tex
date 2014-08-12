@@ -4,11 +4,11 @@
 
 \section{Motivation}
 
-Cloud computing is currently a major thread trend in the IT culture, companies
+Cloud computing is currently a major trend in the IT culture. Companies
 are more and more using cloud infrastructure, even if their reasons are still
 blurred and have been strongly altered by a skilled salesperson. However, behind
-this marketing layer there are some concrete technological evolutions and
-advantages.
+this marketing layer, there are some concrete technological evolutions and
+advantages in cloud related products.
 
 The legitimate question is “Why should people use cloud services? ”. Whether
 it concerns virtual machines, whether it is linked to containers, the answers
@@ -16,81 +16,63 @@ are multiple. Valentina Salapura explains how a virtualized environment
 improves the resiliency of an infrastructure~\cite{virtresiliency}.
 As cloud infrastructure should be highly available and fault tolerant, in order
 to provide a high-quality SLA (Service Level Agreement) and attract customers,
-the overall quality of the hosting is in most of the case better that what can
-ben done by the customers directly. It is not their job, they don't have as
+the overall quality of the hosting is in most of the cases better that what can
+be done by the customers themselves. It is not their job, they don't have as
 much knowleldge as the provider which is specialized in this field.
 
-Behind the user perspective, from the provider point of view, they own the
-infrastructure and have to allocate resources from it for their customers.  It
-is composed of a certain amount of physical machines (PMs) which could be
-dispatched among different data centers, and each of these PMs, contains a
-variable number of virtual machines (VMs), then is the \textbf{PaaS}, each of
-them are running a set containerized applications. The problematic which is now
-interesting concerns the assignment of these applications, what is the optimal
-distributions of the containers among the different servers? It depends of what
-characteristic has to be optimized.
+The \textbf{IaaS} provider owns the infrastructure, commonly composed by
+several physical machines (PMs), sometimes located in different data centers.
+Each of these PMs contains a variable number of virtual machines (VMs), rented
+by the customers. In the scope of a \textbf{PaaS}, the provider has the control
+on the way the users access those instances. Containers are often used to
+isolate the users with each other. The interesting problematic concerns the
+assignment of these VMs on the PMs or the containers on the VMs, what is the
+optimal distributions of the containers among the different servers?
 
 At the scope of the physical server, Thomas Setzer and Alexander Stage based
 their study on the statement that energy represents up to 50\% of operating
 costs of an infrastructure~\cite{reassignmentElectricitysaving}. That's why
-there is a need to optimize it. Using the virtual machine reassignment through
-live migrations, they are looking at consolidating the VMs on the physical
-servers.  Consolidating an infrastructure consists in reducing the number of
-PMs which are hosting instances without disturbing the performance of these.
-After this operation, useless PMs can be suspended and electricity is saved,
-then when more computational power is required they are resumed dynamically.
-
-In the publication \textit{An adaptive Resource Provisioning for the Cloud
-Using Online Bin Packing}~\cite{reassignmentVisbp}, the authors also
-introduce their subject by explaining that it has been estimated that Amazon
-manages more than half a million of physical servers around the world and that
-it must be a priority for them to reduce their expenses by consolidating
-their infrastructure.
-
-For consumers of commercial \textit{IaaS} offers, the main goal is to use the
-minimum number of virtual machines while having enough resources for all the
-applications running on their current infrastructure. They do not directly pay
-the electricity, it is included in the price paid to the provider, the focus is
-on the level of performance directly.
+there is a need to optimize it. For consumers of commercial \textit{IaaS}
+offers, the main goal is to use the minimum number of virtual machines while
+having enough resources for all the applications running on their current
+infrastructure. They do not directly pay the electricity, it is included in the
+price paid to the provider, the focus is on the level of performance directly.
 
 \section{Algorithms}
 
-We have seen that cloud computing is a hot topic in the Internet industry which
-results in a lot of new problematics in computer science. The resource
-allocation problem is one of them. All over the world, universities have
-started studying different approaches of allocation optimisation. The different
-algorithms listed in this document gather publications around the virtual
-machine assignment and reassignment on a set of physical machines.
-
-Whatever is the kind of process used to solve this problem, the goal is always
-the identical. Given a set of resources with a given capacity, how to choose
-the best position for a task which has to consume those resources.
+Cloud computing is a hot topic in the IT industry.  New problematics have
+appeared, the resource allocation problem is one of them. The different
+algorithms listed in this document gather publications about resource
+allocation or reassignment.
 
 In the first part, a general solution method is studied. Using Linear
-Programming, we are able to get the optimized result. However as this problem
+Programming, an optimized result is able to be found. However as this problem
 is NP-hard, it is not possible to use Linear Programming anymore when the
 amount of objects or the number of resources are getting big. This is why we
-have to use heuristics.  Heuristics decrease the quality of the results, but
+have to use heuristics. Heuristics decrease the quality of the results, but
 allow the computation to be executed much more fastly.
 
 Among those heuristic algorithms, we are going to have a special focus on the
-bin packing heuristics which are the methods used later in this thesis.  An
-overview of other methods like the Ant Colony heuristics, or network flows
-based algorithms will be proposed.
+bin packing heuristics which are the methods used later in this thesis. An
+overview of other methods like the Ant Colony heuristics, network flows
+based, or genetic algorithms will be proposed.
 
 \subsection{Linear Programming}
 
 Also known as Linear optimization. It is specialisation of mathematical
 programming, which is focused on linear functions. The main goal of linear
 programming is to find a maximum or a minimum to a linear function given a set
-of constraints, in other words: maximizing profits while minimizing costs. In
-scope of resource allocation, it is required to define the different variables,
-the function we want to optimize and the constraints linked to the variables.
+of constraints. In other words: maximizing profits while minimizing costs. In
+the scope of resource allocation, it is required to define the different
+variables, the function to optimize and the constraints linked to the
+variables.
 
-In their work,~\citet*{allocationHybrid} are working with linear programming. The aim
-of their study is to define a way to optimize the number of allocated virtual
-machines splitted in different cloud infrastructures.  Different constraints
-are defined to setup the scope of the function to minimize.
+In the work \textit{Cost-Optimal Scheduling in Hybrid IaaS Clouds for Deadline
+Constrained Workloads}~\cite{allocationHybrid}, the authors are working with
+linear programming. The aim of their study is to define a way to optimize the
+number of allocated virtual machines splitted in different cloud
+infrastructures. Different constraints are defined to setup the scope of the
+function to minimize.
 
 \begin{figequation}
 	\caption{Example of linear optimization problem}
@@ -116,27 +98,27 @@ unit of time ($S$)
 \end{figequation}
 
 The \textit{Equation 2} defines a constraint from the linear problem, which
-explains that in each cloud, at each unit of time, the sum of all the tasks run
+explains that in each cloud, at each unit of time, the sum of all the tasks running
 on all the virtual machines instantiated should be less than the number of CPUs
-available.  (There is note that in the case of public clouds, the amount of CPU
+available. (There is note that in the case of public clouds, the amount of CPU
 is considered unlimited so this constraint becomes void).
 
 \vspace{1em}
 
-The work of~\citet{allocationHeterogeneous}, which
-focuses virtual machine resources allocation in heterogeneous
-environment also start by defining a formal
-model based on linear programming. However, as explained in this publication,
-resolving such a problem requires an exponential time, linked to the amount of
-allocations to achieve. As a result using directly this solution on an
-important workload is not feasible.
+The work of M. Stillwell, F. Vivien, and H.
+Casanova~\cite{allocationHeterogeneous}, which focuses virtual machine
+resources allocation in heterogeneous environment, also starts by defining a
+formal model based on linear programming. However, as explained in this
+publication, resolving such a problem requires an exponential time, linked to
+the amount of allocations to achieve. As a result using directly this solution
+on an important workload is not feasible.
 
 \vspace{1em}
 
-\citet*{mathsRrndlp} have studied the linear optimization relaxation has been
-used to simplify the original problem and transform it from an exponential
-complexity to a polynomial complexity. The “random rounding” is a probabilistic
-approach which modifies some of the constraints by a weaker one.
+Linear optimization relaxation can be used to simplify the original problem and
+transform it from an exponential complexity to a polynomial
+complexity~\citet*{mathsRrndlp}. The “random rounding” (RRND) is a
+probabilistic approach which modifies some of the constraints by a weaker one.
 
 \begin{figequation}
 	\caption{Application of random rounding}
@@ -151,19 +133,18 @@ approach which modifies some of the constraints by a weaker one.
 	\]
 \end{figequation}
 
-However, the RRND approaches is quickly discarded as the results are not good
+However, the RRND approach is quickly discarded as the results are not good
 enough in the case of resource allocations in heterogeneous environment.
 
 \subsection{Bin packing}
 
-Bin packing is one of the most common approach to resource allocation or
-re-allocation in a cloud environment. It consists in representing “bins”
-associated to a storage capacity and “items” which have to be packed into
-those bins.
+Bin packing is one of the most common method to calculate resource allocation
+or re-allocation. It consists in representing “bins” associated to a storage
+capacity and “items” which have to be packed into those bins.
 
 \subsubsection{Different variants}
 
-Two main types of bin packing algorithms exist. On the one hand, those
+Two main types of bin packing algorithm coexist. On the one hand, those
 considered as “offline”. They consider that we have access to all the items to
 find the optimal packing on the different bins. This problem is a NP-hard
 problem, there is no, to this day, a polynomial way to solve this problem.
@@ -205,12 +186,12 @@ To answer more precisely to the cloud resource allocation problem, some people
 have defined some variants of those two main categories of bin packing
 algorithms. G. Gambosi and A. Postiglione and M. Talamo have developed a
 “relaxed online bin packing” algorithm~\cite{mathsRelaxedonlinebp}. It may be
-represent as a mix between online and offline bin packing. When a new item has
+represented as a mix between online and offline bin packing. When a new item has
 to be packed, it allows an additional limited number of moves among the
 currently packed items.
 
 Another interesting variant is the dynamic online bin packing defined by Joseph
-Wun-Tan.  It differentiates itself from standard online bin packing by allowing
+Wun-Tan. It differentiates itself from standard online bin packing by allowing
 items to be removed from bins. Static online bin packing does not allow these
 items changes, once an item has been placed it does not move anymore.
 
@@ -218,32 +199,29 @@ items changes, once an item has been placed it does not move anymore.
 
 In the scope of containers assignment on a set of hosts, the bins are the
 different servers and the items are the services we want to host. Some
-additional aspects have to be considered: applications need different
-resources like memory, CPU, persistent storage (disk), network input/output. So
-often, the items we want to pack are multidimensional items, and we speak of
-multidimensional vector bin packing. Another interesting point is that moving a
-container from one host to another has a cost which may be important, even if it
-is cheaper than migrating a virtual machine. As a result we can not execute
-numerous container migrations simultaneously.
+additional aspects have to be considered: applications need different resources
+like memory, CPU, persistent storage (disk), network input/output. Often, the
+items are multidimensional, and it is named multidimensional vector bin
+packing. Moving a VM or container from one host to another has a cost which may
+be important for virtual machines, so the number of parallel migrations may be
+limited.
 
-In the work about online bin packing for virtual machines allocation
-of~\cite*{reassignmentVisbp}, the authors consider first, that a virtual
-machine only has one dimension, its CPU consumption. From that point they study
-which algorithm may fit this particular problem. They reject “strict” online
-bin packing, because in realistic situations it is uncommon to know exactly
-the future consumption of a virtual machine, so it is necessary to move it
-afterward, when we can measure it. Moreover, as VMs can be migrated easily,
-there is no reason not considering it if the resulting performance is better.
-“Relaxed online bin packing” allows movements when a new item is packed, but
-an item cannot be resized. “Dynamic online bin packing” is thought inadequate
-in this context too, but often, when an virtual machine has to move the best
-solution is not always to remove it then repack it, but to move others instances
-which are easier to move.
+In \textit{Adaptive Resource Provisioning for the Cloud Using Online Bin
+Packing}~\cite*{reassignmentVisbp}, the authors consider first, that a virtual
+machine only has one dimension, its CPU consumption. They reject “strict”
+online bin packing, because we often don't know exactly the future consumption
+of a virtual machine, so it is necessary to move it afterward, when we can
+measure it. Moreover, as VMs can be migrated easily, there is no reason not
+considering it if the resulting performance is better. “Relaxed online bin
+packing” allows movements when a new item is packed, but an item cannot be
+resized. “Dynamic online bin packing” is thought inadequate in this context
+too, but often, when an virtual machine has to move the best solution is not
+always to remove it then repack it, but to move others instances which are
+easier to move.
 
-This is why in the publication of~\citet*{reassignmentVisbp}, they decided to
-build an online bin packing algorithm which suits the virtualisation
-environment: “Variable Item Size Bin Packing”, its characteristics are the
-following.
+This is why in~\cite{reassignmentVisbp}, they decided to build an online bin
+packing algorithm which suits virtualised environments: “Variable Item Size Bin
+Packing”, its characteristics are the following.
 
 \begin{itemize}
 	\item{As relaxed online bin packing, it allows movements when a new item is packed}
@@ -351,8 +329,8 @@ of David Wilcox et al.\cite{algoGenetics1}, simulations are comparing GA with
 \end{center}
 \end{figure}
 
-On the following graphs, ICDF stands for “inverse cumulative distribution
-function” also known as “quantile function”, the authors use it to represent
+On the following graphs, ICDF stands for “Inverse Cumulative Distribution
+Function” also known as “quantile function”, the authors use it to represent
 the load: “Using the icdf, we can specify a percentile value and obtain a
 corresponding load which can be passed to the assignment algorithm”.
 
@@ -395,20 +373,20 @@ with is not obvious at all.
 \section{Real data analysis}
 
 Most of the cited works in the literature review are basing their work on
-simulations.  In the experiments, simulation tools like
-SimGrid\cite{websiteSimgrid} or CloudSim\cite{websiteCloudsim} are used to simulate
-the behavior of one or multiple cloud infrastructures.
+simulations. In the experiments, simulation tools like
+SimGrid\cite{websiteSimgrid} or CloudSim\cite{websiteCloudsim} are used to
+simulate the behavior of one or multiple cloud infrastructures.
 
 The data may be generated randomly or following some statistical rules, but
 often, workloads are based of extract of real workload. Typically, Google is
 releasing workloads of its own production infrastructure. 
 
-In 2012, Google sponsored the ROADEF contest (Operational research and decision
-support French society)\cite{websiteRoadef}. The contest was focusing the machine
+In 2012, Google sponsored the ROADEF contest (Operational Research and Decision
+Support French Society)\cite{websiteRoadef}. The contest was focusing the machine
 reassignment problem based on Google workload. Each attendee had to find the
-best solution find solution. Some of them resulted in an official publication
+best solution. Some of them resulted in an official publication
 like “Heuristics and matheuristics for a real-life machine reassignment
-problem” from \citet*{roadefIp}.  They based their work on linear programming.
+problem”~\cite*{roadefIp}.  They based their work on linear programming.
 However in~\cite{roadefBp1, roadefBp2}, the authors have used
 around the bin packing algorithms. Unfortunately, the work of the winner has
 not been published so we are not able to see which algorithm has been used to

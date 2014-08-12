@@ -4,12 +4,9 @@
 
 \section{Goal of the experiment}
 
-This experiment has been defined to study of the ability to isolate containers
-CPU usage using Linux control groups Linux containers are sharing the same
-operating system, they are not fully isolated as we can see with complete
-virtual machines. To achieve this isolation, the control groups (cgroup) of the
-linux kernel are used to apply limits on the resource access right of each
-container.
+This experiment has been defined to study the ability to isolate containers CPU
+usage using Linux control groups (cgroups). They are integrated to the linux
+kernel to apply limits on the resource access right of each container.
 
 This experiment aims at studying how these cgroups are working and how do they
 actually share and isolate the CPU resources among the different containers.
@@ -31,9 +28,9 @@ cores will be launched. The source code of the application can be found at
 ./msc-thesis-cpu-burn -nb-cpus=<n>
 \end{lstlisting}
 
-The second input corresponds to the number of shares a container can access
-on the CPUs of the running computer. This number is arbitrary as the shares
-are relative to each other. 
+The second input corresponds to the number of shares a container can access on
+the CPUs of the running computer. This number is arbitrary as the shares are
+relative to each other. 
 
 \begin{quote}
 If a container does not have any cpu share number specified, the default value

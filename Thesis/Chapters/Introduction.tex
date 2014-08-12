@@ -2,11 +2,11 @@
 \addcontentsline{toc}{chapter}{Introduction}
 \lhead{\emph{Introduction}}
 
-The focus of this thesis concerns resource allocation. The optimization of the
+The focus of this thesis concerns resource allocation. Optimization of
 tasks distribution is a common problem to every person who has to scale
-softwares in a distributed setting such as a cloud environment. What is the
-best distribution for the set of applications we need to deploy. People are
-looking for the best ratio performance over cost. In this work, we are going to
+software programs in a distributed setting such as a cloud environment. What is the
+best distribution for the set of applications we need to deploy? People are
+looking for the best price-performance ratio. In this work, we are going to
 design an experimental infrastructure which can be considered as an
 ``enterprise'' infrastructure.
 
@@ -16,20 +16,20 @@ heuristics. The aim of this work is to be able to have an overview of what is
 possible and to give some recommendations concerning good practices and
 interesting algorithms to use in a real world situation.
 
-This ten last years, the hardware of servers has been keeping improving year
-after year, especially processors. They have been improved at doing operations
+In the last decade, the hardware has kept improving year
+after year, especially processors, which have been improved at doing operations
 simultaneously. Infrastructure owners have been struggling to create ways to
-split those resources securely and efficiently, in order to be used by several
+split those resources securely and efficiently, so they may be used by several
 isolated customers. To answer this need, technologies related to the concept of
-virtualization~\cite{virtualisation} have been created, to allow to split
+virtualization~\cite{virtualisation} have been created, enabling to split
 servers into isolated sub-servers, sharing resources from a common host.
 
-\textbf{Amazon Web Service} has started to commercialize their service of
+\textbf{Amazon Web Service} started commercialising their service of
 on-demand virtual servers named \textbf{Elastic Compute Cloud} in 2006. It was
-the first actor of a large market, which has grown hugely since. Based on the
-concept of ``pay as you go'', their customers have been able to adapt, in real
+the first actor of a large market, which has since grown hugely. Based on the
+concept of ``pay as you go'', their customers are able to adapt, in real
 time, their infrastructure consumption, impacting directly the money they are
-spending. This attraction gave birth to the first clouds service like
+spending. This attractive feature gave birth to the first cloud services like
 \textbf{Dropbox} which was first based on Amazon infrastructure.
 
 An interesting definition of the Cloud Computing has been written by the
@@ -43,7 +43,7 @@ National Institute of Standards and Technology~\citep*{nistcloudcomputing}:
 \end{quote}
 
 This thesis doesn't focus on the allocation of virtual machines in a set of
-physical server, but at a higher level, the allocation of application
+physical servers, but at a higher level, the allocation of application
 containers. Actually, VMs have been used extensively and studied for more than
 a decade now, but this is not the only way to achieve virtualization.
 Containers are considered as lightweight virtual machines. Instead of being

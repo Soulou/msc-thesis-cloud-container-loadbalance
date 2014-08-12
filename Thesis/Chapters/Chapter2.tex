@@ -4,12 +4,6 @@
 
 \section{Definition}
 
-The technology of the operating system-level virtualization is composed of
-different mecanisms to create isolated environments in the user-space. Each of
-those environment can gather one or several running applications and has access
-to different resources. Those environment are commonly called containers from
-the tool which popularized them: LXC (LinuX Containers).
-
 Operating system-level virtualization has been existing for a long time, the
 premises of this technology can be found at the early times of computing in the
 1960s. It wasn't named the same way, but companies like \textbf{IBM} had to
@@ -21,32 +15,35 @@ Operating system-level virtualisation was not common in most infrastructures
 until the nineties where common open-source kernels started to implement
 features related to it. \textbf{Jails} appeared first in the BSD kernel (1998).
 Then, Sun developed Solaris (Sun UNIX operating system) \textbf{zones} in 2005,
-the same year as the \textbf{OpenVZ} implementation for the Linux kernel.
+the same year as the \textbf{OpenVZ} implementation over the Linux kernel. But
+tools which really popularized this concept to a broader audience is named
+\textbf{LXC} for LinuX Containers, introduced in 2009.
 
-Containers are running over the same operating system as the host system, they
+Containers are running over the same operating system as the host server, they
 are sharing the same drivers, but all the processes contained in them are
-limited by this same operating system. The memory consumption, the CPU usage,
-the network and disk IO are monitored and managed by these container engines
+running in an isolated environment. The memory consumption, the CPU usage, the
+network and disk IO are monitored and managed by these container engines
 sending the corresponding instructions to their respective kernel. 
 
 This technology has been more and more used in the industry these last 3-5
 years, more and more companies are adopting it. It may be to offer services for
-companies like OpenShift (Red Hat), Cloud Foundry, Heroku, MongoLab, etc. or to
+companies like OpenShift (Red Hat), Cloud Foundry, Heroku, MongoLab, etc\@. or to
 manage the hosting of their own projects: Google, Ebay, Spotify. What kind of
 applications are containerized? Any software is able to run in a container, the
 work done by~\citet*{hpccontainers} shows in the field of HPC, containers are
 mature enough to replace virtual machines and get better performance.
 
 This is a completely different approach to process isolation compare to
-classical virtual machines. Where hypervisors and VM have been following the
+classical virtual machines where hypervisors and VMs have been following the
 paradigm where everything is virtualized, creating overhead and slower
-performance, then we look at optimising by accessing hardware in order to
-reduce binary translations and other slow operations. The main idea for
-containers is, based on the host operating system, only the required
-devices/features will be virtualized, and finally the level of performance is
-close to native efficiency. Already in 2007, \cite{containersAsAlternative}
-have worked on the possibility to use container-based virtualization instead of
-hypervisors and virtual machines as a high-performance alternative.
+performance, then optimization is added afterward.
+
+The main idea behind containers is, based on the host operating system, only
+the required devices/features will be virtualized, and finally the level of
+performance is close to native efficiency. Already in 2007, some articles have
+shown the possibility to use container-based virtualization instead of
+hypervisors and virtual machines as a high-performance
+alternative~\cite{containersAsAlternative}.
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{./Images/containers_vs_vms.png}
@@ -59,14 +56,14 @@ hypervisors and virtual machines as a high-performance alternative.
 
 \textbf{Docker} is a recent project. Introduced in May 2013 by the Platform as
 a Service provider \textbf{Dotcloud} with the ambition to create a standard way
-to manage multiplatform containers, \textbf{docker} has rapidly been promoted
+to manage multiplatform containers, \textbf{Docker} has rapidly been promoted
 as a mainstream project supported by all the main tech companies.  Their
 catchword is "Build once, run everywhere", but this is only a half truth.
 
 The project has been created as a REST-ish API server, using LXC tools to
 manage the containers themselves, however LXC is, as its name shows (LinuX
-Container) specific to Linux-based operating system, at that time it was even
-more restricted, \textbf{docker} was only working on Ubuntu Linux amd64. This
+Container) specific to Linux-based operating systems, at that time it was even
+more restricted, \textbf{Docker} was only working on Ubuntu Linux amd64. This
 is why the "run anywhere" was a bit biased at that time. One year later, the
 project has abandoned LXC to create their own library named
 \textit{libcontainer}, which is able to run on mostly any Linux. In the future,
@@ -87,9 +84,10 @@ deploy containers one a large amount of server through a simple API. This
 simplification took over the LXC tools which were known to be difficult to
 handle.
 
-\textbf{Docker} also use copy on write filesystems, it means that if different
-applications are using the same base files, they only need to be present once.
-The precise characteristic let users create containers in milliseconds.
+\textbf{Docker} also uses copy on write filesystems, it means that if different
+applications are using the same base file system, it only needs to be present once.
+This precise characteristic let users create containers in milliseconds as there
+is no file to copy.
 
 Currently, thanks to \textbf{Docker inc.} containers are really fashionable,
 every tech companies is looking at them and their evolution and more and more
@@ -99,43 +97,34 @@ cases.
 
 \section{Advantages}
 
-Studying containers is not a random choice. They have been more and more
-present in the industry these last years. Companies keep externalizing their
-infrastructure, and the hosting of their services. The phenomena happens for
-various reasons. A company infrastructure has to be robust, and available most
-of the time. Nowadays, unavailability means important losses of money. As
-hosting is a craft by itself, most of the companies do not have enough fund to
-invest in a dedicated IT department, so they have to externalize these
-processes.
-
-The amount of resource providers, whether it is an application (Software as a
-Service - SaaS), a platform (Platform as a Service - PaaS), or an
-infrastructure (Infrastructure as a Service - IaaS), is increasing heavily,
-because for the final users, it is cheaper than doing it themselves, and it is
-easy to use, the internal mechanisms are abstracted.
-
-Those providers have all the same problems: what is the best way to setup a
-multi-tenant architecture which is secure enough and fast enough. "Containers"
-is an answer to this issue. For example, the company \textbf{MongoLab} is hosting
-thousands of MongoDB databases. Data is something critical for any company, so
+Cloud providers are looking for the best way to setup a multi-tenant
+architecture which is secure enough and fast enough. "Containers" is an answer
+to this issue. For example, the company \textbf{MongoLab} is hosting thousands
+of MongoDB databases. Data is something critical for any company, so
 \textbf{MongoLab} needs to isolate each instance of MongoDB from each other.
-We can assume that most of the databases they are hosting don't have a really high
-traffic. Having a virtual machine for each of those instances is clearly something
-oversized and would result on high provisioning overhead (duration of virtual
-machine boot), storage overhead (1 full operating system per instance), etc.
-This company is using containers because, it allows them to isolate the databases,
-to provision them instantly, and the files required to run MongoDB are
-only present once on their servers. (physical or virtual).
+We can assume that most of the databases they are hosting don't have a really
+high traffic. Having a virtual machine for each of those instances is clearly
+something oversized and would result on high provisioning overhead (duration of
+virtual machine boot), storage overhead (1 full operating system per instance),
+etc.  This company is using containers because, it allows them to isolate the
+databases, to provision them instantly, and the files required to run MongoDB
+are only present once on their servers (physical or virtual).
+
+The interface proposed by \textbf{Docker} is easy to manipulate and is using
+standard technologies. There is no need to use a custom protocol to communicate
+with it, everything is transiting through HTTP\@. There is now an easy way to
+isolate applications. Compared to virtual machines, the usage difficulty level
+has been highly decreased.
 
 \section{Limits}
 
 Containers are not able to live-migrate from one host to another with a
-standard linux kernel yet. This feature is possible with a OpenVZ patched
-kernel because those patches implement the checkpoint/restore operations for
-the containers, but for a vanilla Linux kernel, it does not exist yet. Some
-developers/hackers are trying to clean the code of OpenVZ and push the features
-to the mainstream kernel with the \cite{websiteCRIU} project, but so far the
-results are mostly drafty and unstable.
+standard linux kernel yet. This feature is possible with an \textbf{OpenVZ}
+patched kernel because those patches implement the checkpoint/restore
+operations for the containers, but for a vanilla Linux kernel, it does not
+exist yet. Some developers/hackers are trying to clean the code of OpenVZ and
+push the features to the mainstream kernel with the \cite{websiteCRIU} project,
+but so far the results are mostly drafty and unstable.
 
 This main limit results in the difficulty to host stateful applications like a
 database. It can be isolated in a container but we don't have the possibility
@@ -152,7 +141,7 @@ targeted, as stated in the introduction of this work.
 A Web application is an applicative server which uses the web standards to
 communicate with clients. There are two main types of web services. The
 websites, which are rendering HTML/JS/CSS web pages to users, and web services
-defining an API and answering with standard data formats like XML or JSON. Both
+defining an API and answering with standard data formats like XML or JSON\@. Both
 of them are using HTTP as transfer protocol.
 
 By the nature of HTTP, web applications are mostly stateless. Each resource
@@ -164,8 +153,8 @@ connection.
 These last 5 years, more and more of the web services have been written based
 on some or all the principles of the REST method which declares as "best
 practice" to create complete stateless applications. Additionally, another
-manifesto, the \cite{website12Factors} has become a standard set of good
-practices for web development (website and web services)
+manifesto, the ``12 Factors~\cite{website12Factors}'', has become a standard
+set of good practices for web development (website and web services)
 
 The main advantage of stateless services is that they are able to scale
 horizontally easily: the first step is to spawn new instances of the service,
@@ -175,7 +164,7 @@ requests will be distributed among all the instances.
 \section{Application balancing in the infrastructure}
 
 When a web application has to be moved from one host to another, there should
-be no unavailable time and the current requests have to stopped gracefully. To
+be no unavailability and the current requests have to stopped gracefully. To
 solve the first issue, the following walkthrough has to be followed:
 
 \begin{enumerate}
@@ -190,38 +179,29 @@ solve the first issue, the following walkthrough has to be followed:
 
 To solve the second issue, it should be handle by the application itself. When
 the system is querying the old container to stop. It actually sends a signal to
-it.  In most systems (Systemd, Upstart at the system level, or Heroku and
+it. In most systems (Systemd, Upstart at the system level, or Heroku and
 Dotcloud at the PaaS level), SIGTERM is sent, then the application has some
 time to shutdown. In the case where the application is still running a while
 after receiving the signal, SIGKILL is sent to get rid of the process.
 
 \section{Operations on containers}
 
-\subsection{Load balancing}
+\subsection{Load balancing and consolidation}
 
 The load balancing process consists in moving applications in order avoid having
-over-loaded and under-loaded hosts.
+overloaded and underloaded hosts.
 
 \begin{figure}[h!]
 	\includegraphics[width=\textwidth]{./Images/loadbalancing.png}
 	\caption{Schema of a load balancing process}
 \end{figure}
 
-In most of the case, we can't really predict the evolution of the resource usage
-of a service, this step has to be often to maintain a balance in an
-infrastructure.  There are three potential outcome from this operation. The
-first is, that the current number of hosts is sufficient, so the containers are
-dispatched on them to get a balance of resource consumption. The second
-possibility is that all the hosts are completely busy. In this case some new
-servers should be provisioned. (Through a IaaS API, or more simply by sending
-an email to the infrastructure manager who will have to deal with the
-situation) The last case is when the hosts are not required anymore because
-there the applications can be packed on less nodes that before. There are
-different behavior which are possible in order to spare electricity and/or
-money. If the hosts are VMs, they can be shutdown, if they are physical
-servers, they could be suspended (If a mechanism like WakeOnLan is enabled to
-wake them when they are required again) for example, these operational pieces
-information are not in our scope.
+The load balancing operation can be considered as a routine in order to avoid
+overloaded and underloaded servers. It has to be run periodically in order to
+move containers from overloaded host to more available hosts. But also to avoid
+servers to be nearly empty, this is the process of consolidation. In this case
+the server costs money and it would be better if the applications on the
+underloaded servers could be moved.
 
 \subsection{Resource Allocation}
 
