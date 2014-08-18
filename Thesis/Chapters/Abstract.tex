@@ -5,17 +5,19 @@ hardware, or the version of the operating system, a container will always run
 the same way.
 
 This technology has increased the flexibility of an infrastructure, and even
-more of a cloud based infrastructure. Virtual Machines can be migrated and
-containers also. This thesis defines a platform to test resource allocation
-algorithms in a concrete environment, not a simulation. The scope of this work
-has been reduced to bin packing algorithms which are the most common for
-resource allocation and load balancing. Furthermore, the studied tasks are only
-web applications, for there ability to be stateless, and to migrate easily.
+more of a cloud based infrastructure. This thesis defines a platform to test
+resource allocation algorithms in a concrete environment, not a simulation. The
+scope of this work has been reduced to bin packing algorithms which are the
+most common for resource allocation and load balancing. Furthermore, the
+studied tasks are only web applications, for their ability to be stateless, and
+to migrate easily.
 
 The defined platform is based on \textit{Docker} and on the decentralized
 cluster management and service discovery tool \textit{Consul}. Different
-utilities have been developed to spawn containers gathered by services on the
-different servers of the infrastructure.
+utilities have been developed. They create the ability of spawning containers
+on all the servers of the cluster. Moreover, those containers are gathered
+by service. If two containers are part of the service ``abstract``, all the
+requests on \texttt{http://abstract.thesis.dev} are shared between them.
 
 Online bin packing and offline bin packing algorithms have been used to
 respectively study the resource allocation and the load balancing problems

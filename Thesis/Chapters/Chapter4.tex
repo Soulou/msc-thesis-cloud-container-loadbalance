@@ -2,41 +2,41 @@
 \lhead{Chapter 4. \emph{Definition of the experimental platform}}
 \label{chap:expsetup}
 
-This chapter will be devoted to the study of the containerized web application
-allocation and load balancing in a cloud environment. Before speaking of the
-experiments themselves, it is important to define how those experiments have
-been setup. The target is the ability to test algorithms using a realistic
-infrastructure and not to create a simulation of it.
+Before speaking of the experiments themselves, it is important to define how
+those experiments are setup. This chapter is devoted to the design of
+the infrastructure used for the experimental study. The target is the ability
+to test algorithms using a realistic infrastructure and not to create a
+simulation of it.
 
 \section{Hardware Infrastructure}
 
-Different kind of clouds are coexisting, if \textbf{Amazon Web Services} provides
+Different kinds of cloud coexist, if \textbf{Amazon Web Services} provide
 services which are part of a “public” cloud, this is not the only way to use a
 cloud infrastructure: private cloud or hybrid clouds mixing private and public
 cloud infrastructures are being developed more and more. Thanks to open-source
 projects like~\cite{websiteOpenstack}, cloud environments can be installed on
-private infrastructures.
+private servers having commodity hardware.
 
-The experiments have been done on a private cloud infrastructure, powered by
-Openstack (version: Grizzly). But they could be equaly executed on a public
-cloud, or event bar metal servers. The amount and the capacities of the virtual
-machines have been different according to the experiment, but all the instances
-are always in the same private network.
+In this thesis, the experiments are done on a private cloud
+infrastructure, powered by Openstack (version: Grizzly). But they could
+equaly be run on a public cloud, or even bare metal servers. The amount
+and the capacities of the virtual machines are different according to the
+experiment, but all the instances are always in the same private network.
 
 This document won't cover how to install Openstack but there are plenty of
 tutorials on the web. Moreover this setup can be done in a public cloud
 infrastructure like Amazon Web Services EC2, there is no difference. We are
-going to use two distinct kinds of node. The agents execute the
-different web applications, and the controller which is the interface to
+going to use two distinct kinds of node. The agents, which execute the
+different web applications, and the controller, which is the interface to
 control the complete infrastructure.
 
 \section{Software Infrastructure}
 \subsection{Operating System}
 
-All the virtual machines are running \textbf{Ubuntu Server 14.04 LTS}, this choice
-has been lead by the fact that this Linux distribution is probably the most standard
-worldwide and because \textit{python 3.4} is required to run some libraries of the project
-to execute the experiments.
+All the virtual machines are running \textbf{Ubuntu Server 14.04 LTS}, this
+choice has been lead by the fact that this Linux distribution is probably the
+most standard worldwide and because \textit{python 3.4} is required to run some
+libraries of the project.
 
 The cloud version of the distribution has been chosen\footnote{Download page of
 Ubuntu 14.04 Cloud :\url{http://cloud-images.ubuntu.com/releases/14.04/}} if
@@ -57,20 +57,19 @@ owned by root for security reasons, to avoid remote access to the host)
 \subsection{Service discovery}
 
 One of the common difficulties in cloud infrastructure gathering numerous
-virtual machines is the service discovery. It is possible of course to use a
-configuration manager to generate static configuration on each node which will
-be used by the different services. However this system is static, doesn't scale
-well and is not fault resilient. That is what it is a bad idea to write
-anything statically when deploying such infrastructure.
+virtual machines, is the service discovery. It is possible, of course, to use a
+configuration manager to generate static settings on each node.  However this
+system doesn't scale well and is not fault tolerant. That is what it is a bad
+idea to write anything statically when deploying such infrastructure.
 
-The project \textbf{Consul} has been used to achieve the feature. Consul is
+The project \textbf{Consul} is used to achieve the feature. Consul is
 decentralized solution for service discovery based on two protocols. On the one
 hand, it is using a gossip protocol to manage the communication between nodes.
 This feature let \textbf{Consul} creates a decentralized cluster of servers.
 When a new node is available, it just needs to communicate with one node,
 whichever it is, to join the complete cluster and get access to the shared
 resources. On the second hand, the process is using a consensus algorithm to
-elect a leader node on the cluster, which has the responsibility to keep the
+elect a leader node, which has the responsibility to keep the
 data consistent. Write operations have to be validated by the leader node, then
 spread to the rest of the servers. If the leader node crashes, another node is
 automatically elected by the others nodes.
@@ -79,16 +78,16 @@ automatically elected by the others nodes.
 running services to consul which will spread the information among the whole
 cluster. That is how services get to know each other.
 
-The application is developed using the \textbf{Go} programming language, so
-the installation is trivial. To achieve the installation, whatever is the
-operating system, downloading the binary from the website
+The application is developed using the \textbf{Go} programming language, so the
+installation is trivial. To achieve it, whatever is the operating system,
+downloading the binary from the website
 \url{http://www.consul.io/downloads.html} and executing it enough.  The
 configuration of each node service is done through a set of JSON files which
 have to be defined in \textbf{Consul} configuration directory.
 
 \subsection{Balancer agent}
 
-On each server which has to execute the web applications, the installation
+On each server which has to execute web applications, the installation
 of the balancer agent is required. It is a HTTP server written using python3.
 The source code can be found on GitHub
 \footnote{\url{https://github.com/Soulou/msc-thesis-container-balancer-agent}}. The
@@ -121,9 +120,7 @@ server itself and of each container running on it. Different threads
 starts in parallel with the HTTP Server. The reason why it is necessary
 to use separate threads is that at a given time it's not possible to
 get some relative data. This is how the different metrics are gathered
-by the agent.
-
-For the entire server:
+by the agent for the host:
 
 \begin{itemize}
 \item{CPU: The interface from the Linux Kernel to read the CPU usage is
@@ -206,10 +203,11 @@ start or stop a container, it also connects to a \textbf{redis} instance to
 update hipache configuration.
 
 The controller also exposes a HTTP API which is described in the Appendix
-B~\nameref{app:controller-api} Part of this API is only a proxy to the agents
-endpoint, in order to gather all the data to only one location, and  on the
-other side, there are the active actions, linked to container scheduling on the
-infrastructure.
+B~\nameref{app:controller-api}. Part of this API is only a proxy to the agents
+endpoints, in order to aggregate all the cluster data. On the other side, there
+are the active actions, linked to container scheduling in the infrastructure.
+
+%DNS
 
 This component of the infrastructure is critical for the experiment detailed
 later in this work. The controller is charged to choose the nodes where the
@@ -225,16 +223,19 @@ available nodes. Others strategy are available:
 
 \begin{itemize}
 \item{random: Choose randomly a node}
-\item{round-robin: Choose one node after the other, following a loop:
+\item{round-robin: Choose one node after the other, following a loop
 \begin{figure}[h!]
 \begin{center}
 \includegraphics[width=0.5\textwidth]{./Images/round-robin.png}
 \caption{Scheme of a round-robin scheduling}
 \end{center}
 \end{figure}}
+\item{first-fit: Use the online bin packing algorithm First-Fit}
+\item{best-fit: Use the online bin packing algorithm Best-Fit}
+\item{worst-fit: Use the online bin packing algorithm Worst-Fit}
+\item{best-worst-fit: Use a mix of best and worst fit}
+\item{first-worst-fit: Use a mix of first and worst fit}
 \end{itemize}
- 
-\footnote{\url{https://github.com/Soulou/msc-thesis-container-balancer-controller}}
 
 \subsection{Balancer client}
 
@@ -248,14 +249,14 @@ Appendix C: "~\nameref{app:client-doc}".
 \section{Deployment}
 
 All those services and tools have to be deployed on the instances of the
-infrastructure.  More and more configuration managers (CM) are released those days to
-answer the increasing needs to deploy applications in volatiles infrastructure,
+infrastructure. More and more configuration managers (CM) are released those days to
+answer the increasing needs to deploy applications in volatile infrastructures,
 composed of temporary virtual machines. To setup all the different pieces of
 this infrastructure, \textbf{Ansible} has been used. There are two main models
-of CMs, those centralized around a server, like \textbf{Chef Server} or \textbf{Puppet},
+of CMs, it may be centralized around a server, like \textbf{Chef Server} or \textbf{Puppet},
 where the nodes synchronize themselves with this server. The devops do not connect
 directly to the nodes but give instructions to the central server. The second
-category are those who are run from a devops workstation, like \textbf{Chef Solo},
+category are those who are run directly from a devops workstation, like \textbf{Chef Solo},
 \textbf{Ansible}, \textbf{SaltStack}. The choice of \textbf{Ansible} has been done
 for it's ability to deploy nodes in parallel and by it's easiness of prototyping,
 its syntax is pretty simple.
